@@ -85,6 +85,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "exceljs": "^1.13.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0"
   }
