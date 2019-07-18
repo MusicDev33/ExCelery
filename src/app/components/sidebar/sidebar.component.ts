@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
 import { isDevMode } from '@angular/core';
 import * as fs from 'fs';
@@ -11,10 +11,10 @@ import * as path from 'path'
 })
 export class SidebarComponent implements OnInit {
   navbarActive: boolean = false;
-  sheets: Array<string>;
+  sheets: Array<string> = [];
   pathText: string;
 
-  constructor(public electron: ElectronService) { }
+  constructor(public electron: ElectronService, public ngZone: NgZone) { }
 
   ngOnInit() {
     if (isDevMode()){
@@ -22,19 +22,18 @@ export class SidebarComponent implements OnInit {
       this.pathText = this.electron.remote.app.getAppPath()
     }else{
       this.pathText = process.env.PORTABLE_EXECUTABLE_DIR
+      console.log(this.pathText)
     }
 
     if (!fs.existsSync(this.pathText + "/sheets")){
       fs.mkdirSync(this.pathText + "/sheets");
     }
 
-    fs.readdir('./sheets', (err, files) => {
+    fs.readdir(this.pathText + "/sheets", (err, files) => {
       if (files){
-        this.sheets = [];
-        files.forEach(file => {
-          console.log(file);
-          this.sheets.push(file)
-        });
+        this.ngZone.run( () => {
+          this.sheets = files
+        })
       }
     });
   }
@@ -43,4 +42,7 @@ export class SidebarComponent implements OnInit {
     this.navbarActive = !this.navbarActive
   }
 
+  excelButtonClicked(){
+    this.navbarActive = false
+  }
 }

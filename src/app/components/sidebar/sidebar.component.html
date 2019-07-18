@@ -2,7 +2,9 @@
 <!-- Sidebar  -->
 <nav id="sidebar"  [ngClass]="{'active': navbarActive}">
     <div class="sidebar-header">
-      <i class="fas fa-arrow-left" id="left-arrow" (click)="toggleNavbarClicked()"></i>
+      <a href="#wbSubmenu" data-toggle="collapse">
+        <i class="fas fa-arrow-left" id="left-arrow" (click)="toggleNavbarClicked()"></i>
+      </a>
         <span>
           <h3>ExCelery</h3>
           <i class="fas fa-arrow-right" id="right-arrow" (click)="toggleNavbarClicked()"></i>
@@ -31,21 +33,17 @@
                 <i class="fas fa-briefcase"></i>
                 About
             </a>
-            <a href="#wbSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <a href="#wbSubmenu" data-toggle="collapse" aria-expanded="false" (click)="excelButtonClicked()" class="dropdown-toggle">
                 <i class="far fa-file-excel"></i>
                 Workbooks
             </a>
-            <ul class="collapse list-unstyled" id="wbSubmenu">
-                <li>
-                    <a href="#">Page 1</a>
-                </li>
-                <li>
-                    <a href="#">Page 2</a>
-                </li>
-                <li>
-                    <a href="#">Page 3</a>
-                </li>
-            </ul>
+            <div>
+              <ul class="collapse list-unstyled" id="wbSubmenu">
+                  <li *ngFor="let sheet of sheets">
+                      <a href="#">{{ sheet }}</a>
+                  </li>
+              </ul>
+            </div>
         </li>
     </ul>
 </nav>
