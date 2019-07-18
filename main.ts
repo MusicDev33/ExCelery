@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcMain } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -15,8 +15,8 @@ function createWindow() {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: 720,
-    height: 600,
+    width: size.width,
+    height: size.height,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -54,7 +54,12 @@ try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow);
+  app.on('ready', () => {
+    createWindow()
+    ipcMain.on('file-dropped', (event, filepath) => {
+      console.log(filepath)
+    })
+  });
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
