@@ -12,7 +12,8 @@
 
 $sidebar-color: #1ee89b;
 $sidebar-color-em: #1cd991;
-$sidebar-text-color: #222;
+$sidebar-text-color: #333;
+$sidebar-highlight-text-color: #333;
 
 a,
 a:hover,
@@ -161,7 +162,7 @@ span {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    color: $sidebar-highlight-text-color;
     background: #fff;
 }
 
@@ -213,7 +214,7 @@ a.download {
 a.article,
 a.article:hover {
     background: #6d7fcc !important;
-    color: #fff !important;
+    color: $sidebar-highlight-text-color !important;
 }
 
 /* ---------------------------------------------------

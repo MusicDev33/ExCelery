@@ -59,6 +59,14 @@ try {
     ipcMain.on('file-dropped', (event, filepath) => {
       console.log(filepath)
     })
+
+    ipcMain.on('ondragstart', (event, filePath) => {
+      console.log("Drag")
+      event.sender.startDrag({
+        file: filePath,
+        icon: '/path/to/icon.png'
+      })
+    })
   });
 
   // Quit when all windows are closed.

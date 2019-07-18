@@ -37,4 +37,15 @@ export class HomeComponent implements OnInit {
     this.navbarActive = !this.navbarActive
   }
 
+  dragStart($event){
+    $event.preventDefault();
+    this.electron.ipcRenderer.send('ondragstart', 'event')
+    console.log("Dropped")
+  }
+
+  onDrop($event){
+    $event.preventDefault();
+    console.log("Dropped")
+  }
+
 }
