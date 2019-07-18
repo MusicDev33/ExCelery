@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
 
   filePath: string;
 
+  navbarActive: boolean = false;
+
   constructor(public electron: ElectronService) {
     console.log(isDevMode());
   }
@@ -29,6 +31,10 @@ export class HomeComponent implements OnInit {
     if (!fs.existsSync(this.pathText + "/sheets")){
       fs.mkdirSync(this.pathText + "/sheets");
     }
+  }
+
+  toggleNavbarClicked(){
+    this.navbarActive = !this.navbarActive
   }
 
 }
