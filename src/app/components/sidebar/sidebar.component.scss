@@ -10,6 +10,10 @@
   }
 }
 
+$sidebar-color: #1ee89b;
+$sidebar-color-em: #1cd991;
+$sidebar-text-color: #222;
+
 a,
 a:hover,
 a:focus {
@@ -84,8 +88,8 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
-    color: #fff;
+    background: $sidebar-color;
+    color: $sidebar-text-color;
     transition: all 0.3s;
     height: 100%;
 }
@@ -137,7 +141,7 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: $sidebar-color;
 }
 
 #sidebar .sidebar-header strong {
@@ -147,7 +151,7 @@ span {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #6376C5;
+    border-bottom: 1px solid $sidebar-color;
 }
 
 #sidebar ul li a {
@@ -167,8 +171,8 @@ span {
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    color: $sidebar-text-color;
+    background: $sidebar-color;
 }
 
 a[data-toggle="collapse"] {
@@ -186,7 +190,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: $sidebar-color-em;
 }
 
 ul.CTAs {
