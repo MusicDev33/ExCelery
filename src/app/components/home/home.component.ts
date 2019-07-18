@@ -14,27 +14,13 @@ export class HomeComponent implements OnInit {
 
   filePath: string;
 
-  navbarActive: boolean = false;
 
   constructor(public electron: ElectronService) {
     console.log(isDevMode());
   }
 
   ngOnInit() {
-    if (isDevMode()){
-      console.log(this.electron.remote.app.getAppPath())
-      this.pathText = this.electron.remote.app.getAppPath()
-    }else{
-      this.pathText = process.env.PORTABLE_EXECUTABLE_DIR
-    }
 
-    if (!fs.existsSync(this.pathText + "/sheets")){
-      fs.mkdirSync(this.pathText + "/sheets");
-    }
-  }
-
-  toggleNavbarClicked(){
-    this.navbarActive = !this.navbarActive
   }
 
   dragStart($event){
