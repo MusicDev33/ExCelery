@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
 import { ExcelService } from '../../providers/excel.service'
-import { isDevMode } from '@angular/core';
-import * as fs from 'fs';
-import * as path from 'path'
+import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 
 @Component({
   selector: 'app-home',
@@ -11,31 +9,20 @@ import * as path from 'path'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  pathText: string;
 
-  filePath: string;
-
+  currentWorkbook: Workbook;
 
   constructor(
     public electron: ElectronService,
-    public excel: ExcelService
-  ) {
-    console.log(isDevMode());
-  }
+    public excel: ExcelService) {
+
+    }
 
   ngOnInit() {
-    
-  }
-
-  dragStart($event){
-    $event.preventDefault();
-    this.electron.ipcRenderer.send('ondragstart', 'event')
-    console.log("Dropped")
-  }
-
-  onDrop($event){
-    $event.preventDefault();
-    console.log("Dropped")
+    this.excel.currentWorkbook.subscribe(wb => {
+      this.currentWorkbook = wb
+      console.log("Changed")
+    })
   }
 
 }

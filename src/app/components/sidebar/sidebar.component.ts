@@ -1,7 +1,8 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
 import { ExcelService } from '../../providers/excel.service'
 import { FilepathService } from '../../providers/filepath.service'
+import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,7 +14,7 @@ export class SidebarComponent implements OnInit {
   workbooks: Array<string> = [];
   pathText: string;
 
-  openedWorkbook: Workbook;
+  workbook: Workbook;
 
   constructor(
     public electron: ElectronService,
@@ -24,10 +25,11 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.xlService.loadExcel(this.fpService.path, () => {
       console.log(this.xlService.getWorkbooks())
-      this.ngZone.run( () => {
+      this.ngZone.run(() => {
         this.workbooks = this.xlService.getWorkbooks()
       })
     })
+    this.xlService.currentWorkbook.subscribe(wb => this.workbook = wb)
   }
 
   toggleNavbarClicked(){

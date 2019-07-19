@@ -2,14 +2,20 @@ import { Injectable } from '@angular/core';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExcelService {
   workbooks: Array<string> = [];
-  currentWorkbook: Workbook;
+
+  currentWbHeaders: Array<string> = [];
+
   path: string;
+
+  private wbSource = new BehaviorSubject(new Workbook());
+  currentWorkbook = this.wbSource.asObservable();
 
   constructor() { }
 
@@ -36,12 +42,25 @@ export class ExcelService {
   }
 
   openWorkbook(filename: string){
-    this.currentWorkbook = new Workbook()
-    this.currentWorkbook.xlsx.readFile(this.path + "/sheets/" + filename)
+    var workbook = new Workbook()
+    workbook.xlsx.readFile(this.path + "/sheets/" + filename)
       .then(() => {
         // use workbook
-        var ws = this.currentWorkbook.getWorksheet(1);
-        console.log(ws.getRow(1).getCell('B').value);
+        var ws = workbook.getWorksheet(1);
+        this.setWbHeaders(ws)
+        this.wbSource.next(workbook)
       });
+  }
+
+  setWbHeaders(worksheet){
+    this.currentWbHeaders = [];
+    var row = worksheet.getRow(1);
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      console.log('Cell ' + colNumber + ' = ' + cell.value);
+      if (cell.value != null){
+        this.currentWbHeaders.push(cell.value)
+      }
+    });
+    console.log(this.currentWbHeaders)
   }
 }
