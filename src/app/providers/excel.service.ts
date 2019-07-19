@@ -59,14 +59,12 @@ export class ExcelService {
     var wsHeaders = [];
     var row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-      console.log('Cell ' + colNumber + ' = ' + cell.value);
       if (cell.value != null){
         wsHeaders.push(cell.value)
         this.wsHeaderToInt[cell.value] = colNumber
       }
     });
     this.currentWsHeaders = wsHeaders;
-    console.log(this.wsHeaderToInt)
     return wsHeaders
   }
 
@@ -86,11 +84,9 @@ export class ExcelService {
     this.currentWsHeaders = [];
     var row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-      console.log('Cell ' + colNumber + ' = ' + cell.value);
       if (cell.value != null){
         this.currentWsHeaders.push(cell.value)
       }
     });
-    console.log(this.currentWsHeaders)
   }
 }
