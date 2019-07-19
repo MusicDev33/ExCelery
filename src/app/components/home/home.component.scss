@@ -1,6 +1,9 @@
 $sidebar-color: #1ee89b;
 $sidebar-color-em: #1cd991;
 
+$sidebar-color2: #e88aff;
+$sidebar-color2-em: #cc6be3;
+
 .container-fluid {
   height: 100%;
   min-height: 100vh;
@@ -12,7 +15,7 @@ $sidebar-color-em: #1cd991;
 }
 
 input {
-  caret-color: $sidebar-color-em;
+  caret-color: $sidebar-color2-em;
 }
 
 .content-box{
@@ -45,13 +48,26 @@ input {
 }
 
 .content-box.active{
-  border-color: $sidebar-color;
+  border-color: $sidebar-color2;
+}
+
+.cb-title{
+  transition: all 0.3s;
+  margin-right: 0.5em;
+}
+
+.cb-title:hover{
+  color: $sidebar-color2-em;
+}
+
+.check-circle-dark{
+  color: $sidebar-color2-em;
 }
 
 .search-field{
   transition: all 0.4s;
   border-width: 0;
-  border-bottom: 2px solid #fff !important;
+  border-bottom: 2px solid #ddd !important;
   border-radius: 0;
   border-color: $sidebar-color;
   box-shadow: 0;
@@ -63,5 +79,5 @@ input {
 }
 
 .search-field:focus{
-  border-color: #e88aff !important;
+  border-color: $sidebar-color2 !important;
 }

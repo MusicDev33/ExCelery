@@ -14,6 +14,11 @@ export class HomeComponent implements OnInit {
   wsHeaders: Array<string> = [];
 
   activeTextfield: string = '';
+  activeTextSelection: Array<string> = []
+
+  selectedTitles: Array<string> = [];
+
+  searchText: string = ""
 
   constructor(
     public electron: ElectronService,
@@ -31,6 +36,25 @@ export class HomeComponent implements OnInit {
   }
 
   setActiveText(textfieldName){
-    this.activeTextfield = textfieldName;
+    if (this.activeTextfield === textfieldName){
+      this.activeTextfield = ""
+    }else{
+      this.activeTextfield = textfieldName;
+    }
+  }
+
+  selectTitleClicked(title: string){
+    if (this.selectedTitles.includes(title)){
+      const index = this.selectedTitles.indexOf(title, 0);
+      if (index > -1) {
+         this.selectedTitles.splice(index, 1);
+      }
+    }else{
+      this.selectedTitles.push(title)
+    }
+  }
+
+  headerSearchbarClicked(){
+    this.activeTextfield = "";
   }
 }
