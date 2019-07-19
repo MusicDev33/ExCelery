@@ -19,8 +19,11 @@ export class HomeComponent implements OnInit {
   selectedTitles: Array<string> = [];
 
   searchText: string = ""
+  activeText: string = ""
 
   headerToColumn: any = {}
+
+  headerToCell: any = {}
 
   constructor(
     public electron: ElectronService,
@@ -33,7 +36,7 @@ export class HomeComponent implements OnInit {
       this.currentWorkbook = wb
       if (wb.getWorksheet(1)){
         this.wsHeaders = this.excel.getWsHeaders(wb.getWorksheet(1))
-        this.excel.getColumnData()
+        this.headerToCell = this.excel.getColumnData()
       }
     })
   }
@@ -47,6 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectTitleClicked(title: string){
+    this.activeText = ""
     if (this.selectedTitles.includes(title)){
       const index = this.selectedTitles.indexOf(title, 0);
       if (index > -1) {
@@ -59,5 +63,6 @@ export class HomeComponent implements OnInit {
 
   headerSearchbarClicked(){
     this.activeTextfield = "";
+    this.activeText = ""
   }
 }

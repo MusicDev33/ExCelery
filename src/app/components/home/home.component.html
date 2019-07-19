@@ -1,6 +1,6 @@
 <!-- Page Content  -->
 <div class="container-fluid">
-  <div *ngIf="currentWorkbook.getWorksheet(1)">
+  <div *ngIf="currentWorkbook.getWorksheet(1) && headerToCell">
     <div>
       <input class="search-field form-control" [(ngModel)]="searchText"
       name="searchText" placeholder="Header Search" [ngClass]="{'active': header===activeTextfield}" (click)="headerSearchbarClicked()">
@@ -17,6 +17,13 @@
         <div class="row col-sm-12" *ngIf="header===activeTextfield">
           <input class="search-field form-control" [(ngModel)]="activeText"
           name="activeText" placeholder="Search away!" [ngClass]="{'active': header===activeTextfield}">
+        </div>
+        <div *ngIf="header===activeTextfield">
+          <div *ngFor="let cell of headerToCell[header]">
+            <div *ngIf="cell.toLowerCase().includes(activeText.toLowerCase())" class="field-cell">
+              {{ cell }}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -74,10 +74,12 @@ export class ExcelService {
     this.currentWsHeaders.forEach( (header) => {
       this.wsHeaderToCells[header] = [];
       this.currentWorksheet.getColumn(this.wsHeaderToInt[header]).eachCell((cell, rowNumber) => {
-        this.wsHeaderToCells[header].push(cell.value);
+        if (cell.value != header){
+          this.wsHeaderToCells[header].push(cell.value);
+        }
       });
     })
-    console.log(this.wsHeaderToCells)
+    return this.wsHeaderToCells
   }
 
   setWbHeaders(worksheet){
