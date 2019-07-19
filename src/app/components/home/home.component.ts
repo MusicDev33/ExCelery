@@ -11,6 +11,9 @@ import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 export class HomeComponent implements OnInit {
 
   currentWorkbook: Workbook;
+  wsHeaders: Array<string> = [];
+
+  activeTextfield: string = '';
 
   constructor(
     public electron: ElectronService,
@@ -21,8 +24,13 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.excel.currentWorkbook.subscribe(wb => {
       this.currentWorkbook = wb
-      console.log("Changed")
+      if (wb.getWorksheet(1)){
+        this.wsHeaders = this.excel.getWsHeaders(wb.getWorksheet(1))
+      }
     })
   }
 
+  setActiveText(textfieldName){
+    this.activeTextfield = textfieldName;
+  }
 }

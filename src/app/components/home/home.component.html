@@ -1,14 +1,14 @@
 <!-- Page Content  -->
-<div id="content" (dragstart)="dragStart($event)" (dragover)="dragStart($event)" (dragenter)="dragStart($event)">
-  <div class="container-fluid">
-    <div class="row content-box">
-      <div class="col-sm-12" *ngIf="currentWorkbook.getWorksheet(1)">
-        {{currentWorkbook.getWorksheet(1).getRow(4).getCell(1).value}}
+<div class="container-fluid">
+  <div *ngIf="currentWorkbook.getWorksheet(1)">
+    <div *ngFor="let header of wsHeaders" (click)="setActiveText(header)">
+    <div class="content-box" [ngClass]="{'active': header===activeTextfield}">
+      <div class="row col-sm-12">
+        {{ header }}
       </div>
-    </div>
-    <div class="row content-box">
-      <div class="col-sm-12">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam purus sit amet luctus venenatis lectus magna fringilla. Tellus in hac habitasse platea. Mauris augue neque gravida in fermentum. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Lorem donec massa sapien faucibus et. At risus viverra adipiscing at in tellus integer. Sed odio morbi quis commodo odio aenean sed. Augue interdum velit euismod in pellentesque massa placerat. Mi ipsum faucibus vitae aliquet nec ullamcorper. Tincidunt arcu non sodales neque sodales ut etiam sit amet. Nunc faucibus a pellentesque sit amet porttitor eget dolor morbi. Nunc mi ipsum faucibus vitae. Proin libero nunc consequat interdum varius sit amet. Dictum fusce ut placerat orci nulla pellentesque dignissim enim.
+      <div class="row col-sm-12" *ngIf="header===activeTextfield">
+        <input class="search-field form-control" [(ngModel)]="activeText"
+        name="activeText" placeholder="Search away!" [ngClass]="{'active': header===activeTextfield}">
       </div>
     </div>
   </div>

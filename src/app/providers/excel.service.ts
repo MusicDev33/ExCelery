@@ -46,10 +46,20 @@ export class ExcelService {
     workbook.xlsx.readFile(this.path + "/sheets/" + filename)
       .then(() => {
         // use workbook
-        var ws = workbook.getWorksheet(1);
-        this.setWbHeaders(ws)
         this.wbSource.next(workbook)
       });
+  }
+
+  getWsHeaders(worksheet){
+    var wsHeaders = [];
+    var row = worksheet.getRow(1);
+    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+      console.log('Cell ' + colNumber + ' = ' + cell.value);
+      if (cell.value != null){
+        wsHeaders.push(cell.value)
+      }
+    });
+    return wsHeaders
   }
 
   setWbHeaders(worksheet){

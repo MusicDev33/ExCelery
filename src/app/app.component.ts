@@ -32,6 +32,7 @@ export class AppComponent {
 
       if (!fs.existsSync(this.filepathService.path + "/sheets")){
         fs.mkdirSync(this.filepathService.path + "/sheets");
+        fs.mkdirSync(this.filepathService.path + "/sheets/options");
       }
       this.xlService.setPath(this.filepathService.path)
     } else {
