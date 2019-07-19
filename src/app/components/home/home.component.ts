@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit {
 
   searchText: string = ""
 
+  headerToColumn: any = {}
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService) {
@@ -31,6 +33,7 @@ export class HomeComponent implements OnInit {
       this.currentWorkbook = wb
       if (wb.getWorksheet(1)){
         this.wsHeaders = this.excel.getWsHeaders(wb.getWorksheet(1))
+        this.excel.getColumnData()
       }
     })
   }

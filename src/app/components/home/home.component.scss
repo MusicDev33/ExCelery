@@ -64,6 +64,11 @@ input {
   color: $sidebar-color2-em;
 }
 
+.check-circle-light:hover{
+  transition: all 0.3s;
+  color: $sidebar-color2-em;
+}
+
 .search-field{
   transition: all 0.4s;
   border-width: 0;

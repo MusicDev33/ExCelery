@@ -9,8 +9,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ExcelService {
   workbooks: Array<string> = [];
+  currentWorksheet: Worksheet;
 
-  currentWbHeaders: Array<string> = [];
+  currentWsHeaders: Array<string> = [];
+  wsHeaderToInt: any = {};
+  wsHeaderToCells: any = {};
 
   path: string;
 
@@ -51,26 +54,41 @@ export class ExcelService {
   }
 
   getWsHeaders(worksheet){
+    this.currentWorksheet = worksheet;
+    this.wsHeaderToCells = {}
     var wsHeaders = [];
     var row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
       console.log('Cell ' + colNumber + ' = ' + cell.value);
       if (cell.value != null){
         wsHeaders.push(cell.value)
+        this.wsHeaderToInt[cell.value] = colNumber
       }
     });
+    this.currentWsHeaders = wsHeaders;
+    console.log(this.wsHeaderToInt)
     return wsHeaders
   }
 
+  getColumnData(){
+    this.currentWsHeaders.forEach( (header) => {
+      this.wsHeaderToCells[header] = [];
+      this.currentWorksheet.getColumn(this.wsHeaderToInt[header]).eachCell((cell, rowNumber) => {
+        this.wsHeaderToCells[header].push(cell.value);
+      });
+    })
+    console.log(this.wsHeaderToCells)
+  }
+
   setWbHeaders(worksheet){
-    this.currentWbHeaders = [];
+    this.currentWsHeaders = [];
     var row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
       console.log('Cell ' + colNumber + ' = ' + cell.value);
       if (cell.value != null){
-        this.currentWbHeaders.push(cell.value)
+        this.currentWsHeaders.push(cell.value)
       }
     });
-    console.log(this.currentWbHeaders)
+    console.log(this.currentWsHeaders)
   }
 }
