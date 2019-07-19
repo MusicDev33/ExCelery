@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
+import { ExcelService } from '../../providers/excel.service'
 import { isDevMode } from '@angular/core';
 import * as fs from 'fs';
 import * as path from 'path'
@@ -15,12 +16,15 @@ export class HomeComponent implements OnInit {
   filePath: string;
 
 
-  constructor(public electron: ElectronService) {
+  constructor(
+    public electron: ElectronService,
+    public excel: ExcelService
+  ) {
     console.log(isDevMode());
   }
 
   ngOnInit() {
-
+    
   }
 
   dragStart($event){

@@ -1,9 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
-import { isDevMode } from '@angular/core';
-import * as fs from 'fs';
-import * as path from 'path'
-import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { ExcelService } from '../../providers/excel.service'
+import { FilepathService } from '../../providers/filepath.service'
 
 @Component({
   selector: 'app-sidebar',
@@ -12,40 +10,24 @@ import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 })
 export class SidebarComponent implements OnInit {
   navbarActive: boolean = false;
-  sheets: Array<string> = [];
+  workbooks: Array<string> = [];
   pathText: string;
 
   openedWorkbook: Workbook;
 
   constructor(
     public electron: ElectronService,
-    public ngZone: NgZone) { }
+    public ngZone: NgZone,
+    public fpService: FilepathService,
+    public xlService: ExcelService) { }
 
   ngOnInit() {
-    if (isDevMode()){
-      console.log(this.electron.remote.app.getAppPath())
-      this.pathText = this.electron.remote.app.getAppPath()
-    }else{
-      this.pathText = process.env.PORTABLE_EXECUTABLE_DIR
-      console.log(this.pathText)
-    }
-
-    if (!fs.existsSync(this.pathText + "/sheets")){
-      fs.mkdirSync(this.pathText + "/sheets");
-    }
-
-    fs.readdir(this.pathText + "/sheets", (err, files) => {
-      if (files){
-        files.forEach((wb) =>{
-          if (!wb.startsWith("~")){
-            this.sheets.push(wb)
-          }
-        })
-        this.ngZone.run( () => {
-          this.sheets = files
-        })
-      }
-    });
+    this.xlService.loadExcel(this.fpService.path, () => {
+      console.log(this.xlService.getWorkbooks())
+      this.ngZone.run( () => {
+        this.workbooks = this.xlService.getWorkbooks()
+      })
+    })
   }
 
   toggleNavbarClicked(){
@@ -57,12 +39,6 @@ export class SidebarComponent implements OnInit {
   }
 
   openWorkbook(filename){
-    this.openedWorkbook = new Workbook();
-    this.openedWorkbook.xlsx.readFile(this.pathText + "/sheets/" + filename)
-      .then(() => {
-        // use workbook
-        var ws = this.openedWorkbook.getWorksheet(1);
-        console.log(ws.getRow(1).getCell('B').value);
-      });
+    this.xlService.openWorkbook(filename)
   }
 }
