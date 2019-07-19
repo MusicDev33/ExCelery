@@ -16,10 +16,10 @@ input {
 }
 
 .content-box{
-  border-width: 2px;
+  border-width: 1px;
   border-color: #fff;
   border-style: solid;
-  transition: all 0.2s;
+  transition: all 0.9s;
   margin: 0.5em;
   cursor: pointer;
   border-radius: 5px;
@@ -49,7 +49,7 @@ input {
 }
 
 .search-field{
-  transition: all 0.2s;
+  transition: all 0.4s;
   border-width: 0;
   border-bottom: 2px solid #fff !important;
   border-radius: 0;
@@ -62,6 +62,6 @@ input {
   margin: 10px 0;
 }
 
-.search-field.active{
-  border-bottom: 2px solid #e88aff !important;
+.search-field:focus{
+  border-color: #e88aff !important;
 }
