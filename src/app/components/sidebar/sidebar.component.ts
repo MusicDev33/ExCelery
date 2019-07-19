@@ -3,6 +3,7 @@ import { ElectronService } from '../../providers/electron.service'
 import { isDevMode } from '@angular/core';
 import * as fs from 'fs';
 import * as path from 'path'
+import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +15,11 @@ export class SidebarComponent implements OnInit {
   sheets: Array<string> = [];
   pathText: string;
 
-  constructor(public electron: ElectronService, public ngZone: NgZone) { }
+  openedWorkbook: Workbook;
+
+  constructor(
+    public electron: ElectronService,
+    public ngZone: NgZone) { }
 
   ngOnInit() {
     if (isDevMode()){
@@ -31,6 +36,11 @@ export class SidebarComponent implements OnInit {
 
     fs.readdir(this.pathText + "/sheets", (err, files) => {
       if (files){
+        files.forEach((wb) =>{
+          if (!wb.startsWith("~")){
+            this.sheets.push(wb)
+          }
+        })
         this.ngZone.run( () => {
           this.sheets = files
         })
@@ -44,5 +54,15 @@ export class SidebarComponent implements OnInit {
 
   excelButtonClicked(){
     this.navbarActive = false
+  }
+
+  openWorkbook(filename){
+    this.openedWorkbook = new Workbook();
+    this.openedWorkbook.xlsx.readFile(this.pathText + "/sheets/" + filename)
+      .then(() => {
+        // use workbook
+        var ws = this.openedWorkbook.getWorksheet(1);
+        console.log(ws.getRow(1).getCell('B').value);
+      });
   }
 }

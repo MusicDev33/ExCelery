@@ -38,7 +38,7 @@
             <div>
               <ul class="collapse list-unstyled" id="wbSubmenu">
                   <li *ngFor="let sheet of sheets">
-                      <a href="#">{{ sheet }}</a>
+                      <a href="#" (click)="openWorkbook(sheet)">{{ sheet }}</a>
                   </li>
               </ul>
             </div>
