@@ -11,6 +11,12 @@ $sidebar-color2-em: #cc6be3;
   transition: all 0.3s;
 }
 
+.empty-text{
+  color: #333;
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
 
 input {
   caret-color: $sidebar-color2-em;

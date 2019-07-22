@@ -1,5 +1,8 @@
 <!-- Page Content  -->
 <div class="container-fluid">
+  <div *ngIf="!currentWorkbook.getWorksheet(1)">
+    <h4 class="empty-text">No workbooks open currently. Use the sidebar to get started!</h4>
+  </div>
   <div *ngIf="currentWorkbook.getWorksheet(1) && headerToCell">
     <div>
       <input class="search-field form-control" [(ngModel)]="searchText"

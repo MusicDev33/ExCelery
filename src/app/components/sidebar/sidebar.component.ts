@@ -12,6 +12,7 @@ import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 export class SidebarComponent implements OnInit {
   navbarActive: boolean = false;
   workbooks: Array<string> = [];
+  openWorkbooks: Array<string> = [];
   pathText: string;
 
   workbook: Workbook;
@@ -42,5 +43,19 @@ export class SidebarComponent implements OnInit {
 
   openWorkbook(filename){
     this.xlService.openWorkbook(filename)
+    this.openWorkbooks.push(filename)
+  }
+
+  //this is to open a file that's already open
+  openTab(filename){
+    console.log("Opening tab:")
+    console.log(filename)
+  }
+
+  closeTab(filename){
+    var index = this.openWorkbooks.indexOf(filename);
+    if (index !== -1) this.openWorkbooks.splice(index, 1);
+    console.log("Closing tab:")
+    console.log(filename)
   }
 }
