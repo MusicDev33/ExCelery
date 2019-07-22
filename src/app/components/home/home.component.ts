@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
 import { ExcelService } from '../../providers/excel.service'
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   currentWorkbook: Workbook;
   wsHeaders: Array<string> = [];
@@ -25,6 +26,8 @@ export class HomeComponent implements OnInit {
 
   headerToCell: any = {}
 
+  subscription: Subscription;
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService) {
@@ -32,13 +35,17 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.excel.currentWorkbook.subscribe(wb => {
+    this.subscription = this.excel.currentWorkbook.subscribe(wb => {
       this.currentWorkbook = wb
       if (wb.getWorksheet(1)){
         this.wsHeaders = this.excel.getWsHeaders(wb.getWorksheet(1))
         this.headerToCell = this.excel.getColumnData()
       }
     })
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe()
   }
 
   setActiveText(textfieldName){
