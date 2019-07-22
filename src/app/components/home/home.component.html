@@ -1,34 +1,58 @@
 <!-- Page Content  -->
 <div class="container-fluid">
+  <!-- Lorem ipsum is here to fill up the screen width for now...
+    I wish I was better at this -->
+  <div id="filler-lorem" class="noselect">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+    ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+    sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+
   <div *ngIf="!currentWorkbook.getWorksheet(1)">
     <h4 class="empty-text">No workbooks open currently. Use the sidebar to get started!</h4>
   </div>
-  <div *ngIf="currentWorkbook.getWorksheet(1) && headerToCell">
-    <div>
-      <input class="search-field form-control" [(ngModel)]="searchText"
-      name="searchText" placeholder="Header Search" [ngClass]="{'active': header===activeTextfield}" (click)="headerSearchbarClicked()">
-    </div>
-    <div *ngFor="let header of wsHeaders">
-      <div class="content-box" [ngClass]="{'active': header===activeTextfield}" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())">
-        <div class="row col-sm-12">
-          <span>
-            <span (click)="setActiveText(header)" class="cb-title noselect">{{ header }}</span>
-            <i class="fas fa-check-circle check-circle-dark" *ngIf="selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
-            <i class="far fa-check-circle check-circle-light" *ngIf="!selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
-          </span>
-        </div>
-        <div class="row col-sm-12" *ngIf="header===activeTextfield">
-          <input class="search-field form-control" [(ngModel)]="activeText"
-          name="activeText" placeholder="Search away!" [ngClass]="{'active': header===activeTextfield}">
-        </div>
-        <div *ngIf="header===activeTextfield">
-          <div *ngFor="let cell of headerToCell[header]">
-            <div *ngIf="cell.toLowerCase().includes(activeText.toLowerCase())" class="field-cell">
-              {{ cell }}
+
+  <div class="row">
+    <div class="row col-sm-4" *ngIf="currentWorkbook.getWorksheet(1) && headerToCell">
+      <div class="col">
+        <div id="encompass">
+          <!-- Action Bar -->
+          <div class="col">
+            <div class="row" id="actionbar-container">
+              <span id="actionbar">
+                <span class="actionbar-item actionbar-text" [ngClass]="{'inactive': header===activeTextfield}">
+                  Open
+                </span>
+                <i class="fas fa-pound-sign actionbar-item actionbar-icon"></i>
+                <i class="fas fa-euro-sign actionbar-item actionbar-icon"></i>
+                <i class="fas fa-dollar-sign actionbar-item actionbar-icon"></i>
+              </span>
+            </div>
+            <div class="row search-container">
+              <input class="search-field form-control" [(ngModel)]="searchText"
+              name="searchText" placeholder="Header Search" [ngClass]="{'active': header===activeTextfield}" (click)="headerSearchbarClicked()">
             </div>
           </div>
+
+          <!-- Content -->
+          <div *ngFor="let header of wsHeaders">
+            <div class="col">
+              <div class="content-box row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())">
+                <span class="">
+                  <span (click)="setActiveText(header)" class="cb-title noselect selectable">{{ header }}</span>
+                  <i class="fas fa-check-circle header-icon hi-selected" *ngIf="selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+                  <i class="far fa-check-circle header-icon hi-unselected" *ngIf="!selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
+
 </div>

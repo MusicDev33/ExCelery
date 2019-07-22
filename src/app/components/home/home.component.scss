@@ -1,4 +1,5 @@
 $sidebar-color: #1ee89b;
+$sidebar-color-light: #00ff9d;
 $sidebar-color-em: #1cd991;
 
 $sidebar-color2: #e88aff;
@@ -9,6 +10,11 @@ $sidebar-color2-em: #cc6be3;
   width: 100%;
   min-height: 100vh;
   transition: all 0.3s;
+}
+
+#filler-lorem{
+  font-size: 8px;
+  color: #fff;
 }
 
 .empty-text{
@@ -22,14 +28,78 @@ input {
   caret-color: $sidebar-color2-em;
 }
 
+.selectable{
+  cursor: pointer;
+}
+
+#actionbar{
+  margin: 0.4em 0.1em 0.4em 0.1em;
+  padding: 0.1em 0.5em;
+}
+
+#actionbar-container{
+  border-bottom: 1px solid $sidebar-color2;
+}
+
+.actionbar-item{
+  cursor: pointer;
+  margin-right: 0.6em;
+}
+
+.actionbar-text{
+  color: #000;
+}
+
+.no-padding{
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.actionbar-icon{
+  color: $sidebar-color-em;
+  font-size: 20px;
+}
+
+#actionbar .inactive{
+  color: #666;
+  cursor: default;
+}
+
+.cell-content{
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.header-icon{
+  transition: all 0.3s;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
+.hi-unselected:hover{
+  color: $sidebar-color2-em;
+}
+
+.hi-selected{
+  color: $sidebar-color2-em;
+}
+
+#encompass{
+  background-color: #fafafa;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $sidebar-color2;
+  box-sizing: content-box;
+}
+
 .content-box{
   border-width: 1px;
   border-color: #fff;
   border-style: solid;
   transition: all 0.9s;
-  margin: 0.5em;
+  margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
-  cursor: pointer;
   border-radius: 5px;
   background-color: #fff;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -52,6 +122,10 @@ input {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
+.content-box:hover .hidden-hicon{
+  opacity: 1;
+}
+
 .content-box.active{
   border-color: $sidebar-color2;
 }
@@ -65,16 +139,12 @@ input {
   color: $sidebar-color2-em;
 }
 
-.check-circle-dark{
-  color: $sidebar-color2-em;
-}
-
-.check-circle-light:hover{
-  transition: all 0.3s;
-  color: $sidebar-color2-em;
+.hidden-hicon{
+  opacity: 0;
 }
 
 .search-field{
+  background-color: #fafafa;
   transition: all 0.4s;
   border-width: 0;
   border-bottom: 2px solid #ddd !important;
@@ -85,11 +155,24 @@ input {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   line-height: 6px;
-  margin: 10px 0;
+  margin-bottom: 10px;
+}
+
+.search-container{
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 .search-field:focus{
   border-color: $sidebar-color2 !important;
+}
+/*
+I really hate Bootstrap
+But that's probably because I suck at it
+*/
+#searchfield-no-padding{
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .field-cell{
