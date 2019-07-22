@@ -4,6 +4,11 @@ import * as path from 'path';
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+interface ExcelFile{
+  workbook: Workbook
+  filename: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +22,7 @@ export class ExcelService {
 
   path: string;
 
-  private wbSource = new BehaviorSubject(new Workbook());
+  private wbSource = new BehaviorSubject(<ExcelFile>{workbook: new Workbook(), filename: ''});
   currentWorkbook = this.wbSource.asObservable();
 
   constructor() { }
@@ -49,7 +54,8 @@ export class ExcelService {
     workbook.xlsx.readFile(this.path + "/sheets/" + filename)
       .then(() => {
         // use workbook
-        this.wbSource.next(workbook)
+        var excelFile: ExcelFile = {workbook: workbook, filename: filename}
+        this.wbSource.next(excelFile)
       });
   }
 

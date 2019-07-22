@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class CopymodeComponent implements OnInit, OnDestroy {
 
   currentWorkbook: Workbook;
+  currentWbName: string;
   wsHeaders: Array<string> = [];
 
   activeTextfield: string = '';
@@ -33,10 +34,12 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     public excel: ExcelService) { }
 
   ngOnInit() {
+    // wb is an excel file interface
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
-      this.currentWorkbook = wb
-      if (wb.getWorksheet(1)){
-        this.wsHeaders = this.excel.getWsHeaders(wb.getWorksheet(1))
+      this.currentWorkbook = wb.workbook
+      this.currentWbName = wb.filename
+      if (wb.workbook.getWorksheet(1)){
+        this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
         this.headerToCell = this.excel.getColumnData()
       }
     })

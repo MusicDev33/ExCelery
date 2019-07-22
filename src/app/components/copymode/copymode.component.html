@@ -24,11 +24,8 @@
             <div class="row" id="actionbar-container">
               <span id="actionbar">
                 <span class="actionbar-item actionbar-text" [ngClass]="{'inactive': header===activeTextfield}">
-                  Open
+                  {{ currentWbName }}
                 </span>
-                <i class="fas fa-pound-sign actionbar-item actionbar-icon"></i>
-                <i class="fas fa-euro-sign actionbar-item actionbar-icon"></i>
-                <i class="fas fa-dollar-sign actionbar-item actionbar-icon"></i>
               </span>
             </div>
             <div class="row search-container">

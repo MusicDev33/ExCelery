@@ -36,9 +36,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
-      this.currentWorkbook = wb
-      if (wb.getWorksheet(1)){
-        this.wsHeaders = this.excel.getWsHeaders(wb.getWorksheet(1))
+      this.currentWorkbook = wb.workbook
+      if (wb.workbook.getWorksheet(1)){
+        this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
         this.headerToCell = this.excel.getColumnData()
       }
     })
