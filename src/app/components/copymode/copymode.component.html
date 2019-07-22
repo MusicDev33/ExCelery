@@ -15,8 +15,8 @@
     <h4 class="empty-text">No workbooks open currently. One can be opened from the sidebar.</h4>
   </div>
 
-  <div class="row">
-    <div class="row col-sm-4" *ngIf="currentWorkbook.getWorksheet(1) && headerToCell">
+  <div class="row" *ngIf="openWorkbooks.length">
+    <div class="row col-sm-3" *ngFor="let workbook of openWorkbooks">
       <div class="col">
         <div id="encompass">
           <!-- Action Bar -->
@@ -24,8 +24,9 @@
             <div class="row" id="actionbar-container">
               <span id="actionbar">
                 <span class="actionbar-item actionbar-text" [ngClass]="{'inactive': header===activeTextfield}">
-                  {{ currentWbName }}
+                  {{ workbook.filename.split('.')[0] }}
                 </span>
+                <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
               </span>
             </div>
             <div class="row search-container">
@@ -35,7 +36,7 @@
           </div>
 
           <!-- Content -->
-          <div *ngFor="let header of wsHeaders">
+          <div *ngFor="let header of wbToHeaders[workbook.filename]">
             <div class="col">
               <div class="content-box row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())">
                 <span class="">

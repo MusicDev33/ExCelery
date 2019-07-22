@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
-import { ExcelService } from '../../providers/excel.service'
+import { ExcelService, ExcelFile } from '../../providers/excel.service'
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
 
@@ -10,6 +10,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./copymode.component.scss']
 })
 export class CopymodeComponent implements OnInit, OnDestroy {
+
+  openWorkbooks: Array<ExcelFile> = [];
+  wbToHeaders: any = {}
 
   currentWorkbook: Workbook;
   currentWbName: string;
@@ -41,6 +44,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       if (wb.workbook.getWorksheet(1)){
         this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
         this.headerToCell = this.excel.getColumnData()
+        this.openWorkbooks.push(wb)
+        this.wbToHeaders[wb.filename] = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
       }
     })
   }
@@ -72,6 +77,11 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   headerSearchbarClicked(){
     this.activeTextfield = "";
     this.activeText = ""
+  }
+
+  closeFile(filename: string){
+    var index = this.openWorkbooks.findIndex(x => x.filename === filename);
+    if (index !== -1) this.openWorkbooks.splice(index, 1);
   }
 
 }

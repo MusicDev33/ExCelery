@@ -45,7 +45,7 @@ export class SidebarComponent implements OnInit {
 
   openWorkbook(filename){
     this.xlService.openWorkbook(filename)
-    this.openWorkbooks.push(filename)
+    //this.openWorkbooks.push(filename)
   }
 
   //this is to open a file that's already open

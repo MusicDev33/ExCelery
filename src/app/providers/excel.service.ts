@@ -4,7 +4,7 @@ import * as path from 'path';
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-interface ExcelFile{
+export interface ExcelFile{
   workbook: Workbook
   filename: string
 }
