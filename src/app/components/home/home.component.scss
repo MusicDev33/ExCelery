@@ -6,13 +6,11 @@ $sidebar-color2-em: #cc6be3;
 
 .container-fluid {
   height: 100%;
+  width: 100%;
   min-height: 100vh;
   transition: all 0.3s;
 }
 
-.row{
-  margin: auto;
-}
 
 input {
   caret-color: $sidebar-color2-em;

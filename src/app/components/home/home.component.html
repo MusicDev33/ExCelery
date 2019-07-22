@@ -9,7 +9,7 @@
       <div class="content-box" [ngClass]="{'active': header===activeTextfield}" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())">
         <div class="row col-sm-12">
           <span>
-            <span (click)="setActiveText(header)" class="cb-title">{{ header }}</span>
+            <span (click)="setActiveText(header)" class="cb-title noselect">{{ header }}</span>
             <i class="fas fa-check-circle check-circle-dark" *ngIf="selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
             <i class="far fa-check-circle check-circle-light" *ngIf="!selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
           </span>

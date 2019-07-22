@@ -72,8 +72,10 @@ export class ExcelService {
     this.currentWsHeaders.forEach( (header) => {
       this.wsHeaderToCells[header] = [];
       this.currentWorksheet.getColumn(this.wsHeaderToInt[header]).eachCell((cell, rowNumber) => {
-        if (cell.value != header){
+        if (cell.value != header && typeof cell.value === "string"){
           this.wsHeaderToCells[header].push(cell.value);
+        }else if (cell.value != null && cell.value != header){
+          this.wsHeaderToCells[header].push(cell.value.toString());
         }
       });
     })
