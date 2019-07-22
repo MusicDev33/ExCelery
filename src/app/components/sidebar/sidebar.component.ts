@@ -3,6 +3,7 @@ import { ElectronService } from '../../providers/electron.service'
 import { ExcelService } from '../../providers/excel.service'
 import { FilepathService } from '../../providers/filepath.service'
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-sidebar',
@@ -21,7 +22,8 @@ export class SidebarComponent implements OnInit {
     public electron: ElectronService,
     public ngZone: NgZone,
     public fpService: FilepathService,
-    public xlService: ExcelService) { }
+    public xlService: ExcelService,
+    public router: Router) { }
 
   ngOnInit() {
     this.xlService.loadExcel(this.fpService.path, () => {

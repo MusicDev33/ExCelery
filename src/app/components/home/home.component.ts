@@ -25,8 +25,6 @@ export class HomeComponent implements OnInit {
 
   headerToCell: any = {}
 
-  
-
   constructor(
     public electron: ElectronService,
     public excel: ExcelService) {
