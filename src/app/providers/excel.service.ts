@@ -39,7 +39,7 @@ export class ExcelService {
     fs.readdir(filepath + "/sheets", (err, files) => {
       if (files){
         files.forEach((wb) =>{
-          if (!wb.startsWith("~")){
+          if (!wb.startsWith("~") && wb.includes('.')){
             console.log(wb)
             this.workbooks.push(wb)
           }
