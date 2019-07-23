@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service'
-import { ExcelService } from '../../providers/excel.service'
+import { ExcelService, ExcelFile } from '../../providers/excel.service'
 import { FilepathService } from '../../providers/filepath.service'
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 import { Router } from '@angular/router'
@@ -16,7 +16,7 @@ export class SidebarComponent implements OnInit {
   openWorkbooks: Array<string> = [];
   pathText: string;
 
-  workbook: Workbook;
+  workbook: ExcelFile;
 
   constructor(
     public electron: ElectronService,
