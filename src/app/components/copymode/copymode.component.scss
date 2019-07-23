@@ -57,7 +57,7 @@ input {
 
 .actionbar-icon{
   color: $sidebar-color2-em;
-  
+
 }
 
 #actionbar .inactive{
@@ -124,6 +124,12 @@ input {
 
 .content-box:hover .hidden-hicon{
   opacity: 1;
+}
+
+.no-show{
+  transition: all 0.0s;
+  color: #fff;
+  pointer-events: none;
 }
 
 .content-box.active{

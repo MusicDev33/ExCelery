@@ -38,11 +38,21 @@
           <!-- Content -->
           <div *ngFor="let header of wbToHeaders[workbook.filename]">
             <div class="col">
-              <div class="content-box row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())">
+              <div class="content-box row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())" (contextmenu)="onRightClick($event, header); false">
                 <span class="">
                   <span (click)="setActiveText(header)" class="cb-title noselect selectable">{{ header }}</span>
-                  <i class="fas fa-check-circle header-icon hi-selected" *ngIf="selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
-                  <i class="far fa-check-circle header-icon hi-unselected" *ngIf="!selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+                  <i class="fas fa-check-circle header-icon hi-selected"
+                  *ngIf="selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+                  <i class="far fa-check-circle header-icon hi-unselected"
+                  *ngIf="!selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+
+                  <i class="fas fa-key header-icon"
+                  [ngClass]="{'hi-unselected': !getIfKey(workbook.filename, header) && !getIfKeyHasFilename(workbook.filename),
+                  'hi-selected': getIfKey(workbook.filename, header),
+                  'no-show': getIfKeyHasFilename(workbook.filename) && !getIfKey(workbook.filename, header),
+                  'hidden-hicon': !getIfKeyHasFilename(workbook.filename)}"
+                  (click)="setKey(workbook.filename, header)">
+                  </i>
                 </span>
               </div>
             </div>

@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    public electron: ElectronService,
-    public excel: ExcelService) {
+    electron: ElectronService,
+    excel: ExcelService) {
 
     }
 

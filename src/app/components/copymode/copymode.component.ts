@@ -32,6 +32,12 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
+  // format = filename:key
+  primaryKey = ''
+  secondaryKey = ''
+
+  rowObjectsDict: any = {}
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService) { }
@@ -44,6 +50,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       if (wb.workbook.getWorksheet(1)){
         this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
         this.headerToCell = this.excel.getColumnData()
+        this.rowObjectsDict[wb.filename] = this.excel.getRowObjects()
         this.openWorkbooks.push(wb)
         this.wbToHeaders[wb.filename] = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
       }
@@ -82,6 +89,59 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   closeFile(filename: string){
     var index = this.openWorkbooks.findIndex(x => x.filename === filename);
     if (index !== -1) this.openWorkbooks.splice(index, 1);
+    delete this.rowObjectsDict[filename]
   }
 
+  createKey(filename, key){
+    return filename + ":" + key
+  }
+
+  setKey(filename, key){
+    if(this.getIfKey(filename, key)){
+      this.deleteKey(filename, key)
+      return;
+    }
+
+    if (this.primaryKey != '' && this.secondaryKey == ''){
+      this.secondaryKey = this.createKey(filename, key)
+    }else if (this.primaryKey == ''){
+      this.primaryKey = this.createKey(filename, key)
+    }
+  }
+
+  getIfKeysFilled(){
+    return this.primaryKey != '' && this.secondaryKey != '';
+  }
+
+  getIfKeyHasFilename(filename){
+    return this.primaryKey.includes(filename) || this.secondaryKey.includes(filename);
+  }
+
+  getIfKey(filename, key){
+    if(this.getIfPrimaryKey(filename, key)){
+      return true;
+    }else if(this.getIfSecondaryKey(filename, key)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  getIfPrimaryKey(filename, key){
+    return this.primaryKey === this.createKey(filename, key)
+  }
+
+  getIfSecondaryKey(filename, key){
+    return this.secondaryKey === this.createKey(filename, key)
+  }
+
+  deleteKey(filename, key){
+    if (this.getIfPrimaryKey(filename, key)){
+      this.primaryKey = ''
+      this.secondaryKey = ''
+    }
+    if (this.getIfSecondaryKey(filename, key)){
+      this.secondaryKey = ''
+    }
+  }
 }

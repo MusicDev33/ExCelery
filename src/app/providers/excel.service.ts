@@ -23,7 +23,7 @@ export class ExcelService {
 
   path: string;
 
-  private wbSource = new BehaviorSubject(<ExcelFile>{workbook: new Workbook(), filename: ''});
+  private wbSource = new BehaviorSubject<ExcelFile>({workbook: new Workbook(), filename: ''});
   currentWorkbook = this.wbSource.asObservable();
 
   constructor() { }
@@ -105,7 +105,6 @@ export class ExcelService {
         rowObjects.push(rowObject)
       }
     });
-    console.log(rowObjects)
     return rowObjects;
   }
 
