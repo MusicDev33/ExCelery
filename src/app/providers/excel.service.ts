@@ -18,6 +18,7 @@ export class ExcelService {
 
   currentWsHeaders: Array<string> = [];
   wsHeaderToInt: any = {};
+  intToWsHeader: any = []
   wsHeaderToCells: any = {};
 
   path: string;
@@ -62,12 +63,15 @@ export class ExcelService {
   getWsHeaders(worksheet){
     this.currentWorksheet = worksheet;
     this.wsHeaderToCells = {}
+    this.intToWsHeader = {}
+    this.wsHeaderToInt = {}
     var wsHeaders = [];
     var row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
       if (cell.value != null){
         wsHeaders.push(cell.value)
         this.wsHeaderToInt[cell.value] = colNumber
+        this.intToWsHeader[colNumber] = cell.value
       }
     });
     this.currentWsHeaders = wsHeaders;
@@ -86,6 +90,23 @@ export class ExcelService {
       });
     })
     return this.wsHeaderToCells
+  }
+
+  getRowObjects(){
+    // This is a terrible idea but I also need to ship soon
+    var rowObjects: Array<any> = [];
+    this.currentWorksheet.eachRow((row, rowNumber) => {
+      if (rowNumber > 1){
+        var rowObject: any = {}
+        row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+          rowObject[this.intToWsHeader[colNumber]] = cell.value
+          rowObject["rowNumber"] = rowNumber
+        });
+        rowObjects.push(rowObject)
+      }
+    });
+    console.log(rowObjects)
+    return rowObjects;
   }
 
   setWbHeaders(worksheet){
