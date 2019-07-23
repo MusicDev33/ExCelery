@@ -15,6 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ElectronService } from './providers/electron.service';
 import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
+import { ColorgenService } from './providers/colorgen.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
@@ -49,7 +50,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService, ExcelService, FilepathService],
+  providers: [ElectronService, ExcelService, FilepathService, ColorgenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

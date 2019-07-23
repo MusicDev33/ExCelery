@@ -29,10 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    electron: ElectronService,
-    excel: ExcelService) {
-
-    }
+    public electron: ElectronService,
+    public excel: ExcelService) {}
 
   ngOnInit() {
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {

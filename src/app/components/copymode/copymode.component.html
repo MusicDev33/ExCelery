@@ -11,7 +11,7 @@
     sunt in culpa qui officia deserunt mollit anim id est laborum.
   </div>
 
-  <div *ngIf="!currentWorkbook.getWorksheet(1)">
+  <div *ngIf="!openWorkbooks.length">
     <h4 class="empty-text">No workbooks open currently. One can be opened from the sidebar.</h4>
   </div>
 
@@ -27,6 +27,7 @@
                   {{ workbook.filename.split('.')[0] }}
                 </span>
                 <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
+                <span class="actionbar-text"> {{ getKeyText(workbook.filename) }}</span>
               </span>
             </div>
             <div class="row search-container">

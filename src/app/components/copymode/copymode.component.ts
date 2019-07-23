@@ -144,4 +144,14 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       this.secondaryKey = ''
     }
   }
+
+  getKeyText(filename){
+    if (this.primaryKey.includes(filename)){
+      return "Primary";
+    }else if (this.secondaryKey.includes(filename)){
+      return "Secondary";
+    }else{
+      return "";
+    }
+  }
 }
