@@ -16,7 +16,7 @@
   </div>
 
   <div class="row" *ngIf="openWorkbooks.length">
-    <div class="row col-sm-3" *ngFor="let workbook of openWorkbooks">
+    <div class="row col-sm-5" *ngFor="let workbook of openWorkbooks">
       <div class="col">
         <div id="encompass">
           <!-- Action Bar -->
@@ -37,15 +37,23 @@
           </div>
 
           <!-- Content -->
+          <div class="col">
+            <div class="content-box-purple selectable row justify-content-center"
+            *ngIf="selectedHeader.length && mappedHeader.length && getKeyFile(workbook.filename) == 1" (click)="copyColumns()">
+              Copy {{ secondaryKey.split(":")[0] }} column {{ mappedHeader.split(":")[1] }} to 
+              {{ primaryKey.split(":")[0] }} column {{ selectedHeader.split(":")[1] }}?
+            </div>
+          </div>
+
           <div *ngFor="let header of wbToHeaders[workbook.filename]">
             <div class="col">
               <div class="content-box row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())" (contextmenu)="onRightClick($event, header); false">
                 <span class="">
                   <span (click)="setActiveText(header)" class="cb-title noselect selectable">{{ header }}</span>
                   <i class="fas fa-check-circle header-icon hi-selected"
-                  *ngIf="selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+                  *ngIf="isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
                   <i class="far fa-check-circle header-icon hi-unselected"
-                  *ngIf="!selectedTitles.includes(header)" (click)="selectTitleClicked(header)"></i>
+                  *ngIf="!isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
 
                   <i class="fas fa-key header-icon"
                   [ngClass]="{'hi-unselected': !getIfKey(workbook.filename, header) && !getIfKeyHasFilename(workbook.filename),
