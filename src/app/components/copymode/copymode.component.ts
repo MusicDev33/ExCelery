@@ -44,6 +44,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   selectedHeader: string = ''
   mappedHeader: string = ''
 
+  editCount = 0;
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
@@ -56,7 +58,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       this.currentWbName = wb.filename
       if (wb.workbook.getWorksheet(1)){
         this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
-        this.headerToCell = this.excel.getColumnData()
+        this.columnMap[wb.filename] = this.excel.getColumnData()
         this.rowObjectsDict[wb.filename] = this.excel.getRowObjects()
         this.openWorkbooks.push(wb)
         this.wbToHeaders[wb.filename] = this.excel.getWsHeaders(wb.workbook.getWorksheet(1))
@@ -113,7 +115,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   copyColumns(){
     console.log(this.rowObjectsDict)
-    var index = 1
+    var editArray = []
     for (let rowNum in this.rowObjectsDict[this.primaryKey.split(":")[0]]){
       var primaryKeyValue = this.rowObjectsDict[this.primaryKey.split(":")[0]][rowNum][this.primaryKey.split(":")[1]]
 
@@ -124,13 +126,39 @@ export class CopymodeComponent implements OnInit, OnDestroy {
           return rowObj[this.secondaryKey.split(":")[1]] == primaryKeyValue;
         }
       })
-      //console.log(this.rowObjectsDict[this.primaryKey.split(":")[0]][rowNum][this.selectedHeader.split(":")[1]])
+
       if (value.length){
-        console.log(index)
-        console.log(value)
-        index += 1
+        value[0]["mappedRow"] = this.rowObjectsDict[this.primaryKey.split(":")[0]][rowNum]["rowNumber"]
+        editArray.push(value[0])
       }
     }
+
+    var primaryWorkbook = this.openWorkbooks.filter(workbook => {
+      return workbook.filename == this.primaryKey.split(":")[0]
+    })
+
+    console.log(primaryWorkbook)
+
+    editArray.forEach( (rowObj) => {
+      console.log(this.secondaryKey.split(":")[1])
+      var columnNumber = this.columnMap[this.primaryKey.split(":")[0]][this.selectedHeader.split(":")[1]]
+
+      if (rowObj[this.mappedHeader.split(":")[1]].hasOwnProperty("result")){
+        var newValue = rowObj[this.mappedHeader.split(":")[1]]["result"]
+        primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue
+      }else{
+        var newValue = rowObj[this.mappedHeader.split(":")[1]]
+        primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue
+      }
+    })
+    
+    this.excel.saveExcel("test.xlsx", primaryWorkbook[0].workbook, () => {
+      console.log("Saved file!")
+    })
+  }
+
+  saveFile(){
+
   }
 
   getRandomColor(){

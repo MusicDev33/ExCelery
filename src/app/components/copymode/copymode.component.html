@@ -39,8 +39,14 @@
           <!-- Content -->
           <div class="col">
             <div class="content-box-purple selectable row justify-content-center"
+            *ngIf="editCount >= 1 && primaryKey.split(':')[0] == workbook.filename" (click)="saveFile()">
+              Save
+            </div>
+          </div>
+          <div class="col">
+            <div class="content-box-purple selectable row justify-content-center"
             *ngIf="selectedHeader.length && mappedHeader.length && getKeyFile(workbook.filename) == 1" (click)="copyColumns()">
-              Copy {{ secondaryKey.split(":")[0] }} column {{ mappedHeader.split(":")[1] }} to 
+              Copy {{ secondaryKey.split(":")[0] }} column {{ mappedHeader.split(":")[1] }} to
               {{ primaryKey.split(":")[0] }} column {{ selectedHeader.split(":")[1] }}?
             </div>
           </div>

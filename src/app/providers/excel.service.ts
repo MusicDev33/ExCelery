@@ -50,6 +50,13 @@ export class ExcelService {
     });
   }
 
+  saveExcel(filename, workbook, callback){
+    workbook.xlsx.writeFile(this.path + "/sheets/" + filename)
+      .then(function() {
+        callback()
+      });
+  }
+
   openWorkbook(filename: string){
     var workbook = new Workbook()
     workbook.xlsx.readFile(this.path + "/sheets/" + filename)
@@ -79,6 +86,11 @@ export class ExcelService {
   }
 
   getColumnData(){
+    return this.wsHeaderToInt
+  }
+
+  oldColumnData(){
+    /*
     this.currentWsHeaders.forEach( (header) => {
       this.wsHeaderToCells[header] = [];
       this.currentWorksheet.getColumn(this.wsHeaderToInt[header]).eachCell((cell, rowNumber) => {
@@ -89,7 +101,7 @@ export class ExcelService {
         }
       });
     })
-    return this.wsHeaderToCells
+    return this.wsHeaderToCells*/
   }
 
   getRowObjects(){
