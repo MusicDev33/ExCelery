@@ -1,12 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-        "exceljs": [
-            "../node_modules/exceljs/dist/es5/exceljs.browser"
-        ]
-    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
