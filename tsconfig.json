@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+        "baseUrl": ["src"],
         "exceljs": [
             "../node_modules/exceljs/dist/es5/exceljs.browser"
         ]
