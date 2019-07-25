@@ -87,11 +87,12 @@ input {
 
 #encompass{
   background-color: #fafafa;
-  border-radius: 5px;
+  border-radius: 10px;
   border-width: 1px;
   border-style: solid;
   border-color: $sidebar-color2;
   box-sizing: content-box;
+  margin-bottom: 10px;
 }
 
 .content-box{
