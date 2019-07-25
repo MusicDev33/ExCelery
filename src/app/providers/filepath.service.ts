@@ -8,7 +8,7 @@ export class FilepathService {
 
   constructor() { }
 
-  setPath(filepath){
+  setPath(filepath) {
     this.path = filepath;
   }
 }

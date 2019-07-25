@@ -4,9 +4,9 @@ import * as path from 'path';
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export interface ExcelFile{
-  workbook: Workbook
-  filename: string
+export interface ExcelFile {
+  workbook: Workbook;
+  filename: string;
 }
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ExcelService {
 
   currentWsHeaders: Array<string> = [];
   wsHeaderToInt: any = {};
-  intToWsHeader: any = []
+  intToWsHeader: any = [];
   wsHeaderToCells: any = {};
 
   path: string;
@@ -28,68 +28,68 @@ export class ExcelService {
 
   constructor() { }
 
-  getWorkbooks(){
+  getWorkbooks() {
     return this.workbooks;
   }
 
-  setPath(path){
-    this.path = path;
+  setPath(filePath) {
+    this.path = filePath;
   }
 
-  loadExcel(filepath, callback){
-    fs.readdir(filepath + "/sheets", (err, files) => {
-      if (files){
-        files.forEach((wb) =>{
-          if (!wb.startsWith("~") && wb.includes('.')){
-            console.log(wb)
-            this.workbooks.push(wb)
+  loadExcel(filepath, callback) {
+    fs.readdir(filepath + '/sheets', (err, files) => {
+      if (files) {
+        files.forEach((wb) => {
+          if (!wb.startsWith('~') && wb.includes('.')) {
+            console.log(wb);
+            this.workbooks.push(wb);
           }
-        })
-        callback()
+        });
+        callback();
       }
     });
   }
 
-  saveExcel(filename, workbook, callback){
-    workbook.xlsx.writeFile(this.path + "/sheets/" + filename)
-      .then(function() {
-        callback()
+  saveExcel(filename, workbook, callback) {
+    workbook.xlsx.writeFile(this.path + '/sheets/' + filename)
+      .then( () => {
+        callback();
       });
   }
 
-  openWorkbook(filename: string){
-    var workbook = new Workbook()
-    workbook.xlsx.readFile(this.path + "/sheets/" + filename)
+  openWorkbook(filename: string) {
+    const workbook = new Workbook();
+    workbook.xlsx.readFile(this.path + '/sheets/' + filename)
       .then(() => {
         // use workbook
-        var excelFile: ExcelFile = {workbook: workbook, filename: filename}
-        this.wbSource.next(excelFile)
+        const excelFile: ExcelFile = { workbook: workbook, filename: filename };
+        this.wbSource.next(excelFile);
       });
   }
 
-  getWsHeaders(worksheet){
+  getWsHeaders(worksheet) {
     this.currentWorksheet = worksheet;
-    this.wsHeaderToCells = {}
-    this.intToWsHeader = {}
-    this.wsHeaderToInt = {}
-    var wsHeaders = [];
-    var row = worksheet.getRow(1);
+    this.wsHeaderToCells = {};
+    this.intToWsHeader = {};
+    this.wsHeaderToInt = {};
+    const wsHeaders = [];
+    const row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-      if (cell.value != null){
-        wsHeaders.push(cell.value)
-        this.wsHeaderToInt[cell.value] = colNumber
-        this.intToWsHeader[colNumber] = cell.value
+      if (cell.value != null) {
+        wsHeaders.push(cell.value);
+        this.wsHeaderToInt[cell.value] = colNumber;
+        this.intToWsHeader[colNumber] = cell.value;
       }
     });
     this.currentWsHeaders = wsHeaders;
-    return wsHeaders
+    return wsHeaders;
   }
 
-  getColumnData(){
-    return this.wsHeaderToInt
+  getColumnData() {
+    return this.wsHeaderToInt;
   }
 
-  oldColumnData(){
+  oldColumnData() {
     /*
     this.currentWsHeaders.forEach( (header) => {
       this.wsHeaderToCells[header] = [];
@@ -104,28 +104,28 @@ export class ExcelService {
     return this.wsHeaderToCells*/
   }
 
-  getRowObjects(){
+  getRowObjects() {
     // This is a terrible idea but I also need to ship soon
-    var rowObjects: Array<any> = [];
+    const rowObjects: Array<any> = [];
     this.currentWorksheet.eachRow((row, rowNumber) => {
-      if (rowNumber > 1){
-        var rowObject: any = {}
+      if (rowNumber > 1) {
+        const rowObject: any = {};
         row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-          rowObject[this.intToWsHeader[colNumber]] = cell.value
-          rowObject["rowNumber"] = rowNumber
+          rowObject[this.intToWsHeader[colNumber]] = cell.value;
+          rowObject['rowNumber'] = rowNumber;
         });
-        rowObjects.push(rowObject)
+        rowObjects.push(rowObject);
       }
     });
     return rowObjects;
   }
 
-  setWbHeaders(worksheet){
+  setWbHeaders(worksheet) {
     this.currentWsHeaders = [];
-    var row = worksheet.getRow(1);
+    const row = worksheet.getRow(1);
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-      if (cell.value != null){
-        this.currentWsHeaders.push(cell.value)
+      if (cell.value != null) {
+        this.currentWsHeaders.push(cell.value);
       }
     });
   }
