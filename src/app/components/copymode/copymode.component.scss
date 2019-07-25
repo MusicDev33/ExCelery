@@ -1,44 +1,16 @@
-$sidebar-color: #1ee89b;
-$sidebar-color-light: #00ff9d;
-$sidebar-color-em: #1cd991;
+@import 'colors.scss';
 
-$sidebar-color2: #e88aff;
-$sidebar-color2-em: #cc6be3;
+input {
+  caret-color: $sidebar-color2-em;
+}
+
+/* Classes */
 
 .container-fluid {
   height: 100%;
   width: 100%;
   min-height: 100vh;
   transition: all 0.3s;
-}
-
-#filler-lorem{
-  font-size: 8px;
-  color: #fff;
-}
-
-.empty-text{
-  color: #333;
-  margin-top: 2em;
-  margin-left: 2em;
-}
-
-
-input {
-  caret-color: $sidebar-color2-em;
-}
-
-.selectable{
-  cursor: pointer;
-}
-
-#actionbar{
-  margin: 0.4em 0.1em 0.4em 0.1em;
-  padding: 0.1em 0.5em;
-}
-
-#actionbar-container{
-  border-bottom: 1px solid $sidebar-color2;
 }
 
 .actionbar-item{
@@ -50,24 +22,32 @@ input {
   color: #000;
 }
 
-.no-padding{
-  padding-right: 0;
-  padding-left: 0;
-}
-
 .actionbar-icon{
   color: $sidebar-color2-em;
-
 }
 
-#actionbar .inactive{
-  color: #666;
-  cursor: default;
+.search-field{
+  background-color: #fafafa;
+  transition: all 0.4s;
+  border-width: 0;
+  border-bottom: 2px solid #ddd !important;
+  border-radius: 0;
+  border-color: $sidebar-color;
+  box-shadow: 0;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  line-height: 6px;
+  margin-bottom: 5px;
 }
 
-.cell-content{
-  padding-left: 1em;
-  padding-right: 1em;
+.search-container{
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.search-field:focus{
+  border-color: $sidebar-color2 !important;
 }
 
 .header-icon{
@@ -76,29 +56,7 @@ input {
   cursor: pointer;
 }
 
-.hi-unselected:hover{
-  color: $sidebar-color2-em;
-}
-
-.hi-selected{
-  transition: all 1s;
-  color: $sidebar-color2-em;
-}
-
-#encompass{
-  background-color: #fafafa;
-  border-radius: 10px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: $sidebar-color2;
-  box-sizing: content-box;
-  margin-bottom: 10px;
-}
-
 .content-box{
-  border-width: 1px;
-  border-color: #fff;
-  border-style: solid;
   transition: all 0.9s;
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
@@ -124,33 +82,16 @@ input {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-.content-box-purple{
+.white-border{
   border-width: 1px;
-  border-color: $sidebar-color2;
   border-style: solid;
-  transition: all 0.9s;
-  margin: 0.4em 0.1em 0.4em 0.1em;
-  padding: 0.3em;
-  border-radius: 5px;
-  background-color: #fff;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  border-color: #fff;
 }
 
-.content-box-purple:hover {
-  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  -ms-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  -o-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+.purple-border{
+  border-width: 1px;
+  border-style: solid;
+  border-color: $sidebar-color2;
 }
 
 .content-box .confirm-box{
@@ -185,38 +126,41 @@ input {
   opacity: 0;
 }
 
-.search-field{
+.hi-unselected:hover{
+  color: $sidebar-color2-em;
+}
+
+.hi-selected{
+  transition: all 1s;
+  color: $sidebar-color2-em;
+}
+
+/* IDs */
+#encompass{
   background-color: #fafafa;
-  transition: all 0.4s;
-  border-width: 0;
-  border-bottom: 2px solid #ddd !important;
-  border-radius: 0;
-  border-color: $sidebar-color;
-  box-shadow: 0;
-  box-shadow: none;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  line-height: 6px;
-  margin-bottom: 5px;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $sidebar-color2;
+  box-sizing: content-box;
+  margin-bottom: 10px;
 }
 
-.search-container{
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-
-.search-field:focus{
-  border-color: $sidebar-color2 !important;
-}
-/*
-I really hate Bootstrap
-But that's probably because I suck at it
-*/
 #searchfield-no-padding{
   padding-right: 0;
   padding-left: 0;
 }
 
-.field-cell{
-  padding-left: 0.7em;
+#actionbar{
+  margin: 0.4em 0.1em 0.4em 0.1em;
+  padding: 0.1em 0.5em;
+}
+
+#actionbar-container{
+  border-bottom: 1px solid $sidebar-color2;
+}
+
+#actionbar .inactive{
+  color: #666;
+  cursor: default;
 }

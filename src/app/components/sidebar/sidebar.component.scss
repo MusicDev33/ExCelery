@@ -1,3 +1,5 @@
+@import 'colors.scss';
+
 .container {
   height: 100%;
   align-items: center;
@@ -9,12 +11,6 @@
     padding:50px 20px;
   }
 }
-
-$sidebar-color: #1ee89b;
-$sidebar-color-em: #1cd991;
-$sidebar-text-color: #333;
-$sidebar-highlight-text-color: #333;
-$sidebar-color2-em: #cc6be3;
 
 a,
 a:hover,

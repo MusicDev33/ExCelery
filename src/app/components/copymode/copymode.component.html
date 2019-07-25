@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <!-- Lorem ipsum is here to fill up the screen width for now...
     I wish I was better at this -->
-  <div id="filler-lorem" class="noselect">
+  <div style="font-size: 8px; color: #fff;" class="noselect">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit,
     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
@@ -12,7 +12,7 @@
   </div>
 
   <div *ngIf="!openWorkbooks.length">
-    <h4 class="empty-text">No workbooks open currently. One can be opened from the sidebar.</h4>
+    <h4 style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
   </div>
 
   <div class="row" *ngIf="openWorkbooks.length">
@@ -38,13 +38,13 @@
 
           <!-- Content -->
           <div class="col">
-            <div class="content-box-purple selectable row justify-content-center"
+            <div class="content-box purple-border selectable row justify-content-center"
             *ngIf="editCount >= 1 && primaryKey.split(':')[0] == workbook.filename" (click)="saveFile(workbook)">
               Save
             </div>
           </div>
           <div class="col">
-            <div class="content-box-purple selectable row justify-content-center"
+            <div class="content-box purple-border selectable row justify-content-center"
             *ngIf="selectedHeader.length && mappedHeader.length && getKeyFile(workbook.filename) == 1" (click)="copyColumns()">
               Copy {{ secondaryKey.split(":")[0] }} column {{ mappedHeader.split(":")[1] }} to
               {{ primaryKey.split(":")[0] }} column {{ selectedHeader.split(":")[1] }}?
@@ -53,7 +53,7 @@
 
           <div *ngFor="let header of wbToHeaders[workbook.filename]">
             <div class="col">
-              <div class="content-box row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())" (contextmenu)="onRightClick($event, header); false">
+              <div class="content-box white-border row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())" (contextmenu)="onRightClick($event, header); false">
                 <span class="">
                   <span (click)="setActiveText(header)" class="cb-title noselect selectable">{{ header }}</span>
                   <i class="fas fa-check-circle header-icon hi-selected"
