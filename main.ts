@@ -55,18 +55,18 @@ try {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.on('ready', () => {
-    createWindow()
+    createWindow();
     ipcMain.on('file-dropped', (event, filepath) => {
-      console.log(filepath)
-    })
+      console.log(filepath);
+    });
 
     ipcMain.on('ondragstart', (event, filePath) => {
-      console.log("Drag")
+      console.log('Drag');
       event.sender.startDrag({
         file: filePath,
         icon: '/path/to/icon.png'
-      })
-    })
+      });
+    });
   });
 
   // Quit when all windows are closed.

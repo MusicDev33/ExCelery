@@ -24,17 +24,17 @@ export class AppComponent {
       console.log('Mode Electron');
       console.log('Electron ipcRenderer', electronService.ipcRenderer);
       console.log('NodeJS childProcess', electronService.childProcess);
-      if (isDevMode()){
-        this.filepathService.setPath(this.electronService.remote.app.getAppPath())
-      }else{
-        this.filepathService.setPath(process.env.PORTABLE_EXECUTABLE_DIR)
+      if (isDevMode()) {
+        this.filepathService.setPath(this.electronService.remote.app.getAppPath());
+      } else {
+        this.filepathService.setPath(process.env.PORTABLE_EXECUTABLE_DIR);
       }
 
-      if (!fs.existsSync(this.filepathService.path + "/sheets")){
-        fs.mkdirSync(this.filepathService.path + "/sheets");
-        fs.mkdirSync(this.filepathService.path + "/sheets/options");
+      if (!fs.existsSync(this.filepathService.path + '/sheets')) {
+        fs.mkdirSync(this.filepathService.path + '/sheets');
+        fs.mkdirSync(this.filepathService.path + '/sheets/options');
       }
-      this.xlService.setPath(this.filepathService.path)
+      this.xlService.setPath(this.filepathService.path);
     } else {
       console.log('Mode Web');
     }
