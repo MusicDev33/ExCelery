@@ -1,8 +1,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-        "baseUrl": ["./"],
         "exceljs": [
             "../node_modules/exceljs/dist/es5/exceljs.browser"
         ]
