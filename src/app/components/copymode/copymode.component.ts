@@ -143,8 +143,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       return workbook.filename === primaryKeyFile;
     });
 
-    console.log(primaryWorkbook);
-
     editArray.forEach( (rowObj) => {
       const columnNumber = this.columnMap[primaryKeyFile][this.selectedHeader.split(':')[1]];
 
@@ -157,13 +155,28 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.excel.saveExcel('test.xlsx', primaryWorkbook[0].workbook, () => {
-      console.log('Saved file!');
-    });
+    this.editCount += 1;
+    this.selectedHeader = '';
+    this.mappedHeader = '';
   }
 
-  saveFile() {
+  saveFile(workbook) {
+    const currentdate = new Date();
+    const datetime = ' ' + currentdate.getDate() + '-'
+                    + (currentdate.getMonth() + 1)  + '-'
+                    + currentdate.getFullYear() + ' ('
+                    + currentdate.getHours() + '-'
+                    + currentdate.getMinutes() + '-'
+                    + currentdate.getSeconds() + ')';
 
+    const filename = workbook.filename.split('.')[0];
+    const fileExtension = workbook.filename.split('.')[1];
+
+    const totalFilename = filename + datetime + '.' + fileExtension;
+    this.excel.saveExcel(totalFilename, workbook.workbook, () => {
+      console.log('Saved file: ' + totalFilename);
+      this.editCount = 0;
+    });
   }
 
   getRandomColor() {

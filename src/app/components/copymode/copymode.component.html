@@ -39,7 +39,7 @@
           <!-- Content -->
           <div class="col">
             <div class="content-box-purple selectable row justify-content-center"
-            *ngIf="editCount >= 1 && primaryKey.split(':')[0] == workbook.filename" (click)="saveFile()">
+            *ngIf="editCount >= 1 && primaryKey.split(':')[0] == workbook.filename" (click)="saveFile(workbook)">
               Save
             </div>
           </div>

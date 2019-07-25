@@ -35,6 +35,14 @@ export class SidebarComponent implements OnInit {
     this.xlService.currentWorkbook.subscribe(wb => this.workbook = wb);
   }
 
+  refreshFiles() {
+    this.xlService.loadExcel(this.fpService.path, () => {
+      this.ngZone.run(() => {
+        this.workbooks = this.xlService.getWorkbooks();
+      });
+    });
+  }
+
   toggleNavbarClicked() {
     this.navbarActive = !this.navbarActive;
   }

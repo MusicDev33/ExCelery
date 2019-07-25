@@ -37,6 +37,7 @@ export class ExcelService {
   }
 
   loadExcel(filepath, callback) {
+    this.workbooks = [];
     fs.readdir(filepath + '/sheets', (err, files) => {
       if (files) {
         files.forEach((wb) => {
