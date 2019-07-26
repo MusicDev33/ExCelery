@@ -55,9 +55,14 @@
             <div class="scrollbox">
               <div *ngFor="let header of wbToHeaders[workbook.filename]">
                 <div class="col">
-                  <div class="content-box white-border row" *ngIf="header.toLowerCase().includes(searchText.toLowerCase())" (contextmenu)="onRightClick($event, header); false">
+                  <div class="content-box white-border row"
+                  *ngIf="header.toLowerCase().includes(searchText.toLowerCase())"
+                  (contextmenu)="onRightClick($event, header); false">
                     <span class="">
-                      <span (click)="setActiveText(header)" class="cb-title noselect selectable">{{ header }}</span>
+                      <span (click)="setActiveText(header)" class="cb-title noselect selectable"
+                      (click)="headerClicked(workbook.filename, header)">
+                        {{ header }}
+                      </span>
                       <i class="fas fa-check-circle header-icon hi-selected"
                       *ngIf="isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
                       <i class="far fa-check-circle header-icon hi-unselected"
@@ -71,6 +76,13 @@
                       (click)="setKey(workbook.filename, header)">
                       </i>
                     </span>
+                    <div *ngIf="header === columnPreviews[workbook.filename]" class="preview-container col-sm-12">
+                      <div class="preview-cell-container">
+                        <div *ngFor="let cell of headerToCells[workbook.filename][header]" class="content-box white-border">
+                          {{ cell }}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

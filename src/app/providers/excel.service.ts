@@ -80,29 +80,42 @@ export class ExcelService {
         wsHeaders.push(cell.value);
         this.wsHeaderToInt[cell.value] = colNumber;
         this.intToWsHeader[colNumber] = cell.value;
+        this.wsHeaderToCells[cell.value] = [];
       }
     });
     this.currentWsHeaders = wsHeaders;
     return wsHeaders;
   }
 
-  getColumnData() {
+  getColumnMap() {
     return this.wsHeaderToInt;
   }
 
-  oldColumnData() {
-    /*
+  getColumnData() {
     this.currentWsHeaders.forEach( (header) => {
       this.wsHeaderToCells[header] = [];
       this.currentWorksheet.getColumn(this.wsHeaderToInt[header]).eachCell((cell, rowNumber) => {
-        if (cell.value != header && typeof cell.value === "string"){
-          this.wsHeaderToCells[header].push(cell.value);
-        }else if (cell.value != null && cell.value != header){
-          this.wsHeaderToCells[header].push(cell.value.toString());
+        if (cell.value !== header) {
+          switch (typeof cell.value) {
+            case 'string':
+              this.wsHeaderToCells[header].push(cell.value);
+              break;
+            case 'object':
+              // Because null is an object for some stupid reason
+              if (cell.value === null) {
+                this.wsHeaderToCells[header].push('null');
+                break;
+              }
+              this.wsHeaderToCells[header].push(cell.value['result'].toString());
+              break;
+            default:
+              this.wsHeaderToCells[header].push(cell.value.toString());
+              break;
+          }
         }
       });
-    })
-    return this.wsHeaderToCells*/
+    });
+    return this.wsHeaderToCells;
   }
 
   getRowObjects() {

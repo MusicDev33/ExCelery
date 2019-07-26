@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.currentWorkbook = wb.workbook;
       if (wb.workbook.getWorksheet(1)) {
         this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
-        this.headerToCell = this.excel.getColumnData();
+        this.headerToCell = this.excel.getColumnMap();
       }
     });
   }

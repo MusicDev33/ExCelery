@@ -162,6 +162,26 @@ input {
   color: $sidebar-color2-em;
 }
 
+.preview-open{
+  border-bottom: 2px solid #f00;
+}
+
+.preview-container{
+  margin-top: 5px;
+  border-top: 2px solid $sidebar-color2-em;
+  height: 20vh;
+
+  padding: 5px 0;
+}
+
+.preview-cell-container{
+  border-radius: 10px;
+  background-color: #ddd;
+  padding: 5px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
 /* IDs */
 #encompass{
   background-color: #fafafa;

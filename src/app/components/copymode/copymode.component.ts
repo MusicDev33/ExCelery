@@ -30,6 +30,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   headerToColumn: any = {};
 
   headerToCell: any = {};
+  headerToCells = {};
 
   subscription: Subscription;
 
@@ -60,10 +61,12 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       this.currentWbName = wb.filename;
       if (wb.workbook.getWorksheet(1)) {
         this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
-        this.columnMap[wb.filename] = this.excel.getColumnData();
+        this.columnMap[wb.filename] = this.excel.getColumnMap();
         this.rowObjectsDict[wb.filename] = this.excel.getRowObjects();
         this.openWorkbooks.push(wb);
         this.wbToHeaders[wb.filename] = this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
+        this.headerToCells[wb.filename] = this.excel.getColumnData();
+        console.log(this.headerToCells);
       }
     });
   }
@@ -184,6 +187,14 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   headerSearchbarClicked() {
     this.activeTextfield = '';
     this.activeText = '';
+  }
+
+  headerClicked(filename, header) {
+    if (this.columnPreviews[filename] === header) {
+      this.columnPreviews[filename] = '';
+    } else {
+      this.columnPreviews[filename] = header;
+    }
   }
 
   closeFile(filename: string) {
