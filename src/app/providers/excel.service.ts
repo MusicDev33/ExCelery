@@ -106,8 +106,14 @@ export class ExcelService {
                 this.wsHeaderToCells[header].push('null');
                 break;
               }
-              this.wsHeaderToCells[header].push(cell.value['result'].toString());
-              break;
+
+              if (cell.value.hasOwnProperty('result')) {
+                this.wsHeaderToCells[header].push(cell.value['result'].toString());
+                break;
+              } else {
+                this.wsHeaderToCells[header].push('null');
+                break;
+              }
             default:
               this.wsHeaderToCells[header].push(cell.value.toString());
               break;
