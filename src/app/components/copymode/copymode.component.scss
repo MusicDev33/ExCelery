@@ -56,6 +56,33 @@ input {
   cursor: pointer;
 }
 
+.scroll-container{
+  padding-right: 10px;
+}
+
+.scrollbox{
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 85vh;
+  margin-bottom: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+}
+
 .content-box{
   transition: all 0.9s;
   margin: 0.4em 0.1em 0.4em 0.1em;
