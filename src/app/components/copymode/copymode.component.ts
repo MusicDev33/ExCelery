@@ -46,6 +46,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   editCount = 0;
 
+  columnPreviews = {};
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
@@ -179,19 +181,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     });
   }
 
-  getRandomColor() {
-    return this.colorGen.colors[Math.floor(Math.random() * this.colorGen.colors.length)];
-  }
-
-  getColor(filename, header) {
-    const key = this.createKey(filename, header);
-    if (this.colorsDict.hasOwnProperty(key)) {
-      return this.colorsDict[key];
-    } else {
-      return '#666';
-    }
-  }
-
   headerSearchbarClicked() {
     this.activeTextfield = '';
     this.activeText = '';
@@ -206,6 +195,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.selectedHeader = '';
     this.mappedHeader = '';
   }
+
+  // KEYS
 
   createKey(filename, key) {
     return filename + ':' + key;
