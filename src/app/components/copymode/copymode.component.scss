@@ -174,12 +174,17 @@ input {
   padding: 5px 0;
 }
 
-.preview-cell-container{
-  border-radius: 10px;
-  background-color: #eee;
+/* lol what */
+.preview-scroller-container {
   padding: 5px;
   height: 100%;
   overflow-y: scroll;
+}
+
+.preview-cell-container{
+  border-radius: 10px;
+  background-color: #eee;
+  padding: 3px;
 }
 
 /* IDs */

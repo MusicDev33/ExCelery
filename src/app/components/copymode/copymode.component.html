@@ -77,9 +77,11 @@
                       </i>
                     </span>
                     <div *ngIf="header === columnPreviews[workbook.filename]" class="preview-container col-sm-12">
-                      <div class="preview-cell-container">
-                        <div *ngFor="let cell of headerToCells[workbook.filename][header]" class="content-box white-border">
-                          {{ cell }}
+                      <div class="preview-scroller-container">
+                        <div class="preview-cell-container">
+                          <div *ngFor="let cell of headerToCells[workbook.filename][header]" class="content-box white-border">
+                            {{ cell }}
+                          </div>
                         </div>
                       </div>
                     </div>
