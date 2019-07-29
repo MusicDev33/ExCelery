@@ -161,7 +161,7 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: $sidebar-color;
+    background: $sidebar-color-em;
 }
 
 #sidebar .sidebar-header strong {
@@ -170,7 +170,6 @@ span {
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
     border-bottom: 1px solid $sidebar-color;
 }
 

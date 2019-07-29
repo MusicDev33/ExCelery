@@ -13,23 +13,6 @@
 
     <ul class="list-unstyled components">
         <li>
-            <a href="#modeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                <i class="fas fa-vector-square"></i>
-                Mode
-            </a>
-            <ul class="collapse list-unstyled" id="modeSubmenu">
-                <li>
-                    <a [routerLink]="['/']">Excel</a>
-                </li>
-                <li>
-                    <a href="#">PureCSV</a>
-                </li>
-                <li>
-                  <a [routerLink]="['/copymode']">Copy Mode</a>
-                </li>
-            </ul>
-        </li>
-        <li>
             <a href="#" (click)="refreshFiles()">
                 <i class="fas fa-sync"></i>
                 Refresh Files
