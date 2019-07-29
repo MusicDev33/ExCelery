@@ -182,9 +182,13 @@ input {
 }
 
 .preview-cell-container{
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #eee;
   padding: 3px;
+}
+
+.purple-text {
+  color: $sidebar-color2-em;
 }
 
 /* IDs */

@@ -80,7 +80,7 @@
                       <div class="preview-scroller-container">
                         <div class="preview-cell-container">
                           <div *ngFor="let cell of headerToCells[workbook.filename][header]" class="content-box white-border">
-                            {{ cell }}
+                            <span><span class="purple-text">{{ cell.row }}</span>: {{ cell.value }}</span>
                           </div>
                         </div>
                       </div>

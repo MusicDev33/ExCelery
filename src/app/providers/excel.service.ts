@@ -98,24 +98,28 @@ export class ExcelService {
         if (cell.value !== header) {
           switch (typeof cell.value) {
             case 'string':
-              this.wsHeaderToCells[header].push(cell.value);
+              this.wsHeaderToCells[header].push({value: cell.value, row: rowNumber});
               break;
             case 'object':
               // Because null is an object for some stupid reason
               if (cell.value === null) {
-                this.wsHeaderToCells[header].push('null');
+                this.wsHeaderToCells[header].push({value: 'null', row: rowNumber});
                 break;
               }
 
               if (cell.value.hasOwnProperty('result')) {
-                this.wsHeaderToCells[header].push(cell.value['result'].toString());
+                this.wsHeaderToCells[header].push(
+                  {value: cell.value['result'].toString(),
+                  row: rowNumber});
                 break;
               } else {
-                this.wsHeaderToCells[header].push('null');
+                this.wsHeaderToCells[header].push({value: 'null', row: rowNumber});
                 break;
               }
             default:
-              this.wsHeaderToCells[header].push(cell.value.toString());
+              this.wsHeaderToCells[header].push(
+                {value: cell.value.toString(),
+                  row: rowNumber});
               break;
           }
         }
