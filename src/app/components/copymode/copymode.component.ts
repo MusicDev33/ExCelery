@@ -4,6 +4,7 @@ import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { ColorgenService } from '../../providers/colorgen.service';
 import { Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
+import { AbstracterizerService } from '../../providers/abstracterizer.service';
 import { ASWorkbook } from '../../model/asworkbook';
 
 @Component({
@@ -13,12 +14,7 @@ import { ASWorkbook } from '../../model/asworkbook';
 })
 export class CopymodeComponent implements OnInit, OnDestroy {
 
-  openWorkbooks: Array<ExcelFile> = [];
-  wbToHeaders: any = {};
-
-  currentWorkbook: Workbook;
-  currentWbName: string;
-  wsHeaders: Array<string> = [];
+  currentWorkbooks: Array<ASWorkbook> = [];
 
   activeTextfield = '';
   activeTextSelection: Array<string> = [];
@@ -28,11 +24,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   searchText = '';
   activeText = '';
 
-  headerToColumn: any = {};
-
-  headerToCell: any = {};
-  headerToCells = {};
-
   subscription: Subscription;
 
   // format = filename:key
@@ -41,7 +32,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   rowObjectsDict: any = {};
 
-  colorsDict: any = {};
   columnMap: any = {};
   selectedHeader = '';
   mappedHeader = '';
@@ -53,21 +43,20 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
-    public colorGen: ColorgenService) { }
+    public colorGen: ColorgenService,
+    public abstract: AbstracterizerService) { }
 
   ngOnInit() {
     // wb is an excel file interface
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
-      this.currentWorkbook = wb.workbook;
-      this.currentWbName = wb.filename;
       if (wb.workbook.getWorksheet(1)) {
-        this.wsHeaders = this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
+        this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
         this.columnMap[wb.filename] = this.excel.getColumnMap();
         this.rowObjectsDict[wb.filename] = this.excel.getRowObjects();
-        this.openWorkbooks.push(wb);
-        this.wbToHeaders[wb.filename] = this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
-        this.headerToCells[wb.filename] = this.excel.getColumnData();
-        console.log(this.headerToCells);
+
+        const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
+
+        this.currentWorkbooks.push(newWorkbook);
       }
     });
   }
@@ -86,20 +75,9 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   // Fuzzy logic that will hopefully be fixed soon
   checkMarkClicked(filename, header) {
-    if (this.primaryKey === '' && this.secondaryKey === '') {
+    if (!this.primaryKey && !this.secondaryKey) {
       return;
     }
-    /*
-    if (this.selectedTitles.includes(header)){
-      const index = this.selectedTitles.indexOf(header, 0);
-      if (index > -1) {
-         this.selectedTitles.splice(index, 1);
-      }
-    }else{
-      this.selectedTitles.push(header)
-      this.mapColor(filename, header)
-    }*/
-    console.log(this.headerToColumn);
     if (this.getKeyFile(filename) === 1) {
       if (this.selectedHeader === this.createKey(filename, header)) {
         this.selectedHeader = '';
@@ -145,7 +123,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       }
     }
 
-    const primaryWorkbook = this.openWorkbooks.filter(workbook => {
+    const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
       return workbook.filename === primaryKeyFile;
     });
 
@@ -199,8 +177,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   closeFile(filename: string) {
-    const index = this.openWorkbooks.findIndex(x => x.filename === filename);
-    if (index !== -1) { this.openWorkbooks.splice(index, 1); }
+    const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
+    if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
     delete this.rowObjectsDict[filename];
     this.primaryKey = '';
     this.secondaryKey = '';
