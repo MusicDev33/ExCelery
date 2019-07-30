@@ -190,11 +190,17 @@ input {
 .col-preview-row-text {
   color: white;
   background-color: $sidebar-color2-em;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  border-radius: 7px;
   text-align: center;
   display: inline-block;
+  margin-right: 5px;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+.col-preview-icon {
+  margin-right: 5px;
+  color: $sidebar-color2-dark;
 }
 
 /* IDs */
