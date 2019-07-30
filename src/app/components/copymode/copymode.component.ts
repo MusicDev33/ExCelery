@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { ColorgenService } from '../../providers/colorgen.service';
-import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
 import { ASWorkbook } from '../../model/asworkbook';
 

@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { FilepathService } from '../../providers/filepath.service';
-import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { Workbook, Worksheet } from 'exceljs';
 import { Router } from '@angular/router';
 
 @Component({

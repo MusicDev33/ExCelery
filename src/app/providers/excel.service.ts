@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
+import { Workbook, Worksheet } from 'exceljs';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ExcelFile {
