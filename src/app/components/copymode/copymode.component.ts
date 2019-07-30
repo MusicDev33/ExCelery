@@ -4,6 +4,7 @@ import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { ColorgenService } from '../../providers/colorgen.service';
 import { Borders, FillPattern, Font, Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
+import { ASWorkbook } from '../../model/asworkbook';
 
 @Component({
   selector: 'app-copymode',

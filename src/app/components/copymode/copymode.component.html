@@ -82,10 +82,13 @@
                         <div class="preview-cell-container">
                           <div *ngFor="let cell of headerToCells[workbook.filename][header]" class="content-box white-border">
                             <span>
-                              <span class="col-preview-row-text">
+                              <span class="col-preview-row-text"
+                              *ngIf="primaryKey.split(':')[0] == workbook.filename">
+                                <!-- {{ rowMap[cell.row] }} -->
                                 1
                               </span>
-                              <span class="col-preview-icon">
+                              <span class="col-preview-icon"
+                              *ngIf="primaryKey.split(':')[0] == workbook.filename">
                                 <i class="fas fa-arrow-right"></i>
                               </span>
                               <span class="col-preview-row-text">

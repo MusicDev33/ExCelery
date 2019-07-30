@@ -16,6 +16,7 @@ import { ElectronService } from './providers/electron.service';
 import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
 import { ColorgenService } from './providers/colorgen.service';
+import { AbstracterizerService } from './providers/abstracterizer.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
@@ -50,7 +51,12 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService, ExcelService, FilepathService, ColorgenService],
+  providers: [
+    ElectronService,
+    ExcelService,
+    FilepathService,
+    ColorgenService,
+    AbstracterizerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
