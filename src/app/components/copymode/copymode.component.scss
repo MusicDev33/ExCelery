@@ -187,8 +187,14 @@ input {
   padding: 3px;
 }
 
-.purple-text {
-  color: $sidebar-color2-em;
+.col-preview-row-text {
+  color: white;
+  background-color: $sidebar-color2-em;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  display: inline-block;
 }
 
 /* IDs */
