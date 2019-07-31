@@ -1,5 +1,5 @@
 import { Workbook, Worksheet } from 'exceljs';
-import { AbstracterizerService } from '../../providers/abstracterizer.service';
+import { AbstracterizerService } from '../providers/abstracterizer.service';
 
 /* Abstracterizer Service Workbook
 This is supposed to be an implementation
@@ -11,7 +11,7 @@ export class ASWorkbook {
   filename = '';
   // Temporary until this entire thing is working
   workbook: Workbook;
-  worksheets: Array<Worksheets> = [];
+  worksheets: Array<Worksheet> = [];
   currentWorksheet: Worksheet;
 
   headers: Array<string> = [];

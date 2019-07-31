@@ -21,7 +21,7 @@ export class AbstracterizerService {
     // That way, I'm not iterating three times.
     const returnObject = { headers: [], headerToColumnNumber: {}, columnNumbertoHeader: {}};
     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-      if (cell.value != null) {
+      if (cell.value != null && typeof cell.value === 'string') {
         returnObject.headers.push(cell.value);
         returnObject.headerToColumnNumber[cell.value] = colNumber;
         returnObject.columnNumbertoHeader[colNumber] = cell.value;
