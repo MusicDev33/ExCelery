@@ -1,5 +1,5 @@
 # Introduction
-Built off of [angular-electron](https://github.com/maximegris/angular-electron.git).
+Built off of [angular-electron](https://github.com/maximegris/angular-electron.git), big thanks to [Maxime GRIS](https://github.com/maximegris).
 
 Currently runs with:
 
