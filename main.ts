@@ -1,4 +1,7 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
+import {app} from 'electron';
+import {BrowserWindow} from 'electron';
+import {screen} from 'electron';
+import {ipcMain} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
