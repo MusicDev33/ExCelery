@@ -21,20 +21,10 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   activeTextfield = '';
   activeTextSelection: Array<string> = [];
 
-  selectedTitles: Array<string> = [];
-
   searchText = '';
   activeText = '';
 
   subscription: Subscription;
-
-  // format = filename:key
-  primaryKey = '';
-  secondaryKey = '';
-
-  rowObjectsDict: any = {};
-
-  columnMap: any = {};
 
   // The cells from the copyFromHeader will copy to the copyToHeader
   copyToHeader = '';
@@ -55,12 +45,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     // wb is an excel file interface
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
       if (wb.workbook.getWorksheet(1)) {
-        this.excel.getWsHeaders(wb.workbook.getWorksheet(1));
-        this.columnMap[wb.filename] = this.excel.getColumnMap();
-        this.rowObjectsDict[wb.filename] = this.excel.getRowObjects();
-
         const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
-
         this.currentWorkbooks.push(newWorkbook);
       }
     });
@@ -121,8 +106,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   copyColumns() {
-    console.log(this.rowObjectsDict);
-    console.log(this.currentWorkbooks);
     const editArray = [];
 
     const primaryKeyFile = this.keyService.primaryFile;
@@ -198,9 +181,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   closeFile(filename: string) {
     const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
     if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
-    delete this.rowObjectsDict[filename];
-    this.primaryKey = '';
-    this.secondaryKey = '';
     this.copyToHeader = '';
     this.copyFromHeader = '';
     this.keyService.deleteKeys();
