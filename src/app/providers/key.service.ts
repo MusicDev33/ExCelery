@@ -20,15 +20,15 @@ export class KeyService {
   }
 
   setKey(filename: string, header: string) {
-    if (this.getIfKey(filename, key)) {
-      this.deleteKey(filename, key);
+    if (this.keyExists(filename, header)) {
+      this.deleteKey(filename, header);
       return;
     }
 
     if (this.primaryKey !== '' && this.secondaryKey === '') {
-      this.secondaryKey = this.keyService.createKey(filename, key);
+      this.secondaryKey = this.createKey(filename, header);
     } else if (this.primaryKey === '') {
-      this.primaryKey = this.keyService.createKey(filename, key);
+      this.primaryKey = this.createKey(filename, header);
     }
   }
 
@@ -80,7 +80,23 @@ export class KeyService {
     return this.primaryKey.includes(filename) || this.secondaryKey.includes(filename);
   }
 
+  getKeyTypeText(filename: string) {
+    if (!this.isFilenameInKey(filename)) {
+      return '';
+    }
+
+    return this.primaryKeyincludes(filename) ? 'Primary' : 'Secondary';
+  }
+
   // DELETE Methods
+  deleteKey(filename: string, header: string) {
+    if (this.getWhichKey(filename, header) === 1) {
+      this.deletePrimaryKey();
+    } else if (this.getWhichKey(filename, header) === 2) {
+      this.deleteSecondaryKey();
+    }
+  }
+
   deleteKeys() {
     this.deletePrimaryKey();
     this.deleteSecondaryKey();
@@ -88,8 +104,8 @@ export class KeyService {
 
   deletePrimaryKey() {
     this.primaryKey = '';
-    this.primaryKeyFile = '';
-    this.primaryKeyHeader = '';
+    this.primaryFile = '';
+    this.primaryHeader = '';
   }
 
   deleteSecondaryKey() {
