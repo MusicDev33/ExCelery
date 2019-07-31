@@ -26,9 +26,9 @@ export class KeyService {
     }
 
     if (this.primaryKey !== '' && this.secondaryKey === '') {
-      this.secondaryKey = this.createKey(filename, header);
+      this.setSecondaryKey(filename, header);
     } else if (this.primaryKey === '') {
-      this.primaryKey = this.createKey(filename, header);
+      this.setPrimaryKey(filename, header);
     }
   }
 
@@ -69,7 +69,7 @@ export class KeyService {
   }
 
   getWhichKeyFileIn(filename) {
-    if (this.isFilenameInKey(filename)) {
+    if (!this.isFilenameInKey(filename)) {
       return 0;
     }
     // Again, might change for readability's sake
