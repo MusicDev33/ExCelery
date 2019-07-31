@@ -17,6 +17,7 @@ import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
 import { ColorgenService } from './providers/colorgen.service';
 import { AbstracterizerService } from './providers/abstracterizer.service';
+import { KeyService } from './providers/key.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
@@ -56,7 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ExcelService,
     FilepathService,
     ColorgenService,
-    AbstracterizerService],
+    AbstracterizerService,
+    KeyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
