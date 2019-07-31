@@ -27,7 +27,7 @@
                   {{ workbook.filename.split('.')[0] }}
                 </span>
                 <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
-                <span class="actionbar-text"> {{ getKeyText(workbook.filename) }}</span>
+                <span class="actionbar-text"> {{ keyService.getKeyTypeText(workbook.filename) }}</span>
               </span>
             </div>
             <div class="row search-container">
@@ -39,15 +39,15 @@
           <!-- Content -->
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="editCount >= 1 && primaryKey.split(':')[0] == workbook.filename" (click)="saveFile(workbook)">
+            *ngIf="editCount >= 1 && keyService.primaryFile == workbook.filename" (click)="saveFile(workbook)">
               Save
             </div>
           </article>
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="selectedHeader.length && mappedHeader.length && getKeyFile(workbook.filename) == 1" (click)="copyColumns()">
-              Copy {{ secondaryKey.split(":")[0] }} column {{ mappedHeader.split(":")[1] }} to
-              {{ primaryKey.split(":")[0] }} column {{ selectedHeader.split(":")[1] }}?
+            *ngIf="copyToHeader.length && copyFromHeader.length && keyService.getWhichKeyFileIn(workbook.filename) == 1" (click)="copyColumns()">
+              Copy {{ keyService.secondaryFile }} column {{ copyFromHeader.split(":")[1] }} to
+              {{ keyService.primaryFile }} column {{ copyToHeader.split(":")[1] }}?
             </div>
           </article>
 
@@ -59,22 +59,26 @@
                   <div class="content-box white-border row"
                   *ngIf="header.toLowerCase().includes(searchText.toLowerCase())"
                   (contextmenu)="onRightClick($event, header); false">
-                    <span class="">
+                    <span>
                       <span (click)="setActiveText(header)" class="cb-title noselect selectable"
                       (click)="headerClicked(workbook.filename, header)">
                         {{ header }}
                       </span>
                       <i class="fas fa-check-circle header-icon hi-selected"
-                      *ngIf="isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
+                      *ngIf="isSelected(workbook.filename, header)"
+                      (click)="checkMarkClicked(workbook.filename, header)"></i>
                       <i class="far fa-check-circle header-icon hi-unselected"
-                      *ngIf="!isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
+                      *ngIf="!isSelected(workbook.filename, header)"
+                      (click)="checkMarkClicked(workbook.filename, header)"></i>
 
                       <i class="fas fa-key header-icon"
-                      [ngClass]="{'hi-unselected': !getIfKey(workbook.filename, header) && !getIfKeyHasFilename(workbook.filename),
-                      'hi-selected': getIfKey(workbook.filename, header),
-                      'no-show': getIfKeyHasFilename(workbook.filename) && !getIfKey(workbook.filename, header),
-                      'hidden-hicon': !getIfKeyHasFilename(workbook.filename)}"
-                      (click)="setKey(workbook.filename, header)">
+                      [ngClass]="{
+                      'hi-unselected': !keyService.keyExists(workbook.filename, header) &&
+                                          !keyService.isFilenameInKey(workbook.filename),
+                      'hi-selected': keyService.keyExists(workbook.filename, header),
+                      'no-show': keyService.isFilenameInKey(workbook.filename) && !keyService.keyExists(workbook.filename, header),
+                      'hidden-hicon': !keyService.isFilenameInKey(workbook.filename)}"
+                      (click)="keyService.setKey(workbook.filename, header)">
                       </i>
                     </span>
                     <div *ngIf="header === columnPreviews[workbook.filename]" class="preview-container col-sm-12">
@@ -83,12 +87,12 @@
                           <div *ngFor="let cell of workbook.getCellsFromHeader(header)" class="content-box white-border">
                             <span>
                               <span class="col-preview-row-text"
-                              *ngIf="primaryKey.split(':')[0] == workbook.filename">
+                              *ngIf="keyService.primaryFile == workbook.filename">
                                 <!-- {{ rowMap[cell.row] }} -->
                                 1
                               </span>
                               <span class="col-preview-icon"
-                              *ngIf="primaryKey.split(':')[0] == workbook.filename">
+                              *ngIf="keyService.primaryFile == workbook.filename">
                                 <i class="fas fa-arrow-right"></i>
                               </span>
                               <span class="col-preview-row-text">
