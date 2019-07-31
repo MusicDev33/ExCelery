@@ -73,7 +73,7 @@ export class KeyService {
       return 0;
     }
     // Again, might change for readability's sake
-    return this.primaryIncludes(filename) ? 1 : 2;
+    return this.primaryKey.Includes(filename) ? 1 : 2;
   }
 
   isFilenameInKey(filename: string) {
