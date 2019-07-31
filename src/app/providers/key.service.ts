@@ -73,7 +73,7 @@ export class KeyService {
       return 0;
     }
     // Again, might change for readability's sake
-    return this.primaryKey.Includes(filename) ? 1 : 2;
+    return this.primaryKey.includes(filename) ? 1 : 2;
   }
 
   isFilenameInKey(filename: string) {
@@ -85,7 +85,7 @@ export class KeyService {
       return '';
     }
 
-    return this.primaryKeyincludes(filename) ? 'Primary' : 'Secondary';
+    return this.primaryKey.includes(filename) ? 'Primary' : 'Secondary';
   }
 
   // DELETE Methods
