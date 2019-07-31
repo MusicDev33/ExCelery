@@ -65,9 +65,9 @@
                         {{ header }}
                       </span>
                       <i class="fas fa-check-circle header-icon hi-selected"
-                      *ngIf="isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
+                      *ngIf="isSelected(workbook.filename, header)" (click)="!keyService.doBothKeysExist() || checkMarkClicked(workbook.filename, header)"></i>
                       <i class="far fa-check-circle header-icon hi-unselected"
-                      *ngIf="!isSelected(workbook.filename, header)" (click)="checkMarkClicked(workbook.filename, header)"></i>
+                      *ngIf="!isSelected(workbook.filename, header)" (click)="!keyService.doBothKeysExist() || checkMarkClicked(workbook.filename, header)"></i>
 
                       <i class="fas fa-key header-icon"
                       [ngClass]="{'hi-unselected': !getIfKey(workbook.filename, header) && !getIfKeyHasFilename(workbook.filename),
