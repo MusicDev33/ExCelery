@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Workbook, Worksheet } from 'exceljs';
+import { Subscription } from 'rxjs';
+import { ASWorkbook } from '../../model/asworkbook';
+
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { ColorgenService } from '../../providers/colorgen.service';
-import { Workbook, Worksheet } from 'exceljs';
-import { Subscription } from 'rxjs';
 import { AbstracterizerService } from '../../providers/abstracterizer.service';
-import { ASWorkbook } from '../../model/asworkbook';
+import { KeyService } from '../../providers/key.service';
 
 @Component({
   selector: 'app-copymode',
@@ -33,8 +35,10 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   rowObjectsDict: any = {};
 
   columnMap: any = {};
-  selectedHeader = '';
-  mappedHeader = '';
+
+  // The cells from the copyFromHeader will copy to the copyToHeader
+  copyToHeader = '';
+  copyFromHeader = '';
 
   editCount = 0;
 
@@ -44,7 +48,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     public electron: ElectronService,
     public excel: ExcelService,
     public colorGen: ColorgenService,
-    public abstract: AbstracterizerService) { }
+    public abstract: AbstracterizerService,
+    public keyService: KeyService) { }
 
   ngOnInit() {
     // wb is an excel file interface
@@ -79,22 +84,23 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.getKeyFile(filename) === 1) {
-      if (this.selectedHeader === this.createKey(filename, header)) {
-        this.selectedHeader = '';
+      if (this.copyToHeader === this.keyService.createKey(filename, header)) {
+        this.copyToHeader = '';
         return;
       }
-      this.selectedHeader = this.createKey(filename, header);
+      this.copyToHeader = this.keyService.createKey(filename, header);
     } else if (this.getKeyFile(filename) === 2) {
-      if (this.mappedHeader === this.createKey(filename, header)) {
-        this.mappedHeader = '';
+      if (this.copyFromHeader === this.keyService.createKey(filename, header)) {
+        this.copyFromHeader = '';
         return;
       }
-      this.mappedHeader = this.createKey(filename, header);
+      this.copyFromHeader = this.keyService.createKey(filename, header);
     }
   }
 
   isSelected(filename, header) {
-    return this.createKey(filename, header) === this.selectedHeader || this.createKey(filename, header) === this.mappedHeader;
+    return this.keyService.createKey(filename, header) === this.copyToHeader ||
+      this.keyService.createKey(filename, header) === this.copyFromHeader;
   }
 
   copyColumns() {
@@ -106,7 +112,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     const secondaryKeyFile = this.secondaryKey.split(':')[0];
     const secondaryKeyHeader = this.secondaryKey.split(':')[1];
 
-    for (const primaryRowObject of this.rowObjectsDict[this.primaryKey.split(':')[0]]) {
+    for (const primaryRowObject of this.rowObjectsDict[primaryKeyFile]) {
       const primaryKeyValue = primaryRowObject[primaryKeyHeader];
 
       const value = this.rowObjectsDict[secondaryKeyFile].filter(rowObj => {
@@ -128,20 +134,20 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     });
 
     editArray.forEach( (rowObj) => {
-      const columnNumber = this.columnMap[primaryKeyFile][this.selectedHeader.split(':')[1]];
+      const columnNumber = this.columnMap[primaryKeyFile][this.copyToHeader.split(':')[1]];
 
-      if (rowObj[this.mappedHeader.split(':')[1]].hasOwnProperty('result')) {
-        const newValue = rowObj[this.mappedHeader.split(':')[1]]['result'];
+      if (rowObj[this.copyFromHeader.split(':')[1]].hasOwnProperty('result')) {
+        const newValue = rowObj[this.copyFromHeader.split(':')[1]]['result'];
         primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
       } else {
-        const newValue = rowObj[this.mappedHeader.split(':')[1]];
+        const newValue = rowObj[this.copyFromHeader.split(':')[1]];
         primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
       }
     });
 
     this.editCount += 1;
-    this.selectedHeader = '';
-    this.mappedHeader = '';
+    this.copyToHeader = '';
+    this.copyFromHeader = '';
   }
 
   saveFile(workbook) {
@@ -182,16 +188,11 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     delete this.rowObjectsDict[filename];
     this.primaryKey = '';
     this.secondaryKey = '';
-    this.selectedHeader = '';
-    this.mappedHeader = '';
+    this.copyToHeader = '';
+    this.copyFromHeader = '';
   }
 
   // KEYS
-
-  createKey(filename, key) {
-    return filename + ':' + key;
-  }
-
   setKey(filename, key) {
     if (this.getIfKey(filename, key)) {
       this.deleteKey(filename, key);
@@ -199,9 +200,9 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     }
 
     if (this.primaryKey !== '' && this.secondaryKey === '') {
-      this.secondaryKey = this.createKey(filename, key);
+      this.secondaryKey = this.keyService.createKey(filename, key);
     } else if (this.primaryKey === '') {
-      this.primaryKey = this.createKey(filename, key);
+      this.primaryKey = this.keyService.createKey(filename, key);
     }
   }
 
@@ -224,11 +225,11 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   getIfPrimaryKey(filename, key) {
-    return this.primaryKey === this.createKey(filename, key);
+    return this.primaryKey === this.keyService.createKey(filename, key);
   }
 
   getIfSecondaryKey(filename, key) {
-    return this.secondaryKey === this.createKey(filename, key);
+    return this.secondaryKey === this.keyService.createKey(filename, key);
   }
 
   getKeyType(filename, header) {

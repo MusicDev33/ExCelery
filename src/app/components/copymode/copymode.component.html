@@ -45,9 +45,9 @@
           </article>
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="selectedHeader.length && mappedHeader.length && getKeyFile(workbook.filename) == 1" (click)="copyColumns()">
-              Copy {{ secondaryKey.split(":")[0] }} column {{ mappedHeader.split(":")[1] }} to
-              {{ primaryKey.split(":")[0] }} column {{ selectedHeader.split(":")[1] }}?
+            *ngIf="copyToHeader.length && copyFromHeader.length && getKeyFile(workbook.filename) == 1" (click)="copyColumns()">
+              Copy {{ secondaryKey.split(":")[0] }} column {{ copyFromHeader.split(":")[1] }} to
+              {{ primaryKey.split(":")[0] }} column {{ copyToHeader.split(":")[1] }}?
             </div>
           </article>
 
