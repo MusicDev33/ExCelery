@@ -206,6 +206,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.copyToHeader = '';
     this.copyFromHeader = '';
     this.keyService.deleteKeys();
+    this.editCount = 0;
     this.rowMap = {};
   }
 }
