@@ -104,6 +104,12 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     }
   }
 
+  // DIFF
+  diffButtonClicked(filename: string, header: string) {
+
+  }
+
+  // Column Copying
   copyColumns() {
     const editArray = [];
 

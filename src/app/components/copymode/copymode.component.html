@@ -61,7 +61,7 @@
                   (contextmenu)="onRightClick($event, header); false">
                     <span>
                       <span (click)="setActiveText(header)" class="cb-title noselect selectable"
-                      (click)="headerClicked(workbook.filename, header)" 
+                      (click)="headerClicked(workbook.filename, header)"
                       [ngClass]="{'cb-title-red': rowMap.hasOwnProperty(header)}">
                         {{ header }}
                       </span>
@@ -71,6 +71,9 @@
                       <i class="far fa-check-circle header-icon hi-unselected"
                       *ngIf="!isSelected(workbook.filename, header)"
                       (click)="checkMarkClicked(workbook.filename, header)"></i>
+                      
+                      <i class="fas fa-not-equal header-icon hi-unselected"></i>
+                      <i class="fas fa-not-equal header-icon hi-selected"></i>
 
                       <i class="fas fa-key header-icon"
                       [ngClass]="{
