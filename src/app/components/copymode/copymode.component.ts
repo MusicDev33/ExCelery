@@ -8,6 +8,7 @@ import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { ColorgenService } from '../../providers/colorgen.service';
 import { AbstracterizerService } from '../../providers/abstracterizer.service';
 import { KeyService } from '../../providers/key.service';
+import { DiffService } from '../../providers/diff.service';
 
 @Component({
   selector: 'app-copymode',
@@ -29,6 +30,9 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   copyToHeader = '';
   copyFromHeader = '';
 
+  diffHeaderOne = '';
+  diffHeaderTwo = '';
+
   editCount = 0;
 
   columnPreviews = {};
@@ -41,7 +45,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     public excel: ExcelService,
     public colorGen: ColorgenService,
     public abstract: AbstracterizerService,
-    public keyService: KeyService) { }
+    public keyService: KeyService,
+    public diffService: DiffService) { }
 
   ngOnInit() {
     // wb is an excel file interface
@@ -106,7 +111,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   // DIFF
   diffButtonClicked(filename: string, header: string) {
-
+    
   }
 
   // Column Copying

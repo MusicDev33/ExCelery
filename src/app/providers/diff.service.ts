@@ -49,7 +49,7 @@ export class DiffService {
   }
 
   columnCheck(filename: string, header: string) {
-    if (!doesColumnExist(filename, header)) { return 0; }
+    if (!this.doesColumnExist(filename, header)) { return 0; }
 
     return this.createTempKey(this.firstFile, this.firstHeader) === this.createTempKey(filename, header) ? 1 : 2;
   }
