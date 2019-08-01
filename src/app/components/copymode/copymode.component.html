@@ -86,14 +86,15 @@
                         <div class="preview-cell-container">
                           <div *ngFor="let cell of workbook.getCellsFromHeader(header)" class="content-box white-border">
                             <span>
-                              <span class="col-preview-row-text"
-                              *ngIf="keyService.primaryFile == workbook.filename">
-                                <!-- {{ rowMap[cell.row] }} -->
-                                1
-                              </span>
-                              <span class="col-preview-icon"
-                              *ngIf="keyService.primaryFile == workbook.filename">
-                                <i class="fas fa-arrow-right"></i>
+                              <span *ngIf="keyService.primaryFile == workbook.filename && rowMap.hasOwnProperty(header)">
+                                <span class="col-preview-row-text" *ngIf="rowMap[header].hasOwnProperty(cell.row)">
+                                  {{ rowMap[header][cell.row]['mappedRow'] }}
+                                </span>
+                                <span *ngIf="rowMap[header].hasOwnProperty(cell.row)"
+                                  [ngClass]="{'col-preview-red-text': rowMap[header][cell.row]['newValue']!==rowMap[header][cell.row]['oldValue']}">
+                                  {{ rowMap[header][cell.row]['newValue'] }}
+                                  <i class="fas fa-arrow-right col-preview-icon"></i>
+                                </span>
                               </span>
                               <span class="col-preview-row-text">
                                 {{ cell.row }}

@@ -19,7 +19,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   currentWorkbooks: Array<ASWorkbook> = [];
 
   activeTextfield = '';
-  activeTextSelection: Array<string> = [];
 
   searchText = '';
   activeText = '';
@@ -33,6 +32,9 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   editCount = 0;
 
   columnPreviews = {};
+
+  // Shows which rows were copied to which
+  rowMap = {};
 
   constructor(
     public electron: ElectronService,
@@ -66,19 +68,16 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   // Fuzzy logic that will hopefully be fixed soon
   checkMarkClicked(filename, header) {
     if (!this.keyService.doBothKeysExist()) {
-      console.log('No keys');
       return;
     }
 
     if (this.keyService.getWhichKeyFileIn(filename) === 1) {
-      console.log('If 1');
       if (this.copyToHeader === this.keyService.createKey(filename, header)) {
         this.copyToHeader = '';
         return;
       }
       this.copyToHeader = this.keyService.createKey(filename, header);
     } else if (this.keyService.getWhichKeyFileIn(filename) === 2) {
-      console.log('If 2');
       if (this.copyFromHeader === this.keyService.createKey(filename, header)) {
         this.copyFromHeader = '';
         return;
@@ -125,9 +124,15 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
     const secondaryRows = secondaryWorkbook[0]['rows'];
 
+    const headerNameTo = this.copyToHeader.split(':')[1];
+    const headerNameFrom = this.copyFromHeader.split(':')[1];
+    const columnNumber = primaryWorkbook[0]['headerToColumnNumber'][headerNameTo];
+
+    this.rowMap[headerNameTo] = {};
+
     for (const primaryRowObject of primaryRows) {
       const primaryKeyValue = primaryRowObject[primaryKeyHeader];
-
+      // Get row with value regardless of whether or not it's a formula
       const value = secondaryRows.filter(rowObj => {
         if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
           return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
@@ -136,21 +141,37 @@ export class CopymodeComponent implements OnInit, OnDestroy {
         }
       });
 
+      // value is a row, and is actually just very poorly named
       if (value.length) {
         value[0]['mappedRow'] = primaryRowObject['rowNumber'];
+        if (value[0].hasOwnProperty('result')) {
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
+        } else {
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo];
+        }
         editArray.push(value[0]);
       }
     }
 
     editArray.forEach( (rowObj) => {
-      const columnNumber = primaryWorkbook[0]['headerToColumnNumber'][this.copyToHeader.split(':')[1]];
-
-      if (rowObj[this.copyFromHeader.split(':')[1]].hasOwnProperty('result')) {
-        const newValue = rowObj[this.copyFromHeader.split(':')[1]]['result'];
+      if (rowObj[headerNameFrom].hasOwnProperty('result')) {
+        const newValue = rowObj[headerNameFrom]['result'];
         primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = newValue;
+        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        this.rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       } else {
-        const newValue = rowObj[this.copyFromHeader.split(':')[1]];
+        const newValue = rowObj[headerNameFrom];
         primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = newValue;
+        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        this.rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       }
     });
 
@@ -175,6 +196,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.excel.saveExcel(totalFilename, workbook.workbook, () => {
       console.log('Saved file: ' + totalFilename);
       this.editCount = 0;
+      this.rowMap = {};
     });
   }
 
@@ -184,5 +206,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.copyToHeader = '';
     this.copyFromHeader = '';
     this.keyService.deleteKeys();
+    this.rowMap = {};
   }
 }
