@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
 import { ASWorkbook } from '../../model/asworkbook';
+import { KeyPair } from '../../model/keypair';
 
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
@@ -40,6 +41,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   // Shows which rows were copied to which
   rowMap = {};
 
+  keyPairs = {};
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
@@ -53,6 +56,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
       if (wb.workbook.getWorksheet(1)) {
         const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
+        this.keyPairs['copy'] = new KeyPair();
+        this.keyPairs['diff'] = new KeyPair();
         this.currentWorkbooks.push(newWorkbook);
       }
     });
@@ -72,28 +77,28 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   // Fuzzy logic that will hopefully be fixed soon
   checkMarkClicked(filename, header) {
-    if (!this.keyService.doBothKeysExist()) {
+    if (!this.keyPairs['copy'].doBothKeysExist()) {
       return;
     }
 
-    if (this.keyService.getWhichKeyFileIn(filename) === 1) {
-      if (this.copyToHeader === this.keyService.createKey(filename, header)) {
+    if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 1) {
+      if (this.copyToHeader === this.keyPairs['copy'].createKey(filename, header)) {
         this.copyToHeader = '';
         return;
       }
-      this.copyToHeader = this.keyService.createKey(filename, header);
-    } else if (this.keyService.getWhichKeyFileIn(filename) === 2) {
-      if (this.copyFromHeader === this.keyService.createKey(filename, header)) {
+      this.copyToHeader = this.keyPairs['copy'].createKey(filename, header);
+    } else if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 2) {
+      if (this.copyFromHeader === this.keyPairs['copy'].createKey(filename, header)) {
         this.copyFromHeader = '';
         return;
       }
-      this.copyFromHeader = this.keyService.createKey(filename, header);
+      this.copyFromHeader = this.keyPairs['copy'].createKey(filename, header);
     }
   }
 
   isSelected(filename, header) {
-    return this.keyService.createKey(filename, header) === this.copyToHeader ||
-      this.keyService.createKey(filename, header) === this.copyFromHeader;
+    return this.keyPairs['copy'].createKey(filename, header) === this.copyToHeader ||
+      this.keyPairs['copy'].createKey(filename, header) === this.copyFromHeader;
   }
 
   headerSearchbarClicked() {
@@ -111,17 +116,17 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   // DIFF
   diffButtonClicked(filename: string, header: string) {
-    
+
   }
 
   // Column Copying
   copyColumns() {
     const editArray = [];
 
-    const primaryKeyFile = this.keyService.primaryFile;
-    const primaryKeyHeader = this.keyService.primaryHeader;
-    const secondaryKeyFile = this.keyService.secondaryFile;
-    const secondaryKeyHeader = this.keyService.secondaryHeader;
+    const primaryKeyFile = this.keyPairs['copy'].primaryFile;
+    const primaryKeyHeader = this.keyPairs['copy'].primaryHeader;
+    const secondaryKeyFile = this.keyPairs['copy'].secondaryFile;
+    const secondaryKeyHeader = this.keyPairs['copy'].secondaryHeader;
 
     const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
       return workbook.filename === primaryKeyFile;
@@ -216,8 +221,9 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
     this.copyToHeader = '';
     this.copyFromHeader = '';
-    this.keyService.deleteKeys();
+    this.keyPairs['copy'].deleteKeys();
     this.editCount = 0;
     this.rowMap = {};
+    delete this.keyPairs[filename];
   }
 }

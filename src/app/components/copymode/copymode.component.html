@@ -27,7 +27,7 @@
                   {{ workbook.filename.split('.')[0] }}
                 </span>
                 <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
-                <span class="actionbar-text"> {{ keyService.getKeyTypeText(workbook.filename) }}</span>
+                <span class="actionbar-text"> {{ keyPairs['copy'].getKeyTypeText(workbook.filename) }}</span>
               </span>
             </div>
             <div class="row search-container">
@@ -39,15 +39,15 @@
           <!-- Content -->
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="editCount >= 1 && keyService.primaryFile == workbook.filename" (click)="saveFile(workbook)">
+            *ngIf="editCount >= 1 && keyPairs['copy'].primaryFile == workbook.filename" (click)="saveFile(workbook)">
               Save
             </div>
           </article>
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="copyToHeader.length && copyFromHeader.length && keyService.getWhichKeyFileIn(workbook.filename) == 1" (click)="copyColumns()">
-              Copy {{ keyService.secondaryFile }} column {{ copyFromHeader.split(":")[1] }} to
-              {{ keyService.primaryFile }} column {{ copyToHeader.split(":")[1] }}?
+            *ngIf="copyToHeader.length && copyFromHeader.length && keyPairs['copy'].getWhichKeyFileIn(workbook.filename) == 1" (click)="copyColumns()">
+              Copy {{ keyPairs['copy'].secondaryFile }} column {{ copyFromHeader.split(":")[1] }} to
+              {{ keyPairs['copy'].primaryFile }} column {{ copyToHeader.split(":")[1] }}?
             </div>
           </article>
 
@@ -71,18 +71,18 @@
                       <i class="far fa-check-circle header-icon hi-unselected"
                       *ngIf="!isSelected(workbook.filename, header)"
                       (click)="checkMarkClicked(workbook.filename, header)"></i>
-                      
+
                       <i class="fas fa-not-equal header-icon hi-unselected"></i>
                       <i class="fas fa-not-equal header-icon hi-selected"></i>
 
                       <i class="fas fa-key header-icon"
                       [ngClass]="{
-                      'hi-unselected': !keyService.keyExists(workbook.filename, header) &&
-                                          !keyService.isFilenameInKey(workbook.filename),
-                      'hi-selected': keyService.keyExists(workbook.filename, header),
-                      'no-show': keyService.isFilenameInKey(workbook.filename) && !keyService.keyExists(workbook.filename, header),
-                      'hidden-hicon': !keyService.isFilenameInKey(workbook.filename)}"
-                      (click)="keyService.setKey(workbook.filename, header)">
+                      'hi-unselected': !keyPairs['copy'].keyExists(workbook.filename, header) &&
+                                          !keyPairs['copy'].isFilenameInKey(workbook.filename),
+                      'hi-selected': keyPairs['copy'].keyExists(workbook.filename, header),
+                      'no-show': keyPairs['copy'].isFilenameInKey(workbook.filename) && !keyPairs['copy'].keyExists(workbook.filename, header),
+                      'hidden-hicon': !keyPairs['copy'].isFilenameInKey(workbook.filename)}"
+                      (click)="keyPairs['copy'].setKey(workbook.filename, header)">
                       </i>
                     </span>
                     <div *ngIf="header === columnPreviews[workbook.filename]" class="preview-container col-sm-12">
@@ -90,7 +90,7 @@
                         <div class="preview-cell-container">
                           <div *ngFor="let cell of workbook.getCellsFromHeader(header)" class="content-box white-border">
                             <span>
-                              <span *ngIf="keyService.primaryFile == workbook.filename && rowMap.hasOwnProperty(header)">
+                              <span *ngIf="keyPairs['copy'].primaryFile == workbook.filename && rowMap.hasOwnProperty(header)">
                                 <span class="col-preview-row-text" *ngIf="rowMap[header].hasOwnProperty(cell.row)">
                                   {{ rowMap[header][cell.row]['mappedRow'] }}
                                 </span>
