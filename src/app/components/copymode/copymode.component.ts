@@ -40,6 +40,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   // Shows which rows were copied to which
   rowMap = {};
+  diffMap = {};
+  diffOpen = false;
 
   keyPairs = {};
 
@@ -96,9 +98,49 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     }
   }
 
-  isSelected(filename, header) {
+  // DIFF
+  diffButtonClicked(filename: string, header: string) {
+    if (!this.keyPairs['copy'].doBothKeysExist()) {
+      return;
+    }
+
+    if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 1) {
+      if (this.diffHeaderOne === this.keyPairs['copy'].createKey(filename, header)) {
+        this.diffHeaderOne = '';
+        this.diffOpen = false;
+        return;
+      }
+      this.diffHeaderOne = this.keyPairs['copy'].createKey(filename, header);
+      this.calculateDiffIfFull();
+    } else if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 2) {
+      if (this.diffHeaderTwo === this.keyPairs['copy'].createKey(filename, header)) {
+        this.diffHeaderTwo = '';
+        this.diffOpen = false;
+        return;
+      }
+      this.diffHeaderTwo = this.keyPairs['copy'].createKey(filename, header);
+      this.calculateDiffIfFull();
+    }
+  }
+
+  isSelected(filename: string, header: string) {
     return this.keyPairs['copy'].createKey(filename, header) === this.copyToHeader ||
       this.keyPairs['copy'].createKey(filename, header) === this.copyFromHeader;
+  }
+
+  isDiffSelected(filename: string, header: string) {
+    return this.keyPairs['copy'].createKey(filename, header) === this.diffHeaderOne ||
+      this.keyPairs['copy'].createKey(filename, header) === this.diffHeaderTwo;
+  }
+
+  areBothDiffsSelected() {
+    return this.diffHeaderOne !== '' && this.diffHeaderTwo !== '';
+  }
+
+  calculateDiffIfFull() {
+    if (this.areBothDiffsSelected()) {
+      this.calculateDiff();
+    }
   }
 
   headerSearchbarClicked() {
@@ -112,11 +154,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     } else {
       this.columnPreviews[filename] = header;
     }
-  }
-
-  // DIFF
-  diffButtonClicked(filename: string, header: string) {
-
   }
 
   // Column Copying
@@ -194,6 +231,78 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.editCount += 1;
     this.copyToHeader = '';
     this.copyFromHeader = '';
+  }
+
+  calculateDiff() {
+    this.diffMap = {};
+
+    const editArray = [];
+
+    const primaryKeyFile = this.keyPairs['copy'].primaryFile;
+    const primaryKeyHeader = this.keyPairs['copy'].primaryHeader;
+    const secondaryKeyFile = this.keyPairs['copy'].secondaryFile;
+    const secondaryKeyHeader = this.keyPairs['copy'].secondaryHeader;
+
+    const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
+      return workbook.filename === primaryKeyFile;
+    });
+    const primaryRows = primaryWorkbook[0]['rows'];
+
+    const secondaryWorkbook = this.currentWorkbooks.filter(workbook => {
+      return workbook.filename === secondaryKeyFile;
+    });
+    const secondaryRows = secondaryWorkbook[0]['rows'];
+
+    const headerNameOne = this.diffHeaderOne.split(':')[1];
+    const headerNameTwo = this.diffHeaderTwo.split(':')[1];
+    const columnNumber = primaryWorkbook[0]['headerToColumnNumber'][headerNameOne];
+
+    this.diffMap[headerNameOne] = {};
+
+    for (const primaryRowObject of primaryRows) {
+      const primaryKeyValue = primaryRowObject[primaryKeyHeader];
+      // Get row with value regardless of whether or not it's a formula
+      const value = secondaryRows.filter(rowObj => {
+        if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
+          return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
+        } else {
+          return rowObj[secondaryKeyHeader] === primaryKeyValue;
+        }
+      });
+
+      // value is a row, and is actually just very poorly named
+      if (value.length) {
+        value[0]['mappedRow'] = primaryRowObject['rowNumber'];
+        if (value[0].hasOwnProperty('result')) {
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne]['result'];
+        } else {
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne];
+        }
+        editArray.push(value[0]);
+      }
+    }
+
+    editArray.forEach( (rowObj) => {
+      if (rowObj[headerNameTwo].hasOwnProperty('result')) {
+        const newValue = rowObj[headerNameTwo]['result'];
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = newValue;
+        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        this.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
+      } else {
+        const newValue = rowObj[headerNameTwo];
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = newValue;
+        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        this.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
+      }
+    });
+
+    this.diffOpen = true;
   }
 
   saveFile(workbook) {

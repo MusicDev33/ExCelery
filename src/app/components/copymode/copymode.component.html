@@ -65,15 +65,21 @@
                       [ngClass]="{'cb-title-red': rowMap.hasOwnProperty(header)}">
                         {{ header }}
                       </span>
+
                       <i class="fas fa-check-circle header-icon hi-selected"
                       *ngIf="isSelected(workbook.filename, header)"
                       (click)="checkMarkClicked(workbook.filename, header)"></i>
                       <i class="far fa-check-circle header-icon hi-unselected"
                       *ngIf="!isSelected(workbook.filename, header)"
                       (click)="checkMarkClicked(workbook.filename, header)"></i>
+                      <i class="fas fa-check-circle header-icon" (click)="calculateDiff()"></i>
 
-                      <i class="fas fa-not-equal header-icon hi-unselected"></i>
-                      <i class="fas fa-not-equal header-icon hi-selected"></i>
+                      <i class="fas fa-not-equal header-icon hi-selected"
+                      *ngIf="isDiffSelected(workbook.filename, header)"
+                      (click)="diffButtonClicked(workbook.filename, header)"></i>
+                      <i class="fas fa-not-equal header-icon hi-unselected"
+                      *ngIf="!isDiffSelected(workbook.filename, header)"
+                      (click)="diffButtonClicked(workbook.filename, header)"></i>
 
                       <i class="fas fa-key header-icon"
                       [ngClass]="{
@@ -97,6 +103,16 @@
                                 <span *ngIf="rowMap[header].hasOwnProperty(cell.row)"
                                   [ngClass]="{'col-preview-red-text': rowMap[header][cell.row]['newValue']!==rowMap[header][cell.row]['oldValue']}">
                                   {{ rowMap[header][cell.row]['newValue'] }}
+                                  <i class="fas fa-arrow-right col-preview-icon"></i>
+                                </span>
+                              </span>
+                              <span *ngIf="keyPairs['copy'].primaryFile === workbook.filename && diffMap.hasOwnProperty(header) && diffOpen">
+                                <span class="col-preview-row-text" *ngIf="diffMap[header].hasOwnProperty(cell.row)">
+                                  {{ diffMap[header][cell.row]['mappedRow'] }}
+                                </span>
+                                <span *ngIf="diffMap[header].hasOwnProperty(cell.row)"
+                                  [ngClass]="{'col-preview-red-text': diffMap[header][cell.row]['newValue']!==diffMap[header][cell.row]['oldValue']}">
+                                  {{ diffMap[header][cell.row]['newValue'] }}
                                   <i class="fas fa-arrow-right col-preview-icon"></i>
                                 </span>
                               </span>
