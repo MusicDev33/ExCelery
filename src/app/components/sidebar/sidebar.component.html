@@ -17,20 +17,6 @@
                 <i class="fas fa-sync"></i>
                 Refresh Files
             </a>
-            <a href="#modeOpen" data-toggle="collapse" class="dropdown-toggle">
-                <i class="far fa-folder-open"></i>
-                Open Files
-            </a>
-            <ul class="collapse list-unstyled" id="modeOpen">
-              <li *ngFor="let wb of openWorkbooks">
-                <div>
-                  <a href="#">
-                    <i class="fas fa-times close-button" (click)="closeTab(wb)"></i>
-                    <span class="file-select" (click)="openTab(wb)">{{ wb }}</span>
-                  </a>
-                </div>
-              </li>
-            </ul>
             <a href="#wbSubmenu" data-toggle="collapse" aria-expanded="false" (click)="excelButtonClicked()" class="dropdown-toggle">
                 <i class="far fa-file-excel"></i>
                 Workbooks
