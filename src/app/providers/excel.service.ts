@@ -63,6 +63,7 @@ export class ExcelService {
     workbook.xlsx.readFile(this.path + '/sheets/' + filename)
       .then(() => {
         // use workbook
+        workbook.getWorksheet(1).name = workbook.getWorksheet(1).name.slice(0, 31);
         const excelFile: ExcelFile = { workbook: workbook, filename: filename };
         this.wbSource.next(excelFile);
       });
