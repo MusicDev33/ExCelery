@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
-import { KeyPair } from '../model/keypair';
+// This class will make managing keys a little easier (hopefully)
+// It'll basically help the KeyService keep track of more than one pair of keys
+// by storing
 
-@Injectable({
-  providedIn: 'root'
-})
-export class KeyService {
+export class KeyPair {
   primaryKey = '';
   secondaryKey = '';
 
@@ -14,7 +12,7 @@ export class KeyService {
   secondaryFile = '';
   secondaryHeader = '';
 
-  constructor() { }
+  constructor () { }
 
   createKey(filename: string, header: string) {
     return filename + ':' + header;
