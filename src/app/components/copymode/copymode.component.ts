@@ -8,8 +8,6 @@ import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { AbstracterizerService } from '../../providers/abstracterizer.service';
 
-import { DiffService } from '../../providers/diff.service';
-
 @Component({
   selector: 'app-copymode',
   templateUrl: './copymode.component.html',
@@ -47,8 +45,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
-    public abstract: AbstracterizerService,
-    public diffService: DiffService) { }
+    public abstract: AbstracterizerService) { }
 
   ngOnInit() {
     // wb is an excel file interface

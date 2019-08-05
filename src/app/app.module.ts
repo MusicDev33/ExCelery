@@ -16,7 +16,6 @@ import { ElectronService } from './providers/electron.service';
 import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
 import { AbstracterizerService } from './providers/abstracterizer.service';
-import { DiffService } from './providers/diff.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
@@ -55,8 +54,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ElectronService,
     ExcelService,
     FilepathService,
-    AbstracterizerService,
-    DiffService],
+    AbstracterizerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
