@@ -58,15 +58,17 @@ export class ExcelService {
       });
   }
 
-  openWorkbook(filename: string) {
+  async openWorkbook(filename: string) {
     const workbook = new Workbook();
-    workbook.xlsx.readFile(this.path + '/sheets/' + filename)
+    const promise = workbook.xlsx.readFile(this.path + '/sheets/' + filename)
       .then(() => {
         // use workbook
         workbook.getWorksheet(1).name = workbook.getWorksheet(1).name.slice(0, 31);
         const excelFile: ExcelFile = { workbook: workbook, filename: filename };
         this.wbSource.next(excelFile);
       });
+
+    const read = await promise;
   }
 
   getWsHeaders(worksheet) {

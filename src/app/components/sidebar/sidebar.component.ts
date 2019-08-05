@@ -55,17 +55,4 @@ export class SidebarComponent implements OnInit {
     this.xlService.openWorkbook(filename);
     // this.openWorkbooks.push(filename)
   }
-
-  // this is to open a file that's already open
-  openTab(filename) {
-    console.log('Opening tab:');
-    console.log(filename);
-  }
-
-  closeTab(filename) {
-    const index = this.openWorkbooks.indexOf(filename);
-    if (index !== -1) { this.openWorkbooks.splice(index, 1); }
-    console.log('Closing tab:');
-    console.log(filename);
-  }
 }
