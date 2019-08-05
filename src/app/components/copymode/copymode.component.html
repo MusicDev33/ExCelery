@@ -72,7 +72,6 @@
                       <i class="far fa-check-circle header-icon hi-unselected"
                       *ngIf="!isSelected(workbook.filename, header)"
                       (click)="checkMarkClicked(workbook.filename, header)"></i>
-                      <i class="fas fa-check-circle header-icon" (click)="calculateDiff()"></i>
 
                       <i class="fas fa-not-equal header-icon hi-selected"
                       *ngIf="isDiffSelected(workbook.filename, header)"
