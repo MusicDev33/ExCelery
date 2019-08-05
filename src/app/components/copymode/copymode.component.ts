@@ -300,18 +300,14 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   saveFile(workbook) {
-    const currentdate = new Date();
-    const datetime = ' ' + currentdate.getDate() + '-'
-                    + (currentdate.getMonth() + 1)  + '-'
-                    + currentdate.getFullYear() + ' ('
-                    + currentdate.getHours() + '-'
-                    + currentdate.getMinutes() + '-'
-                    + currentdate.getSeconds() + ')';
+    let date = new Date().toLocaleString();
+    date = date.replace(/\//g, '-');
+    date = date.replace(/:\s*/g, '-');
 
     const filename = workbook.filename.split('.')[0];
     const fileExtension = workbook.filename.split('.')[1];
 
-    const totalFilename = filename + datetime + '.' + fileExtension;
+    const totalFilename = filename + ' ' + date + '.' + fileExtension;
     this.excel.saveExcel(totalFilename, workbook.workbook, () => {
       console.log('Saved file: ' + totalFilename);
       this.editCount = 0;
