@@ -20,7 +20,6 @@ import { AbstracterizerService } from './providers/abstracterizer.service';
 import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CopymodeComponent } from './components/copymode/copymode.component';
 
@@ -32,7 +31,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     WebviewDirective,
     SidebarComponent,
     CopymodeComponent
