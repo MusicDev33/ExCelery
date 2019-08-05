@@ -133,6 +133,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   calculateDiffIfFull() {
     if (this.areBothDiffsSelected()) {
+      this.headerClicked(this.diffHeaderOne.split(':')[0], this.diffHeaderOne.split(':')[1]);
       this.calculateDiff();
     }
   }
