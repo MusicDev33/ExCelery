@@ -6,9 +6,8 @@ import { KeyPair } from '../../model/keypair';
 
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
-import { ColorgenService } from '../../providers/colorgen.service';
 import { AbstracterizerService } from '../../providers/abstracterizer.service';
-import { KeyService } from '../../providers/key.service';
+
 import { DiffService } from '../../providers/diff.service';
 
 @Component({
@@ -48,9 +47,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
-    public colorGen: ColorgenService,
     public abstract: AbstracterizerService,
-    public keyService: KeyService,
     public diffService: DiffService) { }
 
   ngOnInit() {
@@ -69,7 +66,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  setActiveText(textfieldName) {
+  setActiveText(textfieldName: string) {
     if (this.activeTextfield === textfieldName) {
       this.activeTextfield = '';
     } else {
@@ -78,7 +75,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   // Fuzzy logic that will hopefully be fixed soon
-  checkMarkClicked(filename, header) {
+  checkMarkClicked(filename: string, header: string) {
     if (!this.keyPairs['copy'].doBothKeysExist()) {
       return;
     }

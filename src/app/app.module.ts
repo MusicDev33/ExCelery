@@ -15,9 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ElectronService } from './providers/electron.service';
 import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
-import { ColorgenService } from './providers/colorgen.service';
 import { AbstracterizerService } from './providers/abstracterizer.service';
-import { KeyService } from './providers/key.service';
 import { DiffService } from './providers/diff.service';
 
 import { WebviewDirective } from './directives/webview.directive';
@@ -57,9 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ElectronService,
     ExcelService,
     FilepathService,
-    ColorgenService,
     AbstracterizerService,
-    KeyService,
     DiffService],
   bootstrap: [AppComponent]
 })
