@@ -56,7 +56,7 @@
               <div *ngFor="let header of workbook.headers">
 
                 <!-- HEADERS -->
-                <app-header-box [header]="createHeader(header, workbook.filename)" (header-event)="headerEvent($event)">
+                <app-header-box [header]="createHeader(header, workbook.filename, workbook)" (header-event)="headerEvent($event)">
                   </app-header-box>
 
               </div>

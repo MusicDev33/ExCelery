@@ -43,6 +43,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   keyPairs = {};
 
+
+
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
@@ -64,8 +66,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  createHeader(header: string, filename: string) {
-    return new Header(header, filename, []);
+  createHeader(header: string, filename: string, workbook: ASWorkbook) {
+    return new Header(header, filename, workbook.getCellsFromHeader(header));
   }
 
   headerEvent(header) {
