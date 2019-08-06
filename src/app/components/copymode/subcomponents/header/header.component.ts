@@ -21,8 +21,23 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  headerActionClicked(header: Header) {
-    this.headerEmitter.emit(header);
+  // Short wrapper
+  emitHeader() {
+    this.headerEmitter.emit(this.header);
   }
 
+  switchKey() {
+    this.header.isKey = !this.header.isKey;
+    this.emitHeader();
+  }
+
+  switchCopyMode() {
+    this.header.copyMode = !this.header.copyMode;
+    this.emitHeader();
+  }
+
+  switchDiffMode() {
+    this.header.diffMode = !this.header.diffMode;
+    this.emitHeader();
+  }
 }
