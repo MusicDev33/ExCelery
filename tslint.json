@@ -46,7 +46,7 @@
     "no-misused-new": true,
     "no-non-null-assertion": true,
     "no-output-on-prefix": true,
-    "no-output-rename": true,
+    "no-output-rename": false,
     "no-outputs-metadata-property": true,
     "no-shadowed-variable": true,
     "no-string-literal": false,

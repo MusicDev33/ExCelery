@@ -3,6 +3,7 @@ import { Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
 import { ASWorkbook } from '../../model/asworkbook';
 import { KeyPair } from '../../model/keypair';
+import { Header } from '../../model/header';
 
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
@@ -61,6 +62,14 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  createHeader(header: string, filename: string) {
+    return new Header(header, filename, []);
+  }
+
+  headerEvent(header) {
+    console.log(header);
   }
 
   setActiveText(textfieldName: string) {
