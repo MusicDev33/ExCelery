@@ -67,7 +67,12 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   createHeader(header: string, filename: string, workbook: ASWorkbook) {
-    return new Header(header, filename, workbook.getCellsFromHeader(header));
+    const isKey = this.keyPairs['copy'].keyExists(filename, header);
+    const isDiff = this.isDiffSelected(filename, header);
+    const isSelected = this.isSelected(filename, header);
+    const headerParams = {isKey: isKey, diffMode: isDiff, copyMode: isSelected};
+    const newHeader = new Header(header, filename, workbook.getCellsFromHeader(header), headerParams);
+    return newHeader;
   }
 
   setActiveText(textfieldName: string) {

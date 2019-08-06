@@ -14,9 +14,6 @@ export class HeaderComponent implements OnInit {
   @Input()
   header: Header;
 
-  @Output('header-event')
-  headerEmitter = new EventEmitter<Header>();
-
   @Output()
   selectKey = new EventEmitter<Header>();
 
@@ -27,13 +24,7 @@ export class HeaderComponent implements OnInit {
   selectDiff = new EventEmitter<Header>();
 
 
-  ngOnInit() {
-  }
-
-  // Short wrapper
-  emitHeader() {
-    this.headerEmitter.emit(this.header);
-  }
+  ngOnInit() {}
 
   switchKey() {
     this.header.isKey = !this.header.isKey;

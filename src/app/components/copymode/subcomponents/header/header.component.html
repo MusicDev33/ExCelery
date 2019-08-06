@@ -5,12 +5,12 @@
         {{ header.name }}
       </span>
 
-      <i class="fas fa-check-circle" (click)="switchCopyMode()"></i>
-      <i class="far fa-check-circle"></i>
+      <i class="fas fa-check-circle" (click)="switchCopyMode()" *ngIf="!header.copyMode"></i>
+      <i class="far fa-check-circle" *ngIf="header.copyMode"></i>
 
-      <i class="fas fa-not-equal" (click)="switchDiffMode()"></i>
+      <i class="fas fa-not-equal" (click)="switchDiffMode()" *ngIf="!header.diffMode"></i>
 
-      <i class="fas fa-key header-icon" (click)="switchKey()"></i>
+      <i class="fas fa-key header-icon" (click)="switchKey()" *ngIf="!header.isKey"></i>
     </span>
     <!--
     <section class="preview-container col-sm-12">
