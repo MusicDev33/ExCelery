@@ -17,6 +17,15 @@ export class HeaderComponent implements OnInit {
   @Output('header-event')
   headerEmitter = new EventEmitter<Header>();
 
+  @Output()
+  selectKey = new EventEmitter<Header>();
+
+  @Output()
+  selectCopy = new EventEmitter<Header>();
+
+  @Output()
+  selectDiff = new EventEmitter<Header>();
+
 
   ngOnInit() {
   }
@@ -28,16 +37,16 @@ export class HeaderComponent implements OnInit {
 
   switchKey() {
     this.header.isKey = !this.header.isKey;
-    this.emitHeader();
+    this.selectKey.emit(this.header);
   }
 
   switchCopyMode() {
     this.header.copyMode = !this.header.copyMode;
-    this.emitHeader();
+    this.selectCopy.emit(this.header);
   }
 
   switchDiffMode() {
     this.header.diffMode = !this.header.diffMode;
-    this.emitHeader();
+    this.selectDiff.emit(this.header);
   }
 }

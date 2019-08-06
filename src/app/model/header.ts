@@ -12,7 +12,7 @@ export class Header {
   // TODO: Fix this constructor, this got way uglier than planned
   constructor(header: string, filename: string, cells: Array<any>,
     {isKey = false, copyMode = false, diffMode = false}:
-    {isKey?: boolean; copyMode?: boolean; diffMode?: boolean}={}) {
+    {isKey?: boolean; copyMode?: boolean; diffMode?: boolean} = {}) {
     /*
     This constructor basically takes a header, filename, and the cells
     but can also take an optional parameter: the booleans that set the

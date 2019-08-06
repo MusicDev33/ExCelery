@@ -70,10 +70,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     return new Header(header, filename, workbook.getCellsFromHeader(header));
   }
 
-  headerEvent(header) {
-    console.log(header);
-  }
-
   setActiveText(textfieldName: string) {
     if (this.activeTextfield === textfieldName) {
       this.activeTextfield = '';

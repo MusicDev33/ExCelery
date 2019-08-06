@@ -56,8 +56,12 @@
               <div *ngFor="let header of workbook.headers">
 
                 <!-- HEADERS -->
-                <app-header-box [header]="createHeader(header, workbook.filename, workbook)" (header-event)="headerEvent($event)">
-                  </app-header-box>
+                <app-header-box
+                [header]="createHeader(header, workbook.filename, workbook)"
+                (selectKey)="keyPairs['copy'].setKey(workbook.filename, header)"
+                (selectDiff)="diffButtonClicked(workbook.filename, header)"
+                (selectCopy)="checkMarkClicked(workbook.filename, header)">
+                </app-header-box>
 
               </div>
             </div>
