@@ -112,6 +112,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       if (this.diffHeaderOne === this.keyPairs['copy'].createKey(filename, header)) {
         this.diffHeaderOne = '';
         this.diffOpen = false;
+        this.diffMap = {};
         return;
       }
       this.diffHeaderOne = this.keyPairs['copy'].createKey(filename, header);
@@ -120,6 +121,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       if (this.diffHeaderTwo === this.keyPairs['copy'].createKey(filename, header)) {
         this.diffHeaderTwo = '';
         this.diffOpen = false;
+        this.diffMap = {};
         return;
       }
       this.diffHeaderTwo = this.keyPairs['copy'].createKey(filename, header);
@@ -143,7 +145,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   calculateDiffIfFull() {
     if (this.areBothDiffsSelected()) {
-      this.headerClicked(this.diffHeaderOne.split(':')[0], this.diffHeaderOne.split(':')[1]);
+      this.openPreview(this.diffHeaderOne.split(':')[0], this.diffHeaderOne.split(':')[1]);
       this.calculateDiff();
     }
   }
@@ -159,6 +161,10 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     } else {
       this.columnPreviews[filename] = header;
     }
+  }
+
+  openPreview(filename, header) {
+    this.columnPreviews[filename] = header;
   }
 
   // Column Copying
