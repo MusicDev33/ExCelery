@@ -26,6 +26,9 @@
                 <span class="actionbar-item actionbar-text" [ngClass]="{'inactive': header===activeTextfield}">
                   {{ workbook.filename.split('.')[0] }}
                 </span>
+                <i class="fas fa-trash-alt actionbar-item actionbar-icon"
+                  *ngIf="checkIfRowMap() && keyPairs['copy'].getWhichKeyFileIn(workbook.filename)" (click)="clearRowMap()">
+                </i>
                 <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
                 <span class="actionbar-text"> {{ keyPairs['copy'].getKeyTypeText(workbook.filename) }}</span>
               </span>
@@ -46,8 +49,10 @@
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
             *ngIf="copyToHeader.length && copyFromHeader.length && keyPairs['copy'].getWhichKeyFileIn(workbook.filename) == 1" (click)="copyColumns()">
-              Copy {{ keyPairs['copy'].secondaryFile }} column {{ copyFromHeader.split(":")[1] }} to
-              {{ keyPairs['copy'].primaryFile }} column {{ copyToHeader.split(":")[1] }}?
+              <b>Copy <span class="text-underline">{{ keyPairs['copy'].secondaryFile }}</span> column
+                <span class="text-purple">{{ copyFromHeader.split(":")[1] }}</span> to
+                <span class="text-underline">{{ keyPairs['copy'].primaryFile }}</span> column
+                <span class="text-purple">{{ copyToHeader.split(":")[1] }}?</span></b>
             </div>
           </article>
 
@@ -58,9 +63,15 @@
                 <!-- HEADERS -->
                 <app-header-box
                 [header]="createHeader(header, workbook.filename, workbook)"
+                [keysFull]="keyPairs['copy'].doBothKeysExist()"
+                [isPrimary]="keyPairs['copy'].getWhichKeyFileIn(workbook.filename) === 1"
+                [rowMap]="rowMap.hasOwnProperty(header) ? rowMap[header] : undefined"
+                [diffMap]="diffMap.hasOwnProperty(header) ? diffMap[header] : undefined"
+                [previewOpen]=" columnPreviews[workbook.filename]===header"
                 (selectKey)="keyPairs['copy'].setKey(workbook.filename, header)"
                 (selectDiff)="diffButtonClicked(workbook.filename, header)"
-                (selectCopy)="checkMarkClicked(workbook.filename, header)">
+                (selectCopy)="checkMarkClicked(workbook.filename, header)"
+                (selectHeader)="headerClicked(workbook.filename, header)">
                 </app-header-box>
 
               </div>

@@ -43,8 +43,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   keyPairs = {};
 
-
-
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
@@ -328,11 +326,24 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     });
   }
 
+  checkIfRowMap() {
+    return typeof this.rowMap !== 'undefined' && Object.keys(this.rowMap).length > 0;
+  }
+
+  clearRowMap() {
+    this.rowMap = {};
+    this.copyToHeader = '';
+    this.copyFromHeader = '';
+    this.editCount = 0;
+  }
+
   closeFile(filename: string) {
     const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
     if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
     this.copyToHeader = '';
     this.copyFromHeader = '';
+    this.diffHeaderOne = '';
+    this.diffHeaderTwo = '';
     this.keyPairs['copy'].deleteKeys();
     this.editCount = 0;
     this.rowMap = {};

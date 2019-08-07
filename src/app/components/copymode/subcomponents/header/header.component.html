@@ -1,43 +1,44 @@
 <article class="col">
   <div class="content-box white-border row">
     <span>
-      <span class="cb-title noselect selectable">
+      <span class="header selectable" (click)="onHeaderClick()">
         {{ header.name }}
       </span>
 
-      <i class="fas fa-check-circle" (click)="switchCopyMode()" *ngIf="!header.copyMode"></i>
-      <i class="far fa-check-circle" *ngIf="header.copyMode"></i>
+      <i class="fas fa-bug icon" (click)="debug()"></i>
+      <i class="far fa-check-circle icon unselected" (click)="switchCopyMode()" *ngIf="!header.copyMode"></i>
+      <i class="fas fa-check-circle icon selected" (click)="switchCopyMode()" *ngIf="header.copyMode"></i>
 
-      <i class="fas fa-not-equal" (click)="switchDiffMode()" *ngIf="!header.diffMode"></i>
+      <i class="fas fa-not-equal icon" (click)="switchDiffMode()"
+        [ngClass]="{'selected': header.diffMode, 'unselected': !header.diffMode}"></i>
 
-      <i class="fas fa-key header-icon" (click)="switchKey()" *ngIf="!header.isKey"></i>
+      <i class="fas fa-key icon" (click)="switchKey()"
+        [ngClass]="{'selected': header.isKey, 'unselected': !header.isKey}" *ngIf="!keysFull || header.isKey"></i>
     </span>
-    <!--
-    <section class="preview-container col-sm-12">
+
+    <section *ngIf="previewOpen" class="preview-container col-sm-12">
       <div class="preview-scroller-container">
         <div class="preview-cell-container">
-          <section *ngFor="let cell of workbook.getCellsFromHeader(header)" class="content-box white-border">
+          <section *ngFor="let cell of header.cells" class="content-box white-border">
 
             <span>
-               After Copying
-              <span *ngIf="keyPairs['copy'].primaryFile == workbook.filename && rowMap.hasOwnProperty(header)">
-                <span class="col-preview-row-text" *ngIf="rowMap[header].hasOwnProperty(cell.row)">
-                  {{ rowMap[header][cell.row]['mappedRow'] }}
+              <span *ngIf="isPrimary && rowMap">
+                <span class="col-preview-row-text" *ngIf="rowMap.hasOwnProperty(cell.row)">
+                  {{ rowMap[cell.row]['mappedRow'] }}
                 </span>
-                <span *ngIf="rowMap[header].hasOwnProperty(cell.row)"
-                  [ngClass]="{'col-preview-red-text': rowMap[header][cell.row]['newValue']!==rowMap[header][cell.row]['oldValue']}">
-                  {{ rowMap[header][cell.row]['newValue'] }}
+                <span *ngIf="rowMap.hasOwnProperty(cell.row)"
+                  [ngClass]="{'col-preview-red-text': rowMap[cell.row]['newValue']!==rowMap[cell.row]['oldValue']}">
+                  {{ rowMap[cell.row]['newValue'] }}
                   <i class="fas fa-arrow-right col-preview-icon"></i>
                 </span>
               </span>
-               Diff Check
-              <span *ngIf="keyPairs['copy'].primaryFile === workbook.filename && diffMap.hasOwnProperty(header) && diffOpen">
-                <span class="col-preview-row-text" *ngIf="diffMap[header].hasOwnProperty(cell.row)">
-                  {{ diffMap[header][cell.row]['mappedRow'] }}
+              <span *ngIf="isPrimary && diffMap">
+                <span class="col-preview-row-text" *ngIf="diffMap.hasOwnProperty(cell.row)">
+                  {{ diffMap[cell.row]['mappedRow'] }}
                 </span>
-                <span *ngIf="diffMap[header].hasOwnProperty(cell.row)"
-                  [ngClass]="{'col-preview-red-text': diffMap[header][cell.row]['newValue']!==diffMap[header][cell.row]['oldValue']}">
-                  {{ diffMap[header][cell.row]['newValue'] }}
+                <span *ngIf="diffMap.hasOwnProperty(cell.row)"
+                  [ngClass]="{'col-preview-red-text': diffMap[cell.row]['newValue']!==diffMap[cell.row]['oldValue']}">
+                  {{ diffMap[cell.row]['newValue'] }}
                   <i class="fas fa-arrow-right col-preview-icon"></i>
                 </span>
               </span>
@@ -49,6 +50,6 @@
           </section>
         </div>
       </div>
-    </section> -->
+    </section>
   </div>
 </article>

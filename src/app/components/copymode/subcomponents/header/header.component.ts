@@ -11,9 +11,27 @@ export class HeaderComponent implements OnInit {
 
   constructor() { }
 
+  // INPUTS
   @Input()
   header: Header;
 
+  @Input()
+  keysFull: boolean;
+
+  @Input()
+  isPrimary: boolean;
+
+  @Input()
+  previewOpen: boolean;
+
+  @Input()
+  rowMap: any;
+
+  @Input()
+  diffMap: any;
+
+
+  // OUTPUTS
   @Output()
   selectKey = new EventEmitter<Header>();
 
@@ -22,6 +40,9 @@ export class HeaderComponent implements OnInit {
 
   @Output()
   selectDiff = new EventEmitter<Header>();
+
+  @Output()
+  selectHeader = new EventEmitter<Header>();
 
 
   ngOnInit() {}
@@ -39,5 +60,15 @@ export class HeaderComponent implements OnInit {
   switchDiffMode() {
     this.header.diffMode = !this.header.diffMode;
     this.selectDiff.emit(this.header);
+  }
+
+  onHeaderClick() {
+    this.selectHeader.emit(this.header);
+  }
+
+  debug() {
+    console.log(this.isPrimary);
+    console.log(this.rowMap);
+    console.log(this.diffMap[5]);
   }
 }

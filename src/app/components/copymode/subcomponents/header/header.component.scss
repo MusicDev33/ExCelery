@@ -1,4 +1,78 @@
-.content-box{
+@import 'colors.scss';
+
+.content-box {
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
+}
+
+.header {
+  transition: all 0.3s;
+  margin-right: 0.3em;
+}
+
+.header:hover{
+  color: $sidebar-color2-em;
+}
+
+.header-red {
+  color: red;
+}
+
+.icon {
+  transition: all 0.3s;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.icon.unselected:hover {
+  color: $sidebar-color2-em;
+}
+
+.icon.selected {
+  transition: all 1s;
+  color: $sidebar-color2-em;
+}
+
+.preview-open{
+  border-bottom: 2px solid #f00;
+}
+
+.preview-container{
+  margin-top: 5px;
+  border-top: 2px solid $sidebar-color2-em;
+  height: 20vh;
+  padding: 5px 0;
+}
+
+/* lol what */
+.preview-scroller-container {
+  padding: 5px;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.preview-cell-container{
+  border-radius: 5px;
+  background-color: #eee;
+  padding: 3px;
+}
+
+.col-preview-row-text {
+  color: white;
+  background-color: $sidebar-color2-em;
+  border-radius: 7px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 5px;
+  padding: 0 8px;
+  font-size: 14px;
+}
+
+.col-preview-red-text {
+  color: red;
+}
+
+.col-preview-icon {
+  margin-right: 5px;
+  color: $sidebar-color2-dark;
 }

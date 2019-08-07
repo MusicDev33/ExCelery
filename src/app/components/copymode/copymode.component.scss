@@ -5,6 +5,13 @@ input {
 }
 
 /* Classes */
+.text-purple {
+  color: $sidebar-color2-em;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
 
 .container-fluid {
   height: 100%;
@@ -50,12 +57,6 @@ input {
   border-color: $sidebar-color2 !important;
 }
 
-.header-icon{
-  transition: all 0.3s;
-  margin-right: 0.5em;
-  cursor: pointer;
-}
-
 .scroll-container{
   padding-right: 10px;
 }
@@ -93,10 +94,6 @@ input {
   border-color: $sidebar-color2;
 }
 
-.content-box:hover .hidden-hicon{
-  opacity: 1;
-}
-
 .no-show{
   transition: all 0.0s;
   color: #fff;
@@ -107,32 +104,6 @@ input {
   border-color: $sidebar-color2;
 }
 
-.cb-title{
-  transition: all 0.3s;
-  margin-right: 0.5em;
-}
-
-.cb-title-red {
-  color: red;
-}
-
-.cb-title:hover{
-  color: $sidebar-color2-em;
-}
-
-.hidden-hicon{
-  opacity: 0;
-}
-
-.hi-unselected:hover{
-  color: $sidebar-color2-em;
-}
-
-.hi-selected{
-  transition: all 1s;
-  color: $sidebar-color2-em;
-}
-
 .preview-open{
   border-bottom: 2px solid #f00;
 }
@@ -141,7 +112,6 @@ input {
   margin-top: 5px;
   border-top: 2px solid $sidebar-color2-em;
   height: 20vh;
-
   padding: 5px 0;
 }
 
