@@ -33,6 +33,11 @@
   color: $sidebar-color2-em;
 }
 
+.icon.disabled {
+  pointer-events: none;
+  color: #e1e6ed;
+}
+
 .preview-open{
   border-bottom: 2px solid #f00;
 }

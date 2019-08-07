@@ -5,11 +5,13 @@
         {{ header.name }}
       </span>
 
-      <i class="far fa-check-circle icon unselected" (click)="switchCopyMode()" *ngIf="!header.copyMode"></i>
+      <i class="far fa-check-circle icon unselected" (click)="switchCopyMode()" *ngIf="!header.copyMode"
+        [ngClass]="{'disabled': !keysFull}"></i>
       <i class="fas fa-check-circle icon selected" (click)="switchCopyMode()" *ngIf="header.copyMode"></i>
 
       <i class="fas fa-not-equal icon" (click)="switchDiffMode()"
-        [ngClass]="{'selected': header.diffMode, 'unselected': !header.diffMode}"></i>
+        [ngClass]="{'selected': header.diffMode, 'unselected': !header.diffMode, 'disabled': !keysFull}">
+      </i>
 
       <i class="fas fa-key icon" (click)="switchKey()"
         [ngClass]="{'selected': header.isKey, 'unselected': !header.isKey}" *ngIf="!keysFull || header.isKey"></i>
