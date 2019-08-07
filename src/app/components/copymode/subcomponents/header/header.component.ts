@@ -9,6 +9,11 @@ import { Header } from '../../../../model/header';
 })
 export class HeaderComponent implements OnInit {
 
+  ttOptions = {
+    'show-delay': 300,
+    'hide-delay': 50
+  };
+
   constructor() { }
 
   // INPUTS
