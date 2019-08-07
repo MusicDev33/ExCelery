@@ -104,50 +104,6 @@ input {
   border-color: $sidebar-color2;
 }
 
-.preview-open{
-  border-bottom: 2px solid #f00;
-}
-
-.preview-container{
-  margin-top: 5px;
-  border-top: 2px solid $sidebar-color2-em;
-  height: 20vh;
-  padding: 5px 0;
-}
-
-/* lol what */
-.preview-scroller-container {
-  padding: 5px;
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.preview-cell-container{
-  border-radius: 5px;
-  background-color: #eee;
-  padding: 3px;
-}
-
-.col-preview-row-text {
-  color: white;
-  background-color: $sidebar-color2-em;
-  border-radius: 7px;
-  text-align: center;
-  display: inline-block;
-  margin-right: 5px;
-  padding: 0 8px;
-  font-size: 14px;
-}
-
-.col-preview-red-text {
-  color: red;
-}
-
-.col-preview-icon {
-  margin-right: 5px;
-  color: $sidebar-color2-dark;
-}
-
 /* IDs */
 #encompass{
   background-color: #fafafa;
