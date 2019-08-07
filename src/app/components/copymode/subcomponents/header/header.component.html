@@ -1,6 +1,6 @@
 <article class="col">
   <div class="content-box white-border row">
-    <span>
+    <span class="col-sm-12">
       <span class="header selectable" (click)="onHeaderClick()">
         {{ header.name }}
       </span>
@@ -13,8 +13,8 @@
         [ngClass]="{'selected': header.diffMode, 'unselected': !header.diffMode, 'disabled': !keysFull}">
       </i>
 
-      <i class="fas fa-key icon" (click)="switchKey()"
-        [ngClass]="{'selected': header.isKey, 'unselected': !header.isKey}" *ngIf="!keysFull || header.isKey"></i>
+      <i class="fas fa-key icon key-icon float-right" (click)="switchKey()"
+        [ngClass]="{'selected': header.isKey, 'unselected': !header.isKey, 'grey': !header.isKey}" *ngIf="!keysFull || header.isKey"></i>
     </span>
 
     <section *ngIf="previewOpen" class="preview-container col-sm-12">

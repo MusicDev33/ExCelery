@@ -25,7 +25,7 @@
 }
 
 .icon.unselected:hover {
-  color: $sidebar-color2-em;
+  color: $sidebar-color2-em !important;
 }
 
 .icon.selected {
@@ -36,6 +36,15 @@
 .icon.disabled {
   pointer-events: none;
   color: #e1e6ed;
+}
+
+.icon.grey {
+  color: #e1e6ed;
+}
+
+.content-box:hover .key-icon {
+  color: black;
+  opacity: 1;
 }
 
 .preview-open{

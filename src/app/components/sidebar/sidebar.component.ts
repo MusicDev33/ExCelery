@@ -27,7 +27,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.xlService.loadExcel(this.fpService.path, () => {
-      console.log(this.xlService.getWorkbooks());
       this.ngZone.run(() => {
         this.workbooks = this.xlService.getWorkbooks();
       });
