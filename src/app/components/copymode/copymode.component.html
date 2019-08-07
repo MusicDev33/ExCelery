@@ -26,6 +26,9 @@
                 <span class="actionbar-item actionbar-text" [ngClass]="{'inactive': header===activeTextfield}">
                   {{ workbook.filename.split('.')[0] }}
                 </span>
+                <i class="fas fa-trash-alt actionbar-item actionbar-icon"
+                  *ngIf="checkIfRowMap() && keyPairs['copy'].getWhichKeyFileIn(workbook.filename)" (click)="clearRowMap()">
+                </i>
                 <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
                 <span class="actionbar-text"> {{ keyPairs['copy'].getKeyTypeText(workbook.filename) }}</span>
               </span>
@@ -46,86 +49,31 @@
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
             *ngIf="copyToHeader.length && copyFromHeader.length && keyPairs['copy'].getWhichKeyFileIn(workbook.filename) == 1" (click)="copyColumns()">
-              Copy {{ keyPairs['copy'].secondaryFile }} column {{ copyFromHeader.split(":")[1] }} to
-              {{ keyPairs['copy'].primaryFile }} column {{ copyToHeader.split(":")[1] }}?
+              <b>Copy <span class="text-underline">{{ keyPairs['copy'].secondaryFile }}</span> column
+                <span class="text-purple">{{ copyFromHeader.split(":")[1] }}</span> to
+                <span class="text-underline">{{ keyPairs['copy'].primaryFile }}</span> column
+                <span class="text-purple">{{ copyToHeader.split(":")[1] }}?</span></b>
             </div>
           </article>
 
           <article class="scroll-container">
             <div class="scrollbox">
               <div *ngFor="let header of workbook.headers">
-                <div class="col">
 
-                  <div class="content-box white-border row"
-                  *ngIf="header.toLowerCase().includes(searchText.toLowerCase())"
-                  (contextmenu)="onRightClick($event, header); false">
-                    <span>
-                      <span (click)="setActiveText(header)" class="cb-title noselect selectable"
-                      (click)="headerClicked(workbook.filename, header)"
-                      [ngClass]="{'cb-title-red': rowMap.hasOwnProperty(header)}">
-                        {{ header }}
-                      </span>
+                <!-- HEADERS -->
+                <app-header-box
+                [header]="createHeader(header, workbook.filename, workbook)"
+                [keysFull]="keyPairs['copy'].doBothKeysExist()"
+                [isPrimary]="keyPairs['copy'].getWhichKeyFileIn(workbook.filename) === 1"
+                [rowMap]="rowMap.hasOwnProperty(header) ? rowMap[header] : undefined"
+                [diffMap]="diffMap.hasOwnProperty(header) ? diffMap[header] : undefined"
+                [previewOpen]=" columnPreviews[workbook.filename]===header"
+                (selectKey)="keyPairs['copy'].setKey(workbook.filename, header)"
+                (selectDiff)="diffButtonClicked(workbook.filename, header)"
+                (selectCopy)="checkMarkClicked(workbook.filename, header)"
+                (selectHeader)="headerClicked(workbook.filename, header)">
+                </app-header-box>
 
-                      <i class="fas fa-check-circle header-icon hi-selected"
-                      *ngIf="isSelected(workbook.filename, header)"
-                      (click)="checkMarkClicked(workbook.filename, header)"></i>
-                      <i class="far fa-check-circle header-icon hi-unselected"
-                      *ngIf="!isSelected(workbook.filename, header)"
-                      (click)="checkMarkClicked(workbook.filename, header)"></i>
-
-                      <i class="fas fa-not-equal header-icon hi-selected"
-                      *ngIf="isDiffSelected(workbook.filename, header)"
-                      (click)="diffButtonClicked(workbook.filename, header)"></i>
-                      <i class="fas fa-not-equal header-icon hi-unselected"
-                      *ngIf="!isDiffSelected(workbook.filename, header)"
-                      (click)="diffButtonClicked(workbook.filename, header)"></i>
-
-                      <i class="fas fa-key header-icon"
-                      [ngClass]="{
-                      'hi-unselected': !keyPairs['copy'].keyExists(workbook.filename, header) &&
-                                          !keyPairs['copy'].isFilenameInKey(workbook.filename),
-                      'hi-selected': keyPairs['copy'].keyExists(workbook.filename, header),
-                      'no-show': keyPairs['copy'].isFilenameInKey(workbook.filename) && !keyPairs['copy'].keyExists(workbook.filename, header),
-                      'hidden-hicon': !keyPairs['copy'].isFilenameInKey(workbook.filename)}"
-                      (click)="keyPairs['copy'].setKey(workbook.filename, header)">
-                      </i>
-                    </span>
-                    <div *ngIf="header === columnPreviews[workbook.filename]" class="preview-container col-sm-12">
-                      <div class="preview-scroller-container">
-                        <div class="preview-cell-container">
-                          <div *ngFor="let cell of workbook.getCellsFromHeader(header)" class="content-box white-border">
-                            <span>
-                              <span *ngIf="keyPairs['copy'].primaryFile == workbook.filename && rowMap.hasOwnProperty(header)">
-                                <span class="col-preview-row-text" *ngIf="rowMap[header].hasOwnProperty(cell.row)">
-                                  {{ rowMap[header][cell.row]['mappedRow'] }}
-                                </span>
-                                <span *ngIf="rowMap[header].hasOwnProperty(cell.row)"
-                                  [ngClass]="{'col-preview-red-text': rowMap[header][cell.row]['newValue']!==rowMap[header][cell.row]['oldValue']}">
-                                  {{ rowMap[header][cell.row]['newValue'] }}
-                                  <i class="fas fa-arrow-right col-preview-icon"></i>
-                                </span>
-                              </span>
-                              <span *ngIf="keyPairs['copy'].primaryFile === workbook.filename && diffMap.hasOwnProperty(header) && diffOpen">
-                                <span class="col-preview-row-text" *ngIf="diffMap[header].hasOwnProperty(cell.row)">
-                                  {{ diffMap[header][cell.row]['mappedRow'] }}
-                                </span>
-                                <span *ngIf="diffMap[header].hasOwnProperty(cell.row)"
-                                  [ngClass]="{'col-preview-red-text': diffMap[header][cell.row]['newValue']!==diffMap[header][cell.row]['oldValue']}">
-                                  {{ diffMap[header][cell.row]['newValue'] }}
-                                  <i class="fas fa-arrow-right col-preview-icon"></i>
-                                </span>
-                              </span>
-                              <span class="col-preview-row-text">
-                                {{ cell.row }}
-                              </span> {{ cell.value }}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
               </div>
             </div>
           </article>

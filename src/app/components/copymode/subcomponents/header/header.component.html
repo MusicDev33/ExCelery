@@ -1,0 +1,59 @@
+<article class="col">
+  <div class="content-box white-border row">
+    <span class="col-sm-12">
+      <span class="header selectable" (click)="onHeaderClick()">
+        {{ header.name }}
+      </span>
+
+      <i class="far fa-check-circle icon unselected" (click)="switchCopyMode()" *ngIf="!header.copyMode"
+        [ngClass]="{'disabled': !keysFull}"></i>
+      <i class="fas fa-check-circle icon selected" (click)="switchCopyMode()" *ngIf="header.copyMode"></i>
+
+      <i class="fas fa-not-equal icon" (click)="switchDiffMode()"
+        [ngClass]="{'selected': header.diffMode, 'unselected': !header.diffMode, 'disabled': !keysFull}">
+      </i>
+
+      <i class="fas fa-key icon key-icon float-right" (click)="switchKey()"
+        [ngClass]="{'selected': header.isKey,
+          'unselected': !header.isKey,
+          'grey': !header.isKey,
+          'hover-appear': !header.isKey}" *ngIf="!keysFull || header.isKey"></i>
+    </span>
+
+    <section *ngIf="previewOpen" class="preview-container col-sm-12">
+      <div class="preview-scroller-container">
+        <div class="preview-cell-container">
+          <section *ngFor="let cell of header.cells" class="content-box white-border">
+
+            <span>
+              <span *ngIf="isPrimary && rowMap">
+                <span class="col-preview-row-text" *ngIf="rowMap.hasOwnProperty(cell.row)">
+                  {{ rowMap[cell.row]['mappedRow'] }}
+                </span>
+                <span *ngIf="rowMap.hasOwnProperty(cell.row)"
+                  [ngClass]="{'col-preview-red-text': rowMap[cell.row]['newValue']!==rowMap[cell.row]['oldValue']}">
+                  {{ rowMap[cell.row]['newValue'] }}
+                  <i class="fas fa-arrow-right col-preview-icon"></i>
+                </span>
+              </span>
+              <span *ngIf="isPrimary && diffMap">
+                <span class="col-preview-row-text" *ngIf="diffMap.hasOwnProperty(cell.row)">
+                  {{ diffMap[cell.row]['mappedRow'] }}
+                </span>
+                <span *ngIf="diffMap.hasOwnProperty(cell.row)"
+                  [ngClass]="{'col-preview-red-text': diffMap[cell.row]['newValue']!==diffMap[cell.row]['oldValue']}">
+                  {{ diffMap[cell.row]['newValue'] }}
+                  <i class="fas fa-arrow-right col-preview-icon"></i>
+                </span>
+              </span>
+              <span class="col-preview-row-text">
+                {{ cell.row }}
+              </span> {{ cell.value }}
+            </span>
+
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+</article>

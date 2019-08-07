@@ -22,6 +22,8 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CopymodeComponent } from './components/copymode/copymode.component';
+import { WorkbookComponent } from './components/copymode/subcomponents/workbook/workbook.component';
+import { HeaderComponent } from './components/copymode/subcomponents/header/header.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -33,7 +35,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     WebviewDirective,
     SidebarComponent,
-    CopymodeComponent
+    CopymodeComponent,
+    WorkbookComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

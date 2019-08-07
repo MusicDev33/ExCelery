@@ -3,6 +3,7 @@ import { Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
 import { ASWorkbook } from '../../model/asworkbook';
 import { KeyPair } from '../../model/keypair';
+import { Header } from '../../model/header';
 
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
@@ -61,6 +62,15 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  createHeader(header: string, filename: string, workbook: ASWorkbook) {
+    const isKey = this.keyPairs['copy'].keyExists(filename, header);
+    const isDiff = this.isDiffSelected(filename, header);
+    const isSelected = this.isSelected(filename, header);
+    const headerParams = {isKey: isKey, diffMode: isDiff, copyMode: isSelected};
+    const newHeader = new Header(header, filename, workbook.getCellsFromHeader(header), headerParams);
+    return newHeader;
   }
 
   setActiveText(textfieldName: string) {
@@ -316,11 +326,24 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     });
   }
 
+  checkIfRowMap() {
+    return typeof this.rowMap !== 'undefined' && Object.keys(this.rowMap).length > 0;
+  }
+
+  clearRowMap() {
+    this.rowMap = {};
+    this.copyToHeader = '';
+    this.copyFromHeader = '';
+    this.editCount = 0;
+  }
+
   closeFile(filename: string) {
     const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
     if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
     this.copyToHeader = '';
     this.copyFromHeader = '';
+    this.diffHeaderOne = '';
+    this.diffHeaderTwo = '';
     this.keyPairs['copy'].deleteKeys();
     this.editCount = 0;
     this.rowMap = {};

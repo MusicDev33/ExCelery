@@ -5,6 +5,13 @@ input {
 }
 
 /* Classes */
+.text-purple {
+  color: $sidebar-color2-em;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
 
 .container-fluid {
   height: 100%;
@@ -50,12 +57,6 @@ input {
   border-color: $sidebar-color2 !important;
 }
 
-.header-icon{
-  transition: all 0.3s;
-  margin-right: 0.5em;
-  cursor: pointer;
-}
-
 .scroll-container{
   padding-right: 10px;
 }
@@ -84,50 +85,13 @@ input {
 }
 
 .content-box{
-  transition: all 0.9s;
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
-  border-radius: 5px;
-  background-color: #fff;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-
-.content-box:hover {
-  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  -ms-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  -o-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-}
-
-.white-border{
-  border-width: 1px;
-  border-style: solid;
-  border-color: #fff;
-}
-
-.purple-border{
-  border-width: 1px;
-  border-style: solid;
-  border-color: $sidebar-color2;
 }
 
 .content-box .confirm-box{
   background-color: $sidebar-color2;
   border-color: $sidebar-color2;
-}
-
-.content-box:hover .hidden-hicon{
-  opacity: 1;
 }
 
 .no-show{
@@ -138,77 +102,6 @@ input {
 
 .content-box.active{
   border-color: $sidebar-color2;
-}
-
-.cb-title{
-  transition: all 0.3s;
-  margin-right: 0.5em;
-}
-
-.cb-title-red {
-  color: red;
-}
-
-.cb-title:hover{
-  color: $sidebar-color2-em;
-}
-
-.hidden-hicon{
-  opacity: 0;
-}
-
-.hi-unselected:hover{
-  color: $sidebar-color2-em;
-}
-
-.hi-selected{
-  transition: all 1s;
-  color: $sidebar-color2-em;
-}
-
-.preview-open{
-  border-bottom: 2px solid #f00;
-}
-
-.preview-container{
-  margin-top: 5px;
-  border-top: 2px solid $sidebar-color2-em;
-  height: 20vh;
-
-  padding: 5px 0;
-}
-
-/* lol what */
-.preview-scroller-container {
-  padding: 5px;
-  height: 100%;
-  overflow-y: scroll;
-}
-
-.preview-cell-container{
-  border-radius: 5px;
-  background-color: #eee;
-  padding: 3px;
-}
-
-.col-preview-row-text {
-  color: white;
-  background-color: $sidebar-color2-em;
-  border-radius: 7px;
-  text-align: center;
-  display: inline-block;
-  margin-right: 5px;
-  padding: 0 8px;
-  font-size: 14px;
-}
-
-.col-preview-red-text {
-  color: red;
-}
-
-.col-preview-icon {
-  margin-right: 5px;
-  color: $sidebar-color2-dark;
 }
 
 /* IDs */
