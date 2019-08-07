@@ -5,7 +5,6 @@
         {{ header.name }}
       </span>
 
-      <i class="fas fa-bug icon" (click)="debug()"></i>
       <i class="far fa-check-circle icon unselected" (click)="switchCopyMode()" *ngIf="!header.copyMode"></i>
       <i class="fas fa-check-circle icon selected" (click)="switchCopyMode()" *ngIf="header.copyMode"></i>
 

@@ -65,10 +65,4 @@ export class HeaderComponent implements OnInit {
   onHeaderClick() {
     this.selectHeader.emit(this.header);
   }
-
-  debug() {
-    console.log(this.isPrimary);
-    console.log(this.rowMap);
-    console.log(this.diffMap[5]);
-  }
 }
