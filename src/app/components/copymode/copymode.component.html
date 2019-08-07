@@ -48,11 +48,15 @@
           </article>
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="copyToHeader.length && copyFromHeader.length && keyPairs['copy'].getWhichKeyFileIn(workbook.filename) == 1" (click)="copyColumns()">
-              <b>Copy <span class="text-underline">{{ keyPairs['copy'].secondaryFile }}</span> column
-                <span class="text-purple">{{ copyFromHeader.split(":")[1] }}</span> to
-                <span class="text-underline">{{ keyPairs['copy'].primaryFile }}</span> column
-                <span class="text-purple">{{ copyToHeader.split(":")[1] }}?</span></b>
+            *ngIf="copyToHeader.length && copyFromHeader.length && keyPairs['copy'].getWhichKeyFileIn(workbook.filename) == 1"
+            (click)="copyColumns()">
+              <div class="col justify-content-center">
+                  <span class="text-underline row no-gutters justify-content-center">{{ keyPairs['copy'].secondaryFile }}</span>
+                  <span class="text-purple row no-gutters justify-content-center">{{ copyFromHeader.split(":")[1] }}</span>
+                  <span class="row no-gutters justify-content-center"><i class="fas fa-arrow-down text-purple"></i></span>
+                  <span class="text-underline row no-gutters justify-content-center">{{ keyPairs['copy'].primaryFile }}</span>
+                  <span class="text-purple row no-gutters justify-content-center">{{ copyToHeader.split(":")[1] }}?</span>
+              </div>
             </div>
           </article>
 
