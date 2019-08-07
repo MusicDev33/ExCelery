@@ -62,16 +62,16 @@
 
                 <!-- HEADERS -->
                 <app-header-box
-                [header]="createHeader(header, workbook.filename, workbook)"
-                [keysFull]="keyPairs['copy'].doBothKeysExist()"
-                [isPrimary]="keyPairs['copy'].getWhichKeyFileIn(workbook.filename) === 1"
-                [rowMap]="rowMap.hasOwnProperty(header) ? rowMap[header] : undefined"
-                [diffMap]="diffMap.hasOwnProperty(header) ? diffMap[header] : undefined"
-                [previewOpen]=" columnPreviews[workbook.filename]===header"
-                (selectKey)="keyPairs['copy'].setKey(workbook.filename, header)"
-                (selectDiff)="diffButtonClicked(workbook.filename, header)"
-                (selectCopy)="checkMarkClicked(workbook.filename, header)"
-                (selectHeader)="headerClicked(workbook.filename, header)">
+                  [header]="createHeader(header, workbook.filename, workbook)"
+                  [keysFull]="keyPairs['copy'].doBothKeysExist()"
+                  [isPrimary]="keyPairs['copy'].getWhichKeyFileIn(workbook.filename) === 1"
+                  [rowMap]="rowMap.hasOwnProperty(header) ? rowMap[header] : undefined"
+                  [diffMap]="diffMap.hasOwnProperty(header) ? diffMap[header] : undefined"
+                  [previewOpen]=" columnPreviews[workbook.filename]===header"
+                  (selectKey)="keyPairs['copy'].setKey(workbook.filename, header)"
+                  (selectDiff)="diffButtonClicked(workbook.filename, header)"
+                  (selectCopy)="checkMarkClicked(workbook.filename, header)"
+                  (selectHeader)="headerClicked(workbook.filename, header)">
                 </app-header-box>
 
               </div>
