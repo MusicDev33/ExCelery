@@ -1,0 +1,105 @@
+@import 'colors.scss';
+
+.actionbar-item{
+  cursor: pointer;
+  margin-right: 0.6em;
+}
+
+.actionbar-text{
+  color: #000;
+}
+
+.actionbar-icon{
+  color: $sidebar-color2-em;
+}
+
+.search-field{
+  background-color: #fafafa;
+  transition: all 0.4s;
+  border-width: 0;
+  border-bottom: 2px solid #ddd !important;
+  border-radius: 0;
+  border-color: $sidebar-color;
+  box-shadow: 0;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  line-height: 6px;
+  margin-bottom: 5px;
+}
+
+.search-container{
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.search-field:focus{
+  border-color: $sidebar-color2 !important;
+}
+
+.scroll-container{
+  padding-right: 10px;
+}
+
+.scrollbox{
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 85vh;
+  margin-bottom: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 10px;
+}
+
+.content-box{
+  margin: 0.4em 0.1em 0.4em 0.1em;
+  padding: 0.3em;
+}
+
+.content-box .confirm-box{
+  background-color: $sidebar-color2;
+  border-color: $sidebar-color2;
+}
+
+/* IDs */
+#encompass {
+  background-color: #fafafa;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $sidebar-color2;
+  box-sizing: content-box;
+  margin-bottom: 10px;
+}
+
+#searchfield-no-padding {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+#actionbar {
+  margin: 0.4em 0.1em 0.4em 0.1em;
+  padding: 0.1em 0.5em;
+}
+
+#actionbar-container {
+  border-bottom: 1px solid $sidebar-color2;
+}
+
+#actionbar .inactive {
+  color: #666;
+  cursor: default;
+}

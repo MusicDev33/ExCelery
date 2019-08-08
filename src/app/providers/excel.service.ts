@@ -42,7 +42,6 @@ export class ExcelService {
       if (files) {
         files.forEach((wb) => {
           if (!wb.startsWith('~') && wb.includes('.')) {
-            console.log(wb);
             this.workbooks.push(wb);
           }
         });
