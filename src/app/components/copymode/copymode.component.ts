@@ -211,7 +211,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       // value is a row, and is actually just very poorly named
       if (value.length) {
         value[0]['mappedRow'] = primaryRowObject['rowNumber'];
-        if (value[0].hasOwnProperty('result')) {
+        if (primaryRowObject[headerNameTo].hasOwnProperty('result')) {
           value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
         } else {
           value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo];
