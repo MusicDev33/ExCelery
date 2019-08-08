@@ -9,11 +9,14 @@
           </span>
           <i class="fas fa-trash-alt actionbar-item actionbar-icon"></i>
           <i class="fas fa-times actionbar-item actionbar-icon"></i>
-          <span class="actionbar-text">   </span>
+          <span class="actionbar-text"> {{ keyPair.getKeyTypeText(workbook.filename)}}  </span>
         </span>
       </section>
       <section class="row search-container">
-        <input class="search-field form-control" name="searchText" placeholder="Header Search">
+        <input class="search-field form-control"
+          name="searchText"
+          placeholder="Header Search"
+          [(ngModel)]="searchText">
       </section>
     </article>
 

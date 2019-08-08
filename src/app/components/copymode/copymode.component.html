@@ -17,7 +17,10 @@
 
   <section class="row" *ngIf="currentWorkbooks.length">
     <div class="row col-xl-5 col-sm-6" *ngFor="let workbook of currentWorkbooks">
-      <app-workbook-view [workbook]="workbook" class="col-12">
+      <app-workbook-view
+        [workbook]="workbook"
+        [keyPair]="keyPairs['copy']"
+        class="col-12">
       </app-workbook-view>
     </div>
 
@@ -40,7 +43,7 @@
             </div>
             <div class="row search-container">
               <input class="search-field form-control" [(ngModel)]="searchText"
-              name="searchText" placeholder="Header Search" [ngClass]="{'active': header===activeTextfield}" (click)="headerSearchbarClicked()">
+              name="searchText" placeholder="Header Search" (click)="headerSearchbarClicked()">
             </div>
           </article>
 

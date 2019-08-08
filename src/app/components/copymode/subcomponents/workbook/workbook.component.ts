@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ASWorkbook } from '../../../../model/asworkbook';
+import { KeyPair } from '../../../../model/keypair';
 
 @Component({
   selector: 'app-workbook-view',
@@ -8,8 +9,13 @@ import { ASWorkbook } from '../../../../model/asworkbook';
 })
 export class WorkbookComponent implements OnInit {
 
+  searchText = '';
+
   @Input()
   workbook: ASWorkbook;
+
+  @Input()
+  keyPair: KeyPair;
 
   constructor() { }
 
