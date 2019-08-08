@@ -8,6 +8,7 @@ import { Header } from '../../model/header';
 import { ElectronService } from '../../providers/electron.service';
 import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { AbstracterizerService } from '../../providers/abstracterizer.service';
+import { CopyStoreService } from '../../providers/copymode/copystore.service';
 
 @Component({
   selector: 'app-copymode',
@@ -46,14 +47,16 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
-    public abstract: AbstracterizerService) { }
+    public abstract: AbstracterizerService,
+    public store: CopyStoreService) { }
 
   ngOnInit() {
     // wb is an excel file interface
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
       if (wb.workbook.getWorksheet(1)) {
         const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
-        this.keyPairs['copy'] = new KeyPair();
+        this.store.keyPair = new KeyPair();
+        this.store.keyPair = new KeyPair();
         this.keyPairs['diff'] = new KeyPair();
         this.currentWorkbooks.push(newWorkbook);
       }
@@ -65,7 +68,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   createHeader(header: string, filename: string, workbook: ASWorkbook) {
-    const isKey = this.keyPairs['copy'].keyExists(filename, header);
+    const isKey = this.store.keyPair.keyExists(filename, header);
     const isDiff = this.isDiffSelected(filename, header);
     const isSelected = this.isSelected(filename, header);
     const headerParams = {isKey: isKey, diffMode: isDiff, copyMode: isSelected};
@@ -83,60 +86,60 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   // Fuzzy logic that will hopefully be fixed soon
   checkMarkClicked(filename: string, header: string) {
-    if (!this.keyPairs['copy'].doBothKeysExist()) {
+    if (!this.store.keyPair.doBothKeysExist()) {
       return;
     }
 
-    if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 1) {
-      if (this.copyToHeader === this.keyPairs['copy'].createKey(filename, header)) {
+    if (this.store.keyPair.getWhichKeyFileIn(filename) === 1) {
+      if (this.copyToHeader === this.store.keyPair.createKey(filename, header)) {
         this.copyToHeader = '';
         return;
       }
-      this.copyToHeader = this.keyPairs['copy'].createKey(filename, header);
-    } else if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 2) {
-      if (this.copyFromHeader === this.keyPairs['copy'].createKey(filename, header)) {
+      this.copyToHeader = this.store.keyPair.createKey(filename, header);
+    } else if (this.store.keyPair.getWhichKeyFileIn(filename) === 2) {
+      if (this.copyFromHeader === this.store.keyPair.createKey(filename, header)) {
         this.copyFromHeader = '';
         return;
       }
-      this.copyFromHeader = this.keyPairs['copy'].createKey(filename, header);
+      this.copyFromHeader = this.store.keyPair.createKey(filename, header);
     }
   }
 
   // DIFF
   diffButtonClicked(filename: string, header: string) {
-    if (!this.keyPairs['copy'].doBothKeysExist()) {
+    if (!this.store.keyPair.doBothKeysExist()) {
       return;
     }
 
-    if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 1) {
-      if (this.diffHeaderOne === this.keyPairs['copy'].createKey(filename, header)) {
+    if (this.store.keyPair.getWhichKeyFileIn(filename) === 1) {
+      if (this.diffHeaderOne === this.store.keyPair.createKey(filename, header)) {
         this.diffHeaderOne = '';
         this.diffOpen = false;
         this.diffMap = {};
         return;
       }
-      this.diffHeaderOne = this.keyPairs['copy'].createKey(filename, header);
+      this.diffHeaderOne = this.store.keyPair.createKey(filename, header);
       this.calculateDiffIfFull();
-    } else if (this.keyPairs['copy'].getWhichKeyFileIn(filename) === 2) {
-      if (this.diffHeaderTwo === this.keyPairs['copy'].createKey(filename, header)) {
+    } else if (this.store.keyPair.getWhichKeyFileIn(filename) === 2) {
+      if (this.diffHeaderTwo === this.store.keyPair.createKey(filename, header)) {
         this.diffHeaderTwo = '';
         this.diffOpen = false;
         this.diffMap = {};
         return;
       }
-      this.diffHeaderTwo = this.keyPairs['copy'].createKey(filename, header);
+      this.diffHeaderTwo = this.store.keyPair.createKey(filename, header);
       this.calculateDiffIfFull();
     }
   }
 
   isSelected(filename: string, header: string) {
-    return this.keyPairs['copy'].createKey(filename, header) === this.copyToHeader ||
-      this.keyPairs['copy'].createKey(filename, header) === this.copyFromHeader;
+    return this.store.keyPair.createKey(filename, header) === this.copyToHeader ||
+      this.store.keyPair.createKey(filename, header) === this.copyFromHeader;
   }
 
   isDiffSelected(filename: string, header: string) {
-    return this.keyPairs['copy'].createKey(filename, header) === this.diffHeaderOne ||
-      this.keyPairs['copy'].createKey(filename, header) === this.diffHeaderTwo;
+    return this.store.keyPair.createKey(filename, header) === this.diffHeaderOne ||
+      this.store.keyPair.createKey(filename, header) === this.diffHeaderTwo;
   }
 
   areBothDiffsSelected() {
@@ -171,10 +174,10 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   copyColumns() {
     const editArray = [];
 
-    const primaryKeyFile = this.keyPairs['copy'].primaryFile;
-    const primaryKeyHeader = this.keyPairs['copy'].primaryHeader;
-    const secondaryKeyFile = this.keyPairs['copy'].secondaryFile;
-    const secondaryKeyHeader = this.keyPairs['copy'].secondaryHeader;
+    const primaryKeyFile = this.store.keyPair.primaryFile;
+    const primaryKeyHeader = this.store.keyPair.primaryHeader;
+    const secondaryKeyFile = this.store.keyPair.secondaryFile;
+    const secondaryKeyHeader = this.store.keyPair.secondaryHeader;
 
     const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
       return workbook.filename === primaryKeyFile;
@@ -249,10 +252,10 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
     const editArray = [];
 
-    const primaryKeyFile = this.keyPairs['copy'].primaryFile;
-    const primaryKeyHeader = this.keyPairs['copy'].primaryHeader;
-    const secondaryKeyFile = this.keyPairs['copy'].secondaryFile;
-    const secondaryKeyHeader = this.keyPairs['copy'].secondaryHeader;
+    const primaryKeyFile = this.store.keyPair.primaryFile;
+    const primaryKeyHeader = this.store.keyPair.primaryHeader;
+    const secondaryKeyFile = this.store.keyPair.secondaryFile;
+    const secondaryKeyHeader = this.store.keyPair.secondaryHeader;
 
     const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
       return workbook.filename === primaryKeyFile;
@@ -284,7 +287,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       // value is a row, and is actually just very poorly named
       if (value.length) {
         value[0]['mappedRow'] = primaryRowObject['rowNumber'];
-        if (value[0].hasOwnProperty('result')) {
+        if (primaryRowObject[headerNameOne] !== null && primaryRowObject[headerNameOne].hasOwnProperty('result')) {
           value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne]['result'];
         } else {
           value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne];
@@ -299,16 +302,16 @@ export class CopymodeComponent implements OnInit, OnDestroy {
         const newMappedRow = {};
         newMappedRow['mappedRow'] = rowObj['rowNumber'];
         newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = newValue;
-        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
         this.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
       } else {
         const newValue = rowObj[headerNameTwo];
         const newMappedRow = {};
         newMappedRow['mappedRow'] = rowObj['rowNumber'];
         newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = newValue;
-        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
         this.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
       }
     });
@@ -350,7 +353,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.copyFromHeader = '';
     this.diffHeaderOne = '';
     this.diffHeaderTwo = '';
-    this.keyPairs['copy'].deleteKeys();
+    this.store.keyPair.deleteKeys();
     this.editCount = 0;
     this.rowMap = {};
     delete this.keyPairs[filename];
