@@ -24,9 +24,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  // Shows which rows were copied to which
-  diffOpen = false;
-
   constructor(
     public electron: ElectronService,
     public excel: ExcelService,
@@ -95,7 +92,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     if (this.store.keyPair.getWhichKeyFileIn(filename) === 1) {
       if (this.store.diffHeaderOne === this.store.keyPair.createKey(filename, header)) {
         this.store.diffHeaderOne = '';
-        this.diffOpen = false;
         this.store.diffMap = {};
         return;
       }
@@ -104,7 +100,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     } else if (this.store.keyPair.getWhichKeyFileIn(filename) === 2) {
       if (this.store.diffHeaderTwo === this.store.keyPair.createKey(filename, header)) {
         this.store.diffHeaderTwo = '';
-        this.diffOpen = false;
         this.store.diffMap = {};
         return;
       }
@@ -296,8 +291,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
         this.store.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
       }
     });
-
-    this.diffOpen = true;
   }
 
   saveFile(workbook) {
