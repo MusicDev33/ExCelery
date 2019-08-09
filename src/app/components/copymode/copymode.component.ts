@@ -186,7 +186,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     const headerNameFrom = this.store.copyFromHeader.split(':')[1];
     const columnNumber = primaryWorkbook[0]['headerToColumnNumber'][headerNameTo];
 
-    this.rowMap[headerNameTo] = {};
+    this.store.rowMap[headerNameTo] = {};
 
     for (const primaryRowObject of primaryRows) {
       const primaryKeyValue = primaryRowObject[primaryKeyHeader];
@@ -202,7 +202,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       // value is a row, and is actually just very poorly named
       if (value.length) {
         value[0]['mappedRow'] = primaryRowObject['rowNumber'];
-        if (primaryRowObject[headerNameTo].hasOwnProperty('result')) {
+        if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
           value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
         } else {
           value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo];
@@ -220,7 +220,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
         newMappedRow['rowNumber'] = rowObj['mappedRow'];
         newMappedRow['newValue'] = newValue;
         newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
-        this.rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+        this.store.rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       } else {
         const newValue = rowObj[headerNameFrom];
         primaryWorkbook[0].workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
@@ -229,7 +229,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
         newMappedRow['rowNumber'] = rowObj['mappedRow'];
         newMappedRow['newValue'] = newValue;
         newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
-        this.rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+        this.store.rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       }
     });
 
@@ -322,16 +322,16 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.excel.saveExcel(totalFilename, workbook.workbook, () => {
       console.log('Saved file: ' + totalFilename);
       this.editCount = 0;
-      this.rowMap = {};
+      this.store.rowMap = {};
     });
   }
 
   checkIfRowMap() {
-    return typeof this.rowMap !== 'undefined' && Object.keys(this.rowMap).length > 0;
+    return typeof this.store.rowMap !== 'undefined' && Object.keys(this.store.rowMap).length > 0;
   }
 
   clearRowMap() {
-    this.rowMap = {};
+    this.store.rowMap = {};
     this.store.copyToHeader = '';
     this.store.copyFromHeader = '';
     this.editCount = 0;
@@ -346,7 +346,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.store.diffHeaderTwo = '';
     this.store.keyPair.deleteKeys();
     this.editCount = 0;
-    this.rowMap = {};
+    this.store.rowMap = {};
     delete this.keyPairs[filename];
   }
 }

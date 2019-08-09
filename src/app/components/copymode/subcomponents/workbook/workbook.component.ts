@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ASWorkbook } from '../../../../model/asworkbook';
 import { KeyPair } from '../../../../model/keypair';
 
+import { CopyStoreService } from '../../../../providers/copymode/copystore';
+
 @Component({
   selector: 'app-workbook-view',
   templateUrl: './workbook.component.html',

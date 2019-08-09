@@ -24,12 +24,6 @@ export class HeaderComponent implements OnInit {
   @Input()
   previewOpen: boolean;
 
-  @Input()
-  rowMap: any;
-
-  @Input()
-  diffMap: any;
-
 
   // OUTPUTS
   @Output()
