@@ -16,13 +16,13 @@
   </section>
 
   <section class="row" *ngIf="currentWorkbooks.length">
-    <!--
+
     <div *ngFor="let workbook of currentWorkbooks" class="row col-xl-5 col-sm-6">
       <app-workbook-view class="col-12"
         [workbook]="workbook"
-        [keyPair]="store.keyPair">
+        (close)="closeFile($event)">
       </app-workbook-view>
-    </div> -->
+    </div>
 
     <div class="row col-xl-5 col-sm-6" *ngFor="let workbook of currentWorkbooks">
       <div class="col">

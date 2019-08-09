@@ -16,11 +16,14 @@ export class WorkbookComponent implements OnInit {
   @Input()
   workbook: ASWorkbook;
 
-  @Input()
-  keyPair: KeyPair;
+  @Output()
+  close = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(public store: CopyStoreService) { }
 
   ngOnInit() { }
 
+  closeButtonClicked() {
+    this.close.emit(this.workbook.filename);
+  }
 }
