@@ -21,6 +21,9 @@ export class WorkbookComponent implements OnInit {
   close = new EventEmitter<string>();
 
   @Output()
+  copy = new EventEmitter<any>();
+
+  @Output()
   save = new EventEmitter<ASWorkbook>();
 
   @Output()
@@ -47,6 +50,10 @@ export class WorkbookComponent implements OnInit {
 
   closeButtonClicked() {
     this.close.emit(this.workbook.filename);
+  }
+
+  copyButtonClicked() {
+    this.copy.emit();
   }
 
   saveButtonClicked() {

@@ -7,9 +7,9 @@
           <span class="actionbar-item actionbar-text">
             {{ workbook.filename.split('.')[0] }}
           </span>
-          <i class="fas fa-trash-alt actionbar-item actionbar-icon"></i>
-          <i class="fas fa-times actionbar-item actionbar-icon"
-            *ngIf="store.checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="store.closeFile(workbook.filename)">
+          <i class="fas fa-trash-alt actionbar-item actionbar-icon"
+            *ngIf="store.checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="store.clearRowMap()"></i>
+          <i class="fas fa-times actionbar-item actionbar-icon" (click)="store.closeFile(workbook.filename)">
           </i>
           <span class="actionbar-text"> {{ store.keyPair.getKeyTypeText(workbook.filename)}}  </span>
         </span>
@@ -31,7 +31,8 @@
 
     <article class="col">
       <div class="content-box purple-border selectable row justify-content-center"
-        *ngIf="store.copyToHeader.length && store.copyFromHeader.length && store.keyPair.getWhichKeyFileIn(workbook.filename) == 1">
+        *ngIf="store.copyToHeader.length && store.copyFromHeader.length && store.keyPair.getWhichKeyFileIn(workbook.filename) == 1"
+        (click)="copyButtonClicked()">
         <div class="col justify-content-center">
           <span class="text-underline row no-gutters justify-content-center"> {{ store.keyPair.secondaryFile }} </span>
           <span class="text-purple row no-gutters justify-content-center"> {{ store.copyFromHeader.split(":")[1] }} </span>
@@ -55,7 +56,7 @@
             (selectKey)="store.keyPair.setKey(workbook.filename, header)"
             (selectDiff)="diffSelected($event)"
             (selectCopy)="copySelected($event)"
-            (selectHeader)="headerSelect($event)">
+            (selectHeader)="headerSelected($event)">
           </app-header-box>
 
         </div>

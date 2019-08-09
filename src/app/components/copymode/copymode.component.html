@@ -22,77 +22,14 @@
         [workbook]="workbook"
         (close)="closeFile($event)"
         (save)="saveFile($event)"
+        (copy)="copyColumns()"
         (selectDiff)="diffButtonClicked(workbook.filename, $event)"
         (selectCopy)="checkMarkClicked(workbook.filename, $event)"
         (selectHeader)="headerClicked(workbook.filename, $event)">
       </app-workbook-view>
     </div>
 
-    <div class="row col-xl-5 col-sm-6" *ngFor="let workbook of store.currentWorkbooks">
-      <div class="col">
-        <div id="encompass">
-          <!-- Action Bar -->
-          <article class="col">
-            <div class="row" id="actionbar-container">
-              <span id="actionbar">
-                <span class="actionbar-item actionbar-text">
-                  {{ workbook.filename.split('.')[0] }}
-                </span>
-                <i class="fas fa-trash-alt actionbar-item actionbar-icon"
-                  *ngIf="store.checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="store.clearRowMap()">
-                </i>
-                <i class="fas fa-times actionbar-item actionbar-icon" (click)="store.closeFile(workbook.filename)"></i>
-                <span class="actionbar-text"> {{ store.keyPair.getKeyTypeText(workbook.filename) }}</span>
-              </span>
-            </div>
-            <div class="row search-container">
-              <input class="search-field form-control" [(ngModel)]="searchText"
-              name="searchText" placeholder="Header Search" (click)="headerSearchbarClicked()">
-            </div>
-          </article>
 
-          <!-- Content -->
-          <article class="col">
-            <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="store.editCount >= 1 && store.keyPair.primaryFile == workbook.filename" (click)="saveFile(workbook)">
-              Save
-            </div>
-          </article>
-
-          <article class="col">
-            <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="store.copyToHeader.length && store.copyFromHeader.length && store.keyPair.getWhichKeyFileIn(workbook.filename) == 1"
-            (click)="copyColumns()">
-              <div class="col justify-content-center">
-                <span class="text-underline row no-gutters justify-content-center">{{ store.keyPair.secondaryFile }}</span>
-                <span class="text-purple row no-gutters justify-content-center">{{ store.copyFromHeader.split(":")[1] }}</span>
-                <span class="row no-gutters justify-content-center"><i class="fas fa-arrow-down text-purple"></i></span>
-                <span class="text-underline row no-gutters justify-content-center">{{ store.keyPair.primaryFile }}</span>
-                <span class="text-purple row no-gutters justify-content-center">{{ store.copyToHeader.split(":")[1] }}?</span>
-              </div>
-            </div>
-          </article>
-
-          <article class="scroll-container">
-            <div class="scrollbox">
-              <div *ngFor="let header of workbook.headers">
-
-                <!-- HEADERS -->
-                <app-header-box
-                  [header]="createHeader(header, workbook.filename, workbook)"
-                  [keysFull]="store.keyPair.doBothKeysExist()"
-                  [isPrimary]="store.keyPair.getWhichKeyFileIn(workbook.filename) === 1"
-                  [previewOpen]=" store.columnPreviews[workbook.filename]===header"
-                  (selectKey)="store.keyPair.setKey(workbook.filename, header)">
-                </app-header-box>
-
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </div>
 
   </section>
 
