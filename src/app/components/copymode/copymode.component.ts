@@ -62,17 +62,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.store.addDiffHeader(filename, header);
   }
 
-  calculateDiffIfFull() {
-    if (this.areBothDiffsSelected()) {
-      this.openPreview(this.store.diffHeaderOne.split(':')[0], this.store.diffHeaderOne.split(':')[1]);
-      this.calculateDiff();
-    }
-  }
-
-  areBothDiffsSelected() {
-    return this.store.diffHeaderOne !== '' && this.store.diffHeaderTwo !== '';
-  }
-
   headerSearchbarClicked() {
     this.activeTextfield = '';
     this.activeText = '';
@@ -165,76 +154,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.store.editCount += 1;
     this.store.copyToHeader = '';
     this.store.copyFromHeader = '';
-  }
-
-  calculateDiff() {
-    this.store.diffMap = {};
-
-    const editArray = [];
-
-    const primaryKeyFile = this.store.keyPair.primaryFile;
-    const primaryKeyHeader = this.store.keyPair.primaryHeader;
-    const secondaryKeyFile = this.store.keyPair.secondaryFile;
-    const secondaryKeyHeader = this.store.keyPair.secondaryHeader;
-
-    const primaryWorkbook = this.store.currentWorkbooks.filter(workbook => {
-      return workbook.filename === primaryKeyFile;
-    });
-    const primaryRows = primaryWorkbook[0]['rows'];
-
-    const secondaryWorkbook = this.store.currentWorkbooks.filter(workbook => {
-      return workbook.filename === secondaryKeyFile;
-    });
-    const secondaryRows = secondaryWorkbook[0]['rows'];
-
-    const headerNameOne = this.store.diffHeaderOne.split(':')[1];
-    const headerNameTwo = this.store.diffHeaderTwo.split(':')[1];
-    const columnNumber = primaryWorkbook[0]['headerToColumnNumber'][headerNameOne];
-
-    this.store.diffMap[headerNameOne] = {};
-
-    for (const primaryRowObject of primaryRows) {
-      const primaryKeyValue = primaryRowObject[primaryKeyHeader];
-      // Get row with value regardless of whether or not it's a formula
-      const value = secondaryRows.filter(rowObj => {
-        if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
-          return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
-        } else {
-          return rowObj[secondaryKeyHeader] === primaryKeyValue;
-        }
-      });
-
-      // value is a row, and is actually just very poorly named
-      if (value.length) {
-        value[0]['mappedRow'] = primaryRowObject['rowNumber'];
-        if (primaryRowObject[headerNameOne] !== null && primaryRowObject[headerNameOne].hasOwnProperty('result')) {
-          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne]['result'];
-        } else {
-          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne];
-        }
-        editArray.push(value[0]);
-      }
-    }
-
-    editArray.forEach( (rowObj) => {
-      if (rowObj[headerNameTwo].hasOwnProperty('result')) {
-        const newValue = rowObj[headerNameTwo]['result'];
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
-        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
-        this.store.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
-      } else {
-        const newValue = rowObj[headerNameTwo];
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
-        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
-        this.store.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
-      }
-    });
   }
 
   saveFile(workbook) {
