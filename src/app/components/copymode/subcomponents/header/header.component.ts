@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 // I should probably find a better way to do this
 import { Header } from '../../../../model/header';
+import { CopyStoreService } from '../../../../providers/copymode/copystore.service';
 
 @Component({
   selector: 'app-header-box',
@@ -9,7 +10,7 @@ import { Header } from '../../../../model/header';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(public store: CopyStoreService) { }
 
   // INPUTS
   @Input()

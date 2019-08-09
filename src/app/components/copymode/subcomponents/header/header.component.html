@@ -28,23 +28,23 @@
            trigger="click" hide-delay="1000" style="cursor: pointer;">
 
             <span>
-              <span *ngIf="isPrimary && rowMap">
-                <span class="col-preview-row-text" *ngIf="rowMap.hasOwnProperty(cell.row)">
-                  {{ rowMap[cell.row]['mappedRow'] }}
+              <span *ngIf="isPrimary && store.rowMap[header.name]">
+                <span class="col-preview-row-text" *ngIf="store.rowMap[header.name].hasOwnProperty(cell.row)">
+                  {{ store.rowMap[header.name][cell.row]['mappedRow'] }}
                 </span>
-                <span *ngIf="rowMap.hasOwnProperty(cell.row)"
-                  [ngClass]="{'col-preview-red-text': rowMap[cell.row]['newValue']!==rowMap[cell.row]['oldValue']}">
-                  {{ rowMap[cell.row]['newValue'] }}
+                <span *ngIf="store.rowMap[header.name].hasOwnProperty(cell.row)"
+                  [ngClass]="{'col-preview-red-text': store.rowMap[header.name][cell.row]['newValue']!==store.rowMap[header.name][cell.row]['oldValue']}">
+                  {{ store.rowMap[header.name][cell.row]['newValue'] }}
                   <i class="fas fa-arrow-right col-preview-icon"></i>
                 </span>
               </span>
-              <span *ngIf="isPrimary && diffMap">
-                <span class="col-preview-row-text" *ngIf="diffMap.hasOwnProperty(cell.row)">
-                  {{ diffMap[cell.row]['mappedRow'] }}
+              <span *ngIf="isPrimary && store.diffMap[header.name]">
+                <span class="col-preview-row-text" *ngIf="store.diffMap[header.name].hasOwnProperty(cell.row)">
+                  {{ store.diffMap[header.name][cell.row]['mappedRow'] }}
                 </span>
-                <span *ngIf="diffMap.hasOwnProperty(cell.row)"
-                  [ngClass]="{'col-preview-red-text': diffMap[cell.row]['newValue']!==diffMap[cell.row]['oldValue']}">
-                  {{ diffMap[cell.row]['newValue'] }}
+                <span *ngIf="store.diffMap[header.name].hasOwnProperty(cell.row)"
+                  [ngClass]="{'col-preview-red-text': store.diffMap[header.name][cell.row]['newValue']!==store.diffMap[header.name][cell.row]['oldValue']}">
+                  {{ store.diffMap[header.name][cell.row]['newValue'] }}
                   <i class="fas fa-arrow-right col-preview-icon"></i>
                 </span>
               </span>
