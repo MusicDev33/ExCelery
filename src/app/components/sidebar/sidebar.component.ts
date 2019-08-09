@@ -18,6 +18,14 @@ export class SidebarComponent implements OnInit {
 
   workbook: ExcelFile;
 
+  /*
+  Right now, this is the only time I need to interact with
+  Bootstrap outside of the DOM. I'm keeping track of the UI state
+  because I don't want to download an entire library
+  just for this one use case.
+  */
+  filesCollapsed = true;
+
   constructor(
     public electron: ElectronService,
     public ngZone: NgZone,
@@ -44,10 +52,13 @@ export class SidebarComponent implements OnInit {
 
   toggleNavbarClicked() {
     this.navbarActive = !this.navbarActive;
+
+    this.filesCollapsed = true;
   }
 
   excelButtonClicked() {
     this.navbarActive = false;
+    this.filesCollapsed = !this.filesCollapsed;
   }
 
   openWorkbook(filename) {

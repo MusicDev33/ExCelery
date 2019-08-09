@@ -2,6 +2,8 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 // I should probably find a better way to do this
 import { Header } from '../../../../model/header';
 
+import { CopyStoreService } from '../../../../providers/copymode/copystore.service';
+
 @Component({
   selector: 'app-header-box',
   templateUrl: './header.component.html',
@@ -9,12 +11,7 @@ import { Header } from '../../../../model/header';
 })
 export class HeaderComponent implements OnInit {
 
-  ttOptions = {
-    'show-delay': 300,
-    'hide-delay': 50
-  };
-
-  constructor() { }
+  constructor(public store: CopyStoreService) { }
 
   // INPUTS
   @Input()
@@ -28,12 +25,6 @@ export class HeaderComponent implements OnInit {
 
   @Input()
   previewOpen: boolean;
-
-  @Input()
-  rowMap: any;
-
-  @Input()
-  diffMap: any;
 
 
   // OUTPUTS

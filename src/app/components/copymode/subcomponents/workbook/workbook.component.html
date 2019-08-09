@@ -1,0 +1,64 @@
+<div class="col">
+  <div id="encompass">
+
+    <article class="col">
+      <section class="row" id="actionbar-container">
+        <span id="actionbar">
+          <span class="actionbar-item actionbar-text">
+            {{ workbook.filename.split('.')[0] }}
+          </span>
+          <i class="fas fa-trash-alt actionbar-item actionbar-icon"
+            *ngIf="store.checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="store.clearRowMap()"></i>
+          <i class="fas fa-times actionbar-item actionbar-icon" (click)="store.closeFile(workbook.filename)">
+          </i>
+          <span class="actionbar-text"> {{ store.keyPair.getKeyTypeText(workbook.filename)}}  </span>
+        </span>
+      </section>
+      <section class="row search-container">
+        <input class="search-field form-control" name="searchText" placeholder="Header Search" [(ngModel)]="searchText">
+      </section>
+    </article>
+
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+        *ngIf="store.editCount >= 1 && store.keyPair.primaryFile === workbook.filename" (click)="saveButtonClicked()">
+        Save
+      </div>
+    </article>
+
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+        *ngIf="store.copyToHeader.length && store.copyFromHeader.length && store.keyPair.getWhichKeyFileIn(workbook.filename) == 1"
+        (click)="copyButtonClicked()">
+        <div class="col justify-content-center">
+          <span class="text-underline row no-gutters justify-content-center"> {{ store.keyPair.secondaryFile }} </span>
+          <span class="text-purple row no-gutters justify-content-center"> {{ store.copyFromHeader.split(":")[1] }} </span>
+          <span class="row no-gutters justify-content-center"><i class="fas fa-arrow-down text-purple"></i></span>
+          <span class="text-underline row no-gutters justify-content-center"> {{ store.keyPair.primaryFile }} </span>
+          <span class="text-purple row no-gutters justify-content-center"> {{ store.copyToHeader.split(":")[1] }}? </span>
+        </div>
+      </div>
+    </article>
+
+    <article class="scroll-container">
+      <div class="scrollbox">
+        <div *ngFor="let header of workbook.headers">
+
+          <!-- HEADERS -->
+          <app-header-box *ngIf="header.toLowerCase().includes(searchText.toLowerCase())"
+            [header]="createHeader(header, workbook.filename, workbook)"
+            [keysFull]="store.keyPair.doBothKeysExist()"
+            [isPrimary]="store.keyPair.getWhichKeyFileIn(workbook.filename) === 1"
+            [previewOpen]=" store.columnPreviews[workbook.filename]===header"
+            (selectKey)="store.keyPair.setKey(workbook.filename, header)"
+            (selectDiff)="diffSelected($event)"
+            (selectCopy)="copySelected($event)"
+            (selectHeader)="headerSelected($event)">
+          </app-header-box>
+
+        </div>
+      </div>
+    </article>
+
+  </div>
+</div>
