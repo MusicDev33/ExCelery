@@ -27,10 +27,22 @@ export class CopyStoreService {
   // but it'll leave here for a bit
   editCount = 0;
 
+  columnPreviews = {};
+
   constructor(public copyService: CopyService) { }
 
   checkIfRowMap() {
     return typeof this.rowMap !== 'undefined' && Object.keys(this.rowMap).length > 0;
+  }
+
+  isSelected(filename: string, header: string) {
+    return this.keyPair.createKey(filename, header) === this.copyToHeader ||
+      this.keyPair.createKey(filename, header) === this.copyFromHeader;
+  }
+
+  isDiffSelected(filename: string, header: string) {
+    return this.keyPair.createKey(filename, header) === this.diffHeaderOne ||
+      this.keyPair.createKey(filename, header) === this.diffHeaderTwo;
   }
 
   clearRowMap() {
@@ -46,7 +58,7 @@ export class CopyStoreService {
     this.copyToHeader = '';
     this.copyFromHeader = '';
     this.diffHeaderOne = '';
-    this.headerNameTwo = '';
+    this.diffHeaderTwo = '';
     this.rowMap = {};
     this.diffMap = {};
     this.editCount = 0;

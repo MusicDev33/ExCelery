@@ -8,7 +8,9 @@
             {{ workbook.filename.split('.')[0] }}
           </span>
           <i class="fas fa-trash-alt actionbar-item actionbar-icon"></i>
-          <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeButtonClicked()"></i>
+          <i class="fas fa-times actionbar-item actionbar-icon"
+            *ngIf="store.checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="store.closeFile(workbook.filename)">
+          </i>
           <span class="actionbar-text"> {{ store.keyPair.getKeyTypeText(workbook.filename)}}  </span>
         </span>
       </section>
@@ -20,20 +22,22 @@
       </section>
     </article>
 
-    <article class="col" *ngIf="0">
-      <div class="content-box purple-border selectable row justify-content-center">
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+        *ngIf="store.editCount >= 1 && store.keyPair.primaryFile === workbook.filename" (click)="saveButtonClicked()">
         Save
       </div>
     </article>
 
-    <article class="col" *ngIf="0">
-      <div class="content-box purple-border selectable row justify-content-center">
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+        *ngIf="store.copyToHeader.length && store.copyFromHeader.length && store.keyPair.getWhichKeyFileIn(workbook.filename) == 1">
         <div class="col justify-content-center">
-          <span class="text-underline row no-gutters justify-content-center"> H </span>
-          <span class="text-purple row no-gutters justify-content-center"> H </span>
+          <span class="text-underline row no-gutters justify-content-center"> {{ store.keyPair.secondaryFile }} </span>
+          <span class="text-purple row no-gutters justify-content-center"> {{ store.copyFromHeader.split(":")[1] }} </span>
           <span class="row no-gutters justify-content-center"><i class="fas fa-arrow-down text-purple"></i></span>
-          <span class="text-underline row no-gutters justify-content-center"> H </span>
-          <span class="text-purple row no-gutters justify-content-center"> H </span>
+          <span class="text-underline row no-gutters justify-content-center"> {{ store.keyPair.primaryFile }} </span>
+          <span class="text-purple row no-gutters justify-content-center"> {{ store.copyToHeader.split(":")[1] }}? </span>
         </div>
       </div>
     </article>
@@ -44,10 +48,14 @@
 
           <!-- HEADERS -->
           <app-header-box
-            [header]="header"
-            [keysFull]="false"
-            [isPrimary]="true"
-            [previewOpen]="false">
+            [header]="createHeader(header, workbook.filename, workbook)"
+            [keysFull]="store.keyPair.doBothKeysExist()"
+            [isPrimary]="store.keyPair.getWhichKeyFileIn(workbook.filename) === 1"
+            [previewOpen]=" store.columnPreviews[workbook.filename]===header"
+            (selectKey)="store.keyPair.setKey(workbook.filename, header)"
+            (selectDiff)="diffSelected($event)"
+            (selectCopy)="copySelected($event)"
+            (selectHeader)="headerSelect($event)">
           </app-header-box>
 
         </div>

@@ -17,8 +17,6 @@ import { CopyStoreService } from '../../providers/copymode/copystore.service';
 })
 export class CopymodeComponent implements OnInit, OnDestroy {
 
-  currentWorkbooks: Array<ASWorkbook> = [];
-
   activeTextfield = '';
 
   searchText = '';
@@ -26,15 +24,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-  editCount = 0;
-
-  columnPreviews = {};
-
   // Shows which rows were copied to which
-  rowMap = {};
   diffOpen = false;
-
-  keyPairs = {};
 
   constructor(
     public electron: ElectronService,
@@ -48,7 +39,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       if (wb.workbook.getWorksheet(1)) {
         const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
         this.store.keyPair = new KeyPair();
-        this.keyPairs['diff'] = new KeyPair();
         this.store.currentWorkbooks.push(newWorkbook);
       }
     });
@@ -150,15 +140,15 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   headerClicked(filename, header) {
-    if (this.columnPreviews[filename] === header) {
-      this.columnPreviews[filename] = '';
+    if (this.store.columnPreviews[filename] === header) {
+      this.store.columnPreviews[filename] = '';
     } else {
-      this.columnPreviews[filename] = header;
+      this.store.columnPreviews[filename] = header;
     }
   }
 
   openPreview(filename, header) {
-    this.columnPreviews[filename] = header;
+    this.store.columnPreviews[filename] = header;
   }
 
   // Column Copying
@@ -324,26 +314,5 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       this.store.editCount = 0;
       this.store.rowMap = {};
     });
-  }
-
-  checkIfRowMap() {
-    return typeof this.store.rowMap !== 'undefined' && Object.keys(this.store.rowMap).length > 0;
-  }
-
-  clearRowMap() {
-    this.store.clearRowMap();
-  }
-
-  closeFile(filename: string) {
-    const index = this.store.currentWorkbooks.findIndex(x => x.filename === filename);
-    if (index !== -1) { this.store.currentWorkbooks.splice(index, 1); }
-    this.store.copyToHeader = '';
-    this.store.copyFromHeader = '';
-    this.store.diffHeaderOne = '';
-    this.store.diffHeaderTwo = '';
-    this.store.keyPair.deleteKeys();
-    this.store.editCount = 0;
-    this.store.rowMap = {};
-    delete this.keyPairs[filename];
   }
 }
