@@ -25,7 +25,7 @@
       <div class="preview-scroller-container">
         <div class="preview-cell-container">
           <section *ngFor="let cell of header.cells" class="content-box white-border" tooltip="{{ cell.value }}"
-          [options]="ttOptions" show-delay="300" hide-delay="10">
+           trigger="click" hide-delay="1000" style="cursor: pointer;">
 
             <span>
               <span *ngIf="isPrimary && rowMap">
