@@ -45,15 +45,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  createHeader(header: string, filename: string, workbook: ASWorkbook) {
-    const isKey = this.store.keyPair.keyExists(filename, header);
-    const isDiff = this.isDiffSelected(filename, header);
-    const isSelected = this.isSelected(filename, header);
-    const headerParams = {isKey: isKey, diffMode: isDiff, copyMode: isSelected};
-    const newHeader = new Header(header, filename, workbook.getCellsFromHeader(header), headerParams);
-    return newHeader;
-  }
-
   setActiveText(textfieldName: string) {
     if (this.activeTextfield === textfieldName) {
       this.activeTextfield = '';
@@ -62,43 +53,13 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkMarkClicked(filename: string, header: string) {
+    this.store.addCopyHeader(filename, header);
+  }
+
   // DIFF
   diffButtonClicked(filename: string, header: string) {
-    if (!this.store.keyPair.doBothKeysExist()) {
-      return;
-    }
-
-    if (this.store.keyPair.getWhichKeyFileIn(filename) === 1) {
-      if (this.store.diffHeaderOne === this.store.keyPair.createKey(filename, header)) {
-        this.store.diffHeaderOne = '';
-        this.store.diffMap = {};
-        return;
-      }
-      this.store.diffHeaderOne = this.store.keyPair.createKey(filename, header);
-      this.calculateDiffIfFull();
-    } else if (this.store.keyPair.getWhichKeyFileIn(filename) === 2) {
-      if (this.store.diffHeaderTwo === this.store.keyPair.createKey(filename, header)) {
-        this.store.diffHeaderTwo = '';
-        this.store.diffMap = {};
-        return;
-      }
-      this.store.diffHeaderTwo = this.store.keyPair.createKey(filename, header);
-      this.calculateDiffIfFull();
-    }
-  }
-
-  isSelected(filename: string, header: string) {
-    return this.store.keyPair.createKey(filename, header) === this.store.copyToHeader ||
-      this.store.keyPair.createKey(filename, header) === this.store.copyFromHeader;
-  }
-
-  isDiffSelected(filename: string, header: string) {
-    return this.store.keyPair.createKey(filename, header) === this.store.diffHeaderOne ||
-      this.store.keyPair.createKey(filename, header) === this.store.diffHeaderTwo;
-  }
-
-  areBothDiffsSelected() {
-    return this.store.diffHeaderOne !== '' && this.store.diffHeaderTwo !== '';
+    this.store.addDiffHeader(filename, header);
   }
 
   calculateDiffIfFull() {
@@ -106,6 +67,10 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       this.openPreview(this.store.diffHeaderOne.split(':')[0], this.store.diffHeaderOne.split(':')[1]);
       this.calculateDiff();
     }
+  }
+
+  areBothDiffsSelected() {
+    return this.store.diffHeaderOne !== '' && this.store.diffHeaderTwo !== '';
   }
 
   headerSearchbarClicked() {
@@ -117,11 +82,11 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     if (this.store.columnPreviews[filename] === header) {
       this.store.columnPreviews[filename] = '';
     } else {
-      this.store.columnPreviews[filename] = header;
+      this.openPreview(filename, header);
     }
   }
 
-  openPreview(filename, header) {
+  openPreview(filename: string, header: string) {
     this.store.columnPreviews[filename] = header;
   }
 
