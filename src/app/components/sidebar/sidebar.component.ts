@@ -18,6 +18,8 @@ export class SidebarComponent implements OnInit {
 
   workbook: ExcelFile;
 
+  filesCollapsed = true;
+
   constructor(
     public electron: ElectronService,
     public ngZone: NgZone,
@@ -44,10 +46,13 @@ export class SidebarComponent implements OnInit {
 
   toggleNavbarClicked() {
     this.navbarActive = !this.navbarActive;
+
+    this.filesCollapsed = true;
   }
 
   excelButtonClicked() {
     this.navbarActive = false;
+    this.filesCollapsed = !this.filesCollapsed;
   }
 
   openWorkbook(filename) {
