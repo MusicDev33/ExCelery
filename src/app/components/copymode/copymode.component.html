@@ -11,20 +11,20 @@
     sunt in culpa qui officia deserunt mollit anim id est laborum.
   </section>
 
-  <section *ngIf="!currentWorkbooks.length">
+  <section *ngIf="!store.currentWorkbooks.length">
     <h4 style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
   </section>
 
-  <section class="row" *ngIf="currentWorkbooks.length">
+  <section class="row" *ngIf="store.currentWorkbooks.length">
 
-    <div *ngFor="let workbook of currentWorkbooks" class="row col-xl-5 col-sm-6">
+    <div *ngFor="let workbook of store.currentWorkbooks" class="row col-xl-5 col-sm-6">
       <app-workbook-view class="col-12"
         [workbook]="workbook"
         (close)="closeFile($event)">
       </app-workbook-view>
     </div>
 
-    <div class="row col-xl-5 col-sm-6" *ngFor="let workbook of currentWorkbooks">
+    <div class="row col-xl-5 col-sm-6" *ngFor="let workbook of store.currentWorkbooks">
       <div class="col">
         <div id="encompass">
           <!-- Action Bar -->
@@ -35,7 +35,7 @@
                   {{ workbook.filename.split('.')[0] }}
                 </span>
                 <i class="fas fa-trash-alt actionbar-item actionbar-icon"
-                  *ngIf="checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="clearRowMap()">
+                  *ngIf="store.checkIfRowMap() && store.keyPair.getWhichKeyFileIn(workbook.filename)" (click)="clearRowMap()">
                 </i>
                 <i class="fas fa-times actionbar-item actionbar-icon" (click)="closeFile(workbook.filename)"></i>
                 <span class="actionbar-text"> {{ store.keyPair.getKeyTypeText(workbook.filename) }}</span>
@@ -50,7 +50,7 @@
           <!-- Content -->
           <article class="col">
             <div class="content-box purple-border selectable row justify-content-center"
-            *ngIf="editCount >= 1 && store.keyPair.primaryFile == workbook.filename" (click)="saveFile(workbook)">
+            *ngIf="store.editCount >= 1 && store.keyPair.primaryFile == workbook.filename" (click)="saveFile(workbook)">
               Save
             </div>
           </article>

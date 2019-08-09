@@ -49,7 +49,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
         const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
         this.store.keyPair = new KeyPair();
         this.keyPairs['diff'] = new KeyPair();
-        this.currentWorkbooks.push(newWorkbook);
+        this.store.currentWorkbooks.push(newWorkbook);
       }
     });
   }
@@ -170,13 +170,13 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     const secondaryKeyFile = this.store.keyPair.secondaryFile;
     const secondaryKeyHeader = this.store.keyPair.secondaryHeader;
 
-    const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
+    const primaryWorkbook = this.store.currentWorkbooks.filter(workbook => {
       return workbook.filename === primaryKeyFile;
     });
 
     const primaryRows = primaryWorkbook[0]['rows'];
 
-    const secondaryWorkbook = this.currentWorkbooks.filter(workbook => {
+    const secondaryWorkbook = this.store.currentWorkbooks.filter(workbook => {
       return workbook.filename === secondaryKeyFile;
     });
 
@@ -233,7 +233,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.editCount += 1;
+    this.store.editCount += 1;
     this.store.copyToHeader = '';
     this.store.copyFromHeader = '';
   }
@@ -248,12 +248,12 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     const secondaryKeyFile = this.store.keyPair.secondaryFile;
     const secondaryKeyHeader = this.store.keyPair.secondaryHeader;
 
-    const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
+    const primaryWorkbook = this.store.currentWorkbooks.filter(workbook => {
       return workbook.filename === primaryKeyFile;
     });
     const primaryRows = primaryWorkbook[0]['rows'];
 
-    const secondaryWorkbook = this.currentWorkbooks.filter(workbook => {
+    const secondaryWorkbook = this.store.currentWorkbooks.filter(workbook => {
       return workbook.filename === secondaryKeyFile;
     });
     const secondaryRows = secondaryWorkbook[0]['rows'];
@@ -321,7 +321,7 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     const totalFilename = filename + ' ' + date + '.' + fileExtension;
     this.excel.saveExcel(totalFilename, workbook.workbook, () => {
       console.log('Saved file: ' + totalFilename);
-      this.editCount = 0;
+      this.store.editCount = 0;
       this.store.rowMap = {};
     });
   }
@@ -331,21 +331,18 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   clearRowMap() {
-    this.store.rowMap = {};
-    this.store.copyToHeader = '';
-    this.store.copyFromHeader = '';
-    this.editCount = 0;
+    this.store.clearRowMap();
   }
 
   closeFile(filename: string) {
-    const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
-    if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
+    const index = this.store.currentWorkbooks.findIndex(x => x.filename === filename);
+    if (index !== -1) { this.store.currentWorkbooks.splice(index, 1); }
     this.store.copyToHeader = '';
     this.store.copyFromHeader = '';
     this.store.diffHeaderOne = '';
     this.store.diffHeaderTwo = '';
     this.store.keyPair.deleteKeys();
-    this.editCount = 0;
+    this.store.editCount = 0;
     this.store.rowMap = {};
     delete this.keyPairs[filename];
   }
