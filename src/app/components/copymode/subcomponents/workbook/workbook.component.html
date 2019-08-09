@@ -48,7 +48,7 @@
         <div *ngFor="let header of workbook.headers">
 
           <!-- HEADERS -->
-          <app-header-box
+          <app-header-box *ngIf="header.toLowerCase().includes(searchText.toLowerCase())"
             [header]="createHeader(header, workbook.filename, workbook)"
             [keysFull]="store.keyPair.doBothKeysExist()"
             [isPrimary]="store.keyPair.getWhichKeyFileIn(workbook.filename) === 1"
