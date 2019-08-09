@@ -17,11 +17,6 @@ import { CopyStoreService } from '../../providers/copymode/copystore.service';
 })
 export class CopymodeComponent implements OnInit, OnDestroy {
 
-  activeTextfield = '';
-
-  searchText = '';
-  activeText = '';
-
   subscription: Subscription;
 
   constructor(
@@ -45,14 +40,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  setActiveText(textfieldName: string) {
-    if (this.activeTextfield === textfieldName) {
-      this.activeTextfield = '';
-    } else {
-      this.activeTextfield = textfieldName;
-    }
-  }
-
   checkMarkClicked(filename: string, header: string) {
     this.store.addCopyHeader(filename, header);
   }
@@ -60,11 +47,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   // DIFF
   diffButtonClicked(filename: string, header: string) {
     this.store.addDiffHeader(filename, header);
-  }
-
-  headerSearchbarClicked() {
-    this.activeTextfield = '';
-    this.activeText = '';
   }
 
   headerClicked(filename, header) {
