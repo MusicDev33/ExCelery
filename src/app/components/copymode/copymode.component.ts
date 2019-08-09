@@ -62,6 +62,9 @@ export class CopymodeComponent implements OnInit, OnDestroy {
   }
 
   // Column Copying
+  // TODO: remove this into another service
+  // Also, this needs to be broken up into
+  // smaller functions
   copyColumns() {
     const editArray = [];
 
