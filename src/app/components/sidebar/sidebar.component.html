@@ -1,44 +1,44 @@
 
 <!-- Sidebar  -->
 <nav id="sidebar"  [ngClass]="{'active': navbarActive}">
-    <div class="sidebar-header">
-      <i class="fas fa-arrow-left" id="left-arrow" (click)="toggleNavbarClicked()"
-        data-toggle="collapse" data-target="#wbSubmenu" *ngIf="!navbarActive && !filesCollapsed">
-      </i>
-      <i class="fas fa-arrow-left" id="left-arrow" (click)="toggleNavbarClicked()"
-        *ngIf="!navbarActive && filesCollapsed">
-      </i>
-      <span>
-        <h3>ExCelery</h3>
-        <i class="fas fa-arrow-right" id="right-arrow" (click)="toggleNavbarClicked()"></i>
-      </span>
+  <div class="sidebar-header">
+    <i class="fas fa-arrow-left" id="left-arrow" (click)="toggleNavbarClicked()"
+      data-toggle="collapse" data-target="#wbSubmenu" *ngIf="!navbarActive && !filesCollapsed">
+    </i>
+    <i class="fas fa-arrow-left" id="left-arrow" (click)="toggleNavbarClicked()"
+      *ngIf="!navbarActive && filesCollapsed">
+    </i>
+    <span>
+      <h3>ExCelery</h3>
+      <i class="fas fa-arrow-right" id="right-arrow" (click)="toggleNavbarClicked()"></i>
+    </span>
 
-      <strong>EC</strong>
-    </div>
+    <strong>EC</strong>
+  </div>
 
-    <ul class="list-unstyled components">
-        <li>
-            <a href="#" (click)="refreshFiles()">
-                <i class="fas fa-sync"></i>
-                Refresh Files
-            </a>
-            <a href="#wbSubmenu" data-toggle="collapse" aria-expanded="false" (click)="excelButtonClicked()" class="dropdown-toggle">
-                <i class="far fa-file-excel"></i>
-                Workbooks
-            </a>
-            <div>
-              <ul class="collapse list-unstyled" id="wbSubmenu">
-                  <li *ngFor="let wb of workbooks">
-                    <div [ngClass]="{'file-opened': openWorkbooks.includes(wb)}">
-                      <a href="#">
-                        <span class="file-select" (click)="openWorkbook(wb)">
-                          {{ wb }} <i class="far fa-folder-open" *ngIf="openWorkbooks.includes(wb)"></i>
-                        </span>
-                      </a>
-                    </div>
-                  </li>
-              </ul>
-            </div>
-        </li>
-    </ul>
+  <ul class="list-unstyled components">
+    <li>
+      <a href="#" (click)="refreshFiles()">
+          <i class="fas fa-sync"></i>
+          Refresh Files
+      </a>
+      <a href="#wbSubmenu" data-toggle="collapse" aria-expanded="false" (click)="excelButtonClicked()" class="dropdown-toggle">
+          <i class="far fa-file-excel"></i>
+          Workbooks
+      </a>
+      <div>
+        <ul class="collapse list-unstyled" id="wbSubmenu">
+            <li *ngFor="let wb of workbooks">
+              <div [ngClass]="{'file-opened': openWorkbooks.includes(wb)}">
+                <a href="#">
+                  <span class="file-select" (click)="openWorkbook(wb)">
+                    {{ wb }} <i class="far fa-folder-open" *ngIf="openWorkbooks.includes(wb)"></i>
+                  </span>
+                </a>
+              </div>
+            </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
 </nav>
