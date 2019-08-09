@@ -45,6 +45,26 @@ export class CopyStoreService {
       this.keyPair.createKey(filename, header) === this.diffHeaderTwo;
   }
 
+  checkMarkClicked(filename: string, header: string) {
+    if (!this.keyPair.doBothKeysExist()) {
+      return;
+    }
+
+    if (this.keyPair.getWhichKeyFileIn(filename) === 1) {
+      if (this.copyToHeader === this.keyPair.createKey(filename, header)) {
+        this.copyToHeader = '';
+        return;
+      }
+      this.copyToHeader = this.keyPair.createKey(filename, header);
+    } else if (this.keyPair.getWhichKeyFileIn(filename) === 2) {
+      if (this.copyFromHeader === this.keyPair.createKey(filename, header)) {
+        this.copyFromHeader = '';
+        return;
+      }
+      this.copyFromHeader = this.keyPair.createKey(filename, header);
+    }
+  }
+
   clearRowMap() {
     this.rowMap = {};
     this.copyToHeader = '';

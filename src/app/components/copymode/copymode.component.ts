@@ -62,27 +62,6 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Fuzzy logic that will hopefully be fixed soon
-  checkMarkClicked(filename: string, header: string) {
-    if (!this.store.keyPair.doBothKeysExist()) {
-      return;
-    }
-
-    if (this.store.keyPair.getWhichKeyFileIn(filename) === 1) {
-      if (this.store.copyToHeader === this.store.keyPair.createKey(filename, header)) {
-        this.store.copyToHeader = '';
-        return;
-      }
-      this.store.copyToHeader = this.store.keyPair.createKey(filename, header);
-    } else if (this.store.keyPair.getWhichKeyFileIn(filename) === 2) {
-      if (this.store.copyFromHeader === this.store.keyPair.createKey(filename, header)) {
-        this.store.copyFromHeader = '';
-        return;
-      }
-      this.store.copyFromHeader = this.store.keyPair.createKey(filename, header);
-    }
-  }
-
   // DIFF
   diffButtonClicked(filename: string, header: string) {
     if (!this.store.keyPair.doBothKeysExist()) {
