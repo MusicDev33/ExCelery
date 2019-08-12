@@ -11,12 +11,12 @@
     sunt in culpa qui officia deserunt mollit anim id est laborum.
   </section>
 
-  <section *ngIf="!store.currentWorkbooks.length">
-    <h4 style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
+  <section *ngIf="!store.currentWorkbooks.length" class="row">
+    <h4 class="col-12" style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
   </section>
 
   <section class="row" *ngIf="store.currentWorkbooks.length">
-    <div *ngFor="let workbook of store.currentWorkbooks" class="row col-xl-5 col-sm-6">
+    <div *ngFor="let workbook of store.currentWorkbooks" class="col-xl-5 col-sm-6">
       <app-workbook-view class="col-12"
         [workbook]="workbook"
         (close)="closeFile($event)"
