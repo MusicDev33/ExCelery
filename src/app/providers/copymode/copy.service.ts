@@ -10,6 +10,7 @@ export class CopyService {
   constructor() { }
 
   copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, copyToHeader: string, copyFromHeader: string, rowMap: any) {
+
     const editArray = [];
 
     const primaryKeyFile = keyPair.primaryFile;
@@ -33,28 +34,30 @@ export class CopyService {
     const headerNameFrom = copyFromHeader.split(':')[1];
     const columnNumber = primaryWorkbook['headerToColumnNumber'][headerNameTo];
 
+    // Call by sharing, this will edit the original rowMap from CopyStore
     rowMap[headerNameTo] = {};
 
     for (const primaryRowObject of primaryRows) {
       const primaryKeyValue = primaryRowObject[primaryKeyHeader];
       // Get row with value regardless of whether or not it's a formula
       const value = secondaryRows.filter(rowObj => {
+
         if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
           return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
         } else {
           return rowObj[secondaryKeyHeader] === primaryKeyValue;
         }
-      })[0];
+      });
 
       // value is a row, and is actually just very poorly named
       if (value.length) {
-        value['mappedRow'] = primaryRowObject['rowNumber'];
+        value[0]['mappedRow'] = primaryRowObject['rowNumber'];
         if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
-          value['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
         } else {
-          value['mappedRowOldValue'] = primaryRowObject[headerNameTo];
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo];
         }
-        editArray.push(value);
+        editArray.push(value[0]);
       }
     }
 

@@ -21,7 +21,7 @@
         [workbook]="workbook"
         (close)="closeFile($event)"
         (save)="saveFile($event)"
-        (copy)="copyColumns()"
+        (copy)="store.copyColumns()"
         (selectDiff)="diffButtonClicked(workbook.filename, $event)"
         (selectCopy)="checkMarkClicked(workbook.filename, $event)"
         (selectHeader)="headerClicked(workbook.filename, $event)">
