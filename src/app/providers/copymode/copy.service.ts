@@ -9,6 +9,7 @@ export class CopyService {
 
   constructor() { }
 
+  // Again, this needs to be split up
   copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, copyToHeader: string, copyFromHeader: string, rowMap: any) {
 
     const editArray = [];
@@ -36,6 +37,8 @@ export class CopyService {
 
     // Call by sharing, this will edit the original rowMap from CopyStore
     rowMap[headerNameTo] = {};
+
+    this.createEditArray(currentWorkbooks);
 
     for (const primaryRowObject of primaryRows) {
       const primaryKeyValue = primaryRowObject[primaryKeyHeader];
@@ -82,5 +85,47 @@ export class CopyService {
         rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       }
     });
+  }
+
+  createEditArray(workbooks: Array<ASWorkbook>) {
+    const editArray = [];
+
+    const primaryWorkbook = workbooks.filter(workbook => {
+      return workbook.filename === primaryKeyFile;
+    })[0];
+
+    const primaryRows = primaryWorkbook['rows'];
+
+    const secondaryWorkbook = workbooks.filter(workbook => {
+      return workbook.filename === secondaryKeyFile;
+    })[0];
+
+    const secondaryRows = secondaryWorkbook['rows'];
+
+    const primaryRows = primaryWorkbook['rows'];
+
+    for (const primaryRowObject of primaryRows) {
+      const primaryKeyValue = primaryRowObject[primaryKeyHeader];
+      // Get row with value regardless of whether or not it's a formula
+      const value = secondaryRows.filter(rowObj => {
+
+        if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
+          return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
+        } else {
+          return rowObj[secondaryKeyHeader] === primaryKeyValue;
+        }
+      });
+
+      // value is a row, and is actually just very poorly named
+      if (value.length) {
+        value[0]['mappedRow'] = primaryRowObject['rowNumber'];
+        if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
+        } else {
+          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo];
+        }
+        editArray.push(value[0]);
+      }
+    }
   }
 }

@@ -113,7 +113,7 @@ export class CopyStoreService {
     this.copyFromHeader = '';
   }
 
-  // This is here until cleanup round 3
+  // DOES NOT GO IN COPY SERVICE
   calculateDiff() {
     this.diffMap = {};
 
