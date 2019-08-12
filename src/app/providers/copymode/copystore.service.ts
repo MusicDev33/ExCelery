@@ -105,6 +105,14 @@ export class CopyStoreService {
     }
   }
 
+  // This is really just a wrapper function
+  copyColumns() {
+    this.copyService.copyColumns(this.keyPair, this.currentWorkbooks, this.copyToHeader, this.copyFromHeader, this.rowMap);
+    this.editCount += 1;
+    this.copyToHeader = '';
+    this.copyFromHeader = '';
+  }
+
   // This is here until cleanup round 3
   calculateDiff() {
     this.diffMap = {};
