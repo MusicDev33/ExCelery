@@ -1,5 +1,9 @@
 @import 'colors.scss';
 
+input {
+  caret-color: $sidebar-color2-em;
+}
+
 .actionbar-item{
   cursor: pointer;
   margin-right: 0.6em;
