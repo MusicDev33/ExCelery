@@ -4,6 +4,8 @@ import { ExcelService, ExcelFile } from '../../providers/excel.service';
 import { FilepathService } from '../../providers/filepath.service';
 import { Workbook, Worksheet } from 'exceljs';
 import { Router } from '@angular/router';
+import { Observable, of, timer } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,6 +19,9 @@ export class SidebarComponent implements OnInit {
   pathText: string;
 
   workbook: ExcelFile;
+
+  // File marked for delete
+  markedFile: string;
 
   /*
   Right now, this is the only time I need to interact with
@@ -61,8 +66,31 @@ export class SidebarComponent implements OnInit {
     this.filesCollapsed = !this.filesCollapsed;
   }
 
-  openWorkbook(filename) {
+  openWorkbook(filename: string) {
     this.xlService.openWorkbook(filename);
     // this.openWorkbooks.push(filename)
+  }
+
+  trashButtonClicked(filename: string) {
+    if (this.markedFile === filename) {
+      this.fpService.deleteFile(filename, err => {
+        if (err === null) {
+          this.xlService.loadExcel(this.fpService.path, () => {
+            this.ngZone.run(() => {
+              this.workbooks = this.xlService.getWorkbooks();
+            });
+          });
+        }
+      });
+      this.markedFile = '';
+    } else {
+      this.markedFile = filename;
+      const trashTimer = timer(2000, 1000);
+      trashTimer.pipe(take(1)).subscribe(t => {
+        if (t === 0) {
+          this.markedFile = '';
+        }
+      });
+    }
   }
 }

@@ -22,10 +22,38 @@ a:focus {
 
 .file-select{
   transition: all 0.3s;
+  padding-right: 10px;
 }
 
 .file-select:hover{
   color: $sidebar-color2-em;
+}
+
+.list-container:hover .trash-icon {
+  opacity: 1;
+}
+
+.list-container {
+  position: relative;
+}
+
+.trash-icon {
+  opacity: 0;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  transition: all 0.3s;
+  color: $sidebar-color2-em;
+  float: right;
+  cursor: pointer;
+}
+
+.trash-icon:hover {
+  opacity: 1;
+  color: #ff695e;
 }
 
 .close-button{
@@ -43,30 +71,30 @@ a:focus {
 }
 
 .navbar {
-    padding: 15px 10px;
-    background: #fff;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px 10px;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 40px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
+  box-shadow: none;
+  outline: none !important;
+  border: none;
 }
 
 .line {
-    width: 100%;
-    height: 1px;
-    border-bottom: 1px dashed #fff;
-    margin: 40px 0;
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #fff;
+  margin: 40px 0;
 }
 
 i,
 span {
-    display: inline-block;
+  display: inline-block;
 }
 
 #left-arrow{
@@ -106,133 +134,133 @@ span {
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    background: $sidebar-color;
-    color: $sidebar-text-color;
-    transition: all 0.3s;
-    height: 100%;
+  min-width: 250px;
+  max-width: 250px;
+  background: $sidebar-color;
+  color: $sidebar-text-color;
+  transition: all 0.3s;
+  height: 100%;
 }
 
 #sidebar.active {
-    min-width: 80px;
-    max-width: 80px;
-    text-align: center;
+  min-width: 80px;
+  max-width: 80px;
+  text-align: center;
 }
 
 #sidebar.active .sidebar-header h3,
 #sidebar.active .CTAs {
-    display: none;
+  display: none;
 }
 
 #sidebar.active .sidebar-header strong {
-    display: block;
+  display: block;
 }
 
 #sidebar ul li a {
-    text-align: left;
+  text-align: left;
 }
 
 #sidebar.active ul li a {
-    padding: 20px 10px;
-    text-align: center;
-    font-size: 0.85em;
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 0.85em;
 }
 
 #sidebar.active ul li a i {
-    margin-right: 0;
-    display: block;
-    font-size: 1.8em;
-    margin-bottom: 5px;
+  margin-right: 0;
+  display: block;
+  font-size: 1.8em;
+  margin-bottom: 5px;
 }
 
 #sidebar.active ul ul a {
-    padding: 10px !important;
+  padding: 10px !important;
 }
 
 #sidebar.active .dropdown-toggle::after {
-    top: auto;
-    bottom: 10px;
-    right: 50%;
-    -webkit-transform: translateX(50%);
-    -ms-transform: translateX(50%);
-    transform: translateX(50%);
+  top: auto;
+  bottom: 10px;
+  right: 50%;
+  -webkit-transform: translateX(50%);
+  -ms-transform: translateX(50%);
+  transform: translateX(50%);
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: $sidebar-color-em;
+  padding: 20px;
+  background: $sidebar-color-em;
 }
 
 #sidebar .sidebar-header strong {
-    display: none;
-    font-size: 1.8em;
+  display: none;
+  font-size: 1.8em;
 }
 
 #sidebar ul.components {
-    border-bottom: 1px solid $sidebar-color;
+  border-bottom: 1px solid $sidebar-color;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
 }
 
 #sidebar ul li a:hover {
-    color: $sidebar-highlight-text-color;
-    background: #fff;
+  color: $sidebar-highlight-text-color;
+  background: #fff;
 }
 
 #sidebar ul li a i {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: $sidebar-text-color;
-    background: $sidebar-color;
+  color: $sidebar-text-color;
+  background: $sidebar-color;
 }
 
 a[data-toggle="collapse"] {
-    position: relative;
+  position: relative;
 }
 
 .dropdown-toggle::after {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
 }
 
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: $sidebar-color-em;
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: $sidebar-color-em;
 }
 
 ul.CTAs {
-    padding: 20px;
+  padding: 20px;
 }
 
 ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 a.download {
-    background: #fff;
-    color: #7386D5;
+  background: #fff;
+  color: #7386D5;
 }
 
 a.article,
 a.article:hover {
-    background: #6d7fcc !important;
-    color: $sidebar-highlight-text-color !important;
+  background: #6d7fcc !important;
+  color: $sidebar-highlight-text-color !important;
 }
 
 /* ---------------------------------------------------
@@ -240,8 +268,8 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: 100%;
-    padding: 20px;
-    min-height: 100vh;
-    transition: all 0.3s;
+  width: 100%;
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s;
 }

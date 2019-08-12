@@ -40,6 +40,7 @@ testem.log
 /typings
 package-lock.json
 /sheets
+/deleted
 
 # e2e
 /e2e/*.js

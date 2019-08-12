@@ -16,7 +16,7 @@
   </section>
 
   <section class="row" *ngIf="store.currentWorkbooks.length">
-    <div *ngFor="let workbook of store.currentWorkbooks" class="col-xl-5 col-sm-6">
+    <div *ngFor="let workbook of store.currentWorkbooks" class="row col-xl-5 col-sm-6">
       <app-workbook-view class="col-12"
         [workbook]="workbook"
         (close)="closeFile($event)"

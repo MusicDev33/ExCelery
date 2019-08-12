@@ -28,15 +28,18 @@
       </a>
       <div>
         <ul class="collapse list-unstyled" id="wbSubmenu">
-            <li *ngFor="let wb of workbooks">
-              <div [ngClass]="{'file-opened': openWorkbooks.includes(wb)}">
-                <a href="#">
-                  <span class="file-select" (click)="openWorkbook(wb)">
-                    {{ wb }} <i class="far fa-folder-open" *ngIf="openWorkbooks.includes(wb)"></i>
-                  </span>
-                </a>
-              </div>
-            </li>
+          <li *ngFor="let wb of workbooks" class="list-container">
+            <div [ngClass]="{'file-opened': openWorkbooks.includes(wb)}">
+              <a href="#">
+                <span class="file-select" (click)="openWorkbook(wb)">
+                  {{ wb }}
+                </span>
+              </a>
+              <i class="far fa-trash-alt trash-icon" (click)="trashButtonClicked(wb)"
+              tooltip="Click again to delete this file." trigger="click" placement="right" hide-delay="2000"
+              style="font-size: 18px;"></i>
+            </div>
+          </li>
         </ul>
       </div>
     </li>

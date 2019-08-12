@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as fs from 'fs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,5 +11,11 @@ export class FilepathService {
 
   setPath(filepath) {
     this.path = filepath;
+  }
+
+  deleteFile(filename: string, callback) {
+    fs.rename(this.path + '/sheets/' + filename, this.path + '/deleted/' + filename, err => {
+      callback(err);
+    });
   }
 }
