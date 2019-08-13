@@ -14,7 +14,7 @@
         [ngClass]="{'selected': header.diffMode, 'unselected': !header.diffMode, 'disabled': !keysFull}">
       </i>
 
-      <i class="fas fa-key icon key-icon float-right" (click)="switchKey()"
+      <i class="fas fa-key icon key-icon float-right" style="margin-top: 4px; margin-right: 0;" (click)="switchKey()"
         [ngClass]="{'selected': header.isKey,
           'unselected': !header.isKey,
           'grey': !header.isKey,

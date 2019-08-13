@@ -58,7 +58,6 @@
   padding: 5px 0;
 }
 
-/* lol what */
 .preview-scroller-container {
   padding: 5px;
   height: 100%;
@@ -96,13 +95,13 @@
   width: 6px;
 }
 
-/* Track */
+// Track
 ::-webkit-scrollbar-track {
   background-color: $scroll-track;
   border-radius: 10px;
 }
 
-/* Handle */
+// Handle
 ::-webkit-scrollbar-thumb {
   background: $scrollbar;
   border-radius: 10px;

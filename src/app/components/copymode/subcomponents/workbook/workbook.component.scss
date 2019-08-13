@@ -17,6 +17,27 @@ input {
   color: $sidebar-color2-em;
 }
 
+.actionbar {
+  margin: 0.4em 0.1em 0.4em 0.1em;
+  padding: 0.1em 0.5em;
+}
+
+.actionbar-container {
+  border-bottom: 1px solid $sidebar-color2;
+}
+
+.text-purple {
+  color: $sidebar-color2-em
+}
+
+.text-purple.underlined {
+  border-bottom: 2px solid $sidebar-color2-em;
+}
+
+.text-green {
+  color: $sidebar-color-em;
+}
+
 .search-field {
   background-color: #fafafa;
   transition: all 0.4s;
@@ -87,13 +108,4 @@ input {
   border-color: $sidebar-color2;
   box-sizing: content-box;
   margin-bottom: 10px;
-}
-
-.actionbar {
-  margin: 0.4em 0.1em 0.4em 0.1em;
-  padding: 0.1em 0.5em;
-}
-
-.actionbar-container {
-  border-bottom: 1px solid $sidebar-color2;
 }
