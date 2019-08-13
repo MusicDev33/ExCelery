@@ -47,16 +47,16 @@ export class ColumnComparisonService {
       });
 
       // value is a row, and is actually just very poorly named
-      if (value.length) {
-        const row = value[0];
-        row['mappedRow'] = primaryRowObject['rowNumber'];
-        if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
-          row['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
-        } else {
-          row['mappedRowOldValue'] = primaryRowObject[headerNameTo];
-        }
-        editArray.push(row);
+      if (!value.length) { continue; }
+
+      const row = value[0];
+      row['mappedRow'] = primaryRowObject['rowNumber'];
+      if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
+        row['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
+      } else {
+        row['mappedRowOldValue'] = primaryRowObject[headerNameTo];
       }
+      editArray.push(row);
     }
 
     return editArray;
