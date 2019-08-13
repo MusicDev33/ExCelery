@@ -118,13 +118,14 @@ export class CopyService {
 
       // value is a row, and is actually just very poorly named
       if (value.length) {
-        value[0]['mappedRow'] = primaryRowObject['rowNumber'];
+        const row = value[0];
+        row['mappedRow'] = primaryRowObject['rowNumber'];
         if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
-          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
+          row['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
         } else {
-          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameTo];
+          row['mappedRowOldValue'] = primaryRowObject[headerNameTo];
         }
-        editArray.push(value[0]);
+        editArray.push(row);
       }
     }
   }
