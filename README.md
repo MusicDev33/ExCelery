@@ -1,5 +1,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d7724c0e23521306ece7/maintainability)](https://codeclimate.com/github/MusicDev33/ExCelery/maintainability)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1652a86dfd2f4826bd54dadaf3c6e779)](https://www.codacy.com/app/SM1/ExCelery?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MusicDev33/ExCelery&amp;utm_campaign=Badge_Grade)
+
 # Introduction
 Built off of [angular-electron](https://github.com/maximegris/angular-electron.git), big thanks to [Maxime GRIS](https://github.com/maximegris).
 
