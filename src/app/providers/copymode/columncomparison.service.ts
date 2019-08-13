@@ -5,22 +5,21 @@ import { KeyPair } from '../../model/keypair';
 @Injectable({
   providedIn: 'root'
 })
-export class CopyService {
+export class ColumnComparisonService {
 
-  constructor() { }
+  mode: string;
 
-  // Again, this needs to be split up
-  copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, copyToHeader: string, copyFromHeader: string, rowMap: any) {
+  copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, toHeader: string, fromHeader: string, genericMap: any) {
 
     const primaryKeyFile = keyPair.primaryFile;
     const primaryWorkbook = this.getWorkbookByFile(currentWorkbooks, primaryKeyFile);
 
-    const editArray = this.createEditArray(keyPair, currentWorkbooks, copyToHeader, copyFromHeader);
+    const editArray = this.createEditArray(keyPair, currentWorkbooks, toHeader, fromHeader);
 
-    this.createRowMap(rowMap, editArray, copyToHeader, copyFromHeader, primaryWorkbook);
+    this.createRowMap(genericMap, editArray, toHeader, fromHeader, primaryWorkbook);
   }
 
-  createEditArray(keyPair: KeyPair, workbooks: Array<ASWorkbook>, copyToHeader: string, copyFromHeader: string) {
+  createEditArray(keyPair: KeyPair, workbooks: Array<ASWorkbook>, toHeader: string, fromHeader: string) {
     const primaryKeyFile = keyPair.primaryFile;
     const primaryKeyHeader = keyPair.primaryHeader;
     const secondaryKeyFile = keyPair.secondaryFile;
@@ -32,8 +31,8 @@ export class CopyService {
     const primaryRows = primaryWorkbook['rows'];
     const secondaryRows = secondaryWorkbook['rows'];
 
-    const headerNameTo = copyToHeader.split(':')[1];
-    const headerNameFrom = copyFromHeader.split(':')[1];
+    const headerNameTo = toHeader.split(':')[1];
+    const headerNameFrom = fromHeader.split(':')[1];
 
     const editArray = [];
     for (const primaryRowObject of primaryRows) {
@@ -63,36 +62,40 @@ export class CopyService {
     return editArray;
   }
 
-  createRowMap(rowMap: any, editArray: Array<any>, copyToHeader: string, copyFromHeader: string, primaryWorkbook: ASWorkbook) {
+  createRowMap(genericMap: any, editArray: Array<any>, toHeader: string, fromHeader: string, primaryWorkbook: ASWorkbook) {
     // This is all still based on JavaScript's call by sharing.
     // I'm not entirely sure if I still use that or find a more
-    // readable way to use the rowMap
+    // readable way to use the genericMap
 
-    const headerNameTo = copyToHeader.split(':')[1];
-    const headerNameFrom = copyFromHeader.split(':')[1];
+    const headerNameTo = toHeader.split(':')[1];
+    const headerNameFrom = fromHeader.split(':')[1];
     const columnNumber = primaryWorkbook['headerToColumnNumber'][headerNameTo];
 
-    rowMap[headerNameTo] = {};
+    genericMap[headerNameTo] = {};
 
     editArray.forEach( rowObj => {
       if (rowObj[headerNameFrom].hasOwnProperty('result')) {
         const newValue = rowObj[headerNameFrom]['result'];
-        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        if (this.mode === 'copy') {
+          primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        }
         const newMappedRow = {};
         newMappedRow['mappedRow'] = rowObj['rowNumber'];
         newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = newValue;
-        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
-        rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
+        genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       } else {
         const newValue = rowObj[headerNameFrom];
-        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        if (this.mode === 'copy') {
+          primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        }
         const newMappedRow = {};
         newMappedRow['mappedRow'] = rowObj['rowNumber'];
         newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = newValue;
-        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
-        rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
+        genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
       }
     });
   }

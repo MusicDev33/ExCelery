@@ -17,9 +17,8 @@ import { ElectronService } from './providers/electron.service';
 import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
 import { AbstracterizerService } from './providers/abstracterizer.service';
-import { CopyService } from './providers/copymode/copy.service';
-import { DiffService } from './providers/copymode/diff.service';
 import { CopyStoreService } from './providers/copymode/copystore.service';
+import { ColumnComparisonService } from './providers/copymode/columncomparison.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
@@ -62,8 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ExcelService,
     FilepathService,
     AbstracterizerService,
-    CopyService,
-    DiffService,
+    ColumnComparisonService,
     CopyStoreService],
   bootstrap: [AppComponent]
 })
