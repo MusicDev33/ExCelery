@@ -22,6 +22,7 @@ export class SidebarComponent implements OnInit {
 
   // File marked for delete
   markedFile: string;
+  trashTimers: Array<timer> = [];
 
   /*
   Right now, this is the only time I need to interact with
@@ -67,17 +68,29 @@ export class SidebarComponent implements OnInit {
     // this.openWorkbooks.push(filename)
   }
 
+  fileDeleted(filename: string) {
+    this.fpService.deleteFile(filename, err => {
+      if (err === null) {
+        this.refreshFiles();
+        this.unsubFromAllTimers();
+      }
+    });
+    this.markedFile = '';
+  }
+
+  unsubFromAllTimers() {
+    this.trashTimers.forEach( tTimer => {
+      tTimer.unsubscribe();
+    });
+  }
+
   trashButtonClicked(filename: string) {
     if (this.markedFile === filename) {
-      this.fpService.deleteFile(filename, err => {
-        if (err === null) {
-          this.refreshFiles();
-        }
-      });
-      this.markedFile = '';
+      this.fileDeleted(filename);
     } else {
       this.markedFile = filename;
       const trashTimer = timer(2000, 1000);
+      this.trashTimers.push(trashTimer);
       trashTimer.pipe(take(1)).subscribe(t => {
         if (t === 0) {
           this.markedFile = '';
