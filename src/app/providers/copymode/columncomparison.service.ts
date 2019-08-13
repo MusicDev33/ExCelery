@@ -10,9 +10,7 @@ export class ColumnComparisonService {
   mode: string;
 
   copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, toHeader: string, fromHeader: string, genericMap: any) {
-
-    const primaryKeyFile = keyPair.primaryFile;
-    const primaryWorkbook = this.getWorkbookByFile(currentWorkbooks, primaryKeyFile);
+    const primaryWorkbook = this.getWorkbookByFile(currentWorkbooks, keyPair.primaryFile);
 
     const editArray = this.createEditArray(keyPair, currentWorkbooks, toHeader, fromHeader);
 
@@ -20,13 +18,8 @@ export class ColumnComparisonService {
   }
 
   createEditArray(keyPair: KeyPair, workbooks: Array<ASWorkbook>, toHeader: string, fromHeader: string) {
-    const primaryKeyFile = keyPair.primaryFile;
-    const primaryKeyHeader = keyPair.primaryHeader;
-    const secondaryKeyFile = keyPair.secondaryFile;
-    const secondaryKeyHeader = keyPair.secondaryHeader;
-
-    const primaryWorkbook = this.getWorkbookByFile(workbooks, primaryKeyFile);
-    const secondaryWorkbook = this.getWorkbookByFile(workbooks, secondaryKeyFile);
+    const primaryWorkbook = this.getWorkbookByFile(workbooks, keyPair.primaryFile);
+    const secondaryWorkbook = this.getWorkbookByFile(workbooks, keyPair.secondaryFile);
 
     const primaryRows = primaryWorkbook['rows'];
     const secondaryRows = secondaryWorkbook['rows'];
@@ -36,13 +29,13 @@ export class ColumnComparisonService {
 
     const editArray = [];
     for (const primaryRowObject of primaryRows) {
-      const primaryKeyValue = primaryRowObject[primaryKeyHeader];
+      const primaryKeyValue = primaryRowObject[keyPair.primaryHeader];
       // Get row with value regardless of whether or not it's a formula
       const value = secondaryRows.filter(rowObj => {
-        if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
-          return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
+        if (rowObj[keyPair.secondaryHeader].hasOwnProperty('result')) {
+          return rowObj[keyPair.secondaryHeader]['result'] === primaryKeyValue;
         } else {
-          return rowObj[secondaryKeyHeader] === primaryKeyValue;
+          return rowObj[keyPair.secondaryHeader] === primaryKeyValue;
         }
       });
 

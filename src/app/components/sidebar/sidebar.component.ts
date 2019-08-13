@@ -39,11 +39,7 @@ export class SidebarComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit() {
-    this.xlService.loadExcel(this.fpService.path, () => {
-      this.ngZone.run(() => {
-        this.workbooks = this.xlService.getWorkbooks();
-      });
-    });
+    this.refreshFiles();
     this.xlService.currentWorkbook.subscribe(wb => this.workbook = wb);
   }
 
@@ -75,11 +71,7 @@ export class SidebarComponent implements OnInit {
     if (this.markedFile === filename) {
       this.fpService.deleteFile(filename, err => {
         if (err === null) {
-          this.xlService.loadExcel(this.fpService.path, () => {
-            this.ngZone.run(() => {
-              this.workbooks = this.xlService.getWorkbooks();
-            });
-          });
+          this.refreshFiles();
         }
       });
       this.markedFile = '';
