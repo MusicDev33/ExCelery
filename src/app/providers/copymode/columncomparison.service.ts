@@ -74,29 +74,25 @@ export class ColumnComparisonService {
     genericMap[headerNameTo] = {};
 
     editArray.forEach( rowObj => {
+      let newValue: any;
+
+      const newMappedRow = {};
+
       if (rowObj[headerNameFrom].hasOwnProperty('result')) {
-        const newValue = rowObj[headerNameFrom]['result'];
-        if (this.mode === 'copy') {
-          primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
-        }
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
-        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
-        genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+        newValue = rowObj[headerNameFrom]['result'];
       } else {
-        const newValue = rowObj[headerNameFrom];
-        if (this.mode === 'copy') {
-          primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
-        }
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
-        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
-        genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+        newValue = rowObj[headerNameFrom];
       }
+      if (this.mode === 'copy') {
+        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+      }
+
+      newMappedRow['mappedRow'] = rowObj['rowNumber'];
+      newMappedRow['rowNumber'] = rowObj['mappedRow'];
+      newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+      newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
+
+      genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
     });
   }
 
