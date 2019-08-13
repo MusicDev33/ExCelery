@@ -40,7 +40,7 @@ body::-webkit-scrollbar {
 
 /* Track */
 body::-webkit-scrollbar-track {
-  background-color: #eee;
+  background-color: $scroll-track;
   border-radius: 10px;
 }
 
