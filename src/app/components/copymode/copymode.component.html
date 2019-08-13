@@ -11,8 +11,8 @@
     sunt in culpa qui officia deserunt mollit anim id est laborum.
   </section>
 
-  <section *ngIf="!store.currentWorkbooks.length" class="row">
-    <h4 class="col-12" style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
+  <section *ngIf="!store.currentWorkbooks.length">
+    <h4 style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
   </section>
 
   <section class="row" *ngIf="store.currentWorkbooks.length">
@@ -21,7 +21,7 @@
         [workbook]="workbook"
         (close)="closeFile($event)"
         (save)="saveFile($event)"
-        (copy)="copyColumns()"
+        (copy)="store.copyColumns()"
         (selectDiff)="diffButtonClicked(workbook.filename, $event)"
         (selectCopy)="checkMarkClicked(workbook.filename, $event)"
         (selectHeader)="headerClicked(workbook.filename, $event)">

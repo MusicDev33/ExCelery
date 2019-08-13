@@ -18,6 +18,7 @@ import { ExcelService } from './providers/excel.service';
 import { FilepathService } from './providers/filepath.service';
 import { AbstracterizerService } from './providers/abstracterizer.service';
 import { CopyService } from './providers/copymode/copy.service';
+import { DiffService } from './providers/copymode/diff.service';
 import { CopyStoreService } from './providers/copymode/copystore.service';
 
 import { WebviewDirective } from './directives/webview.directive';
@@ -62,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FilepathService,
     AbstracterizerService,
     CopyService,
+    DiffService,
     CopyStoreService],
   bootstrap: [AppComponent]
 })
