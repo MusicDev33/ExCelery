@@ -12,47 +12,12 @@ export class CopyService {
   // Again, this needs to be split up
   copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, copyToHeader: string, copyFromHeader: string, rowMap: any) {
 
-    const editArray = [];
-
     const primaryKeyFile = keyPair.primaryFile;
-    const primaryKeyHeader = keyPair.primaryHeader;
-    const secondaryKeyFile = keyPair.secondaryFile;
-    const secondaryKeyHeader = keyPair.secondaryHeader;
-
     const primaryWorkbook = this.getWorkbookByFile(currentWorkbooks, primaryKeyFile);
-    const secondaryWorkbook = this.getWorkbookByFile(currentWorkbooks, secondaryKeyFile);
 
-    const primaryRows = primaryWorkbook['rows'];
-    const secondaryRows = secondaryWorkbook['rows'];
+    const editArray = this.createEditArray(keyPair, currentWorkbooks, copyToHeader, copyFromHeader);
 
-    const headerNameTo = copyToHeader.split(':')[1];
-    const headerNameFrom = copyFromHeader.split(':')[1];
-    const columnNumber = primaryWorkbook['headerToColumnNumber'][headerNameTo];
-
-    // Call by sharing, this will edit the original rowMap from CopyStore
-    rowMap[headerNameTo] = {};
-
-    this.createEditArray(keyPair, currentWorkbooks, copyToHeader, copyFromHeader).forEach( rowObj => {
-      if (rowObj[headerNameFrom].hasOwnProperty('result')) {
-        const newValue = rowObj[headerNameFrom]['result'];
-        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = newValue;
-        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
-        rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
-      } else {
-        const newValue = rowObj[headerNameFrom];
-        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = newValue;
-        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
-        rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
-      }
-    });
+    this.createRowMap(rowMap, editArray, copyToHeader, copyFromHeader, primaryWorkbook);
   }
 
   createEditArray(keyPair: KeyPair, workbooks: Array<ASWorkbook>, copyToHeader: string, copyFromHeader: string) {
@@ -69,7 +34,6 @@ export class CopyService {
 
     const headerNameTo = copyToHeader.split(':')[1];
     const headerNameFrom = copyFromHeader.split(':')[1];
-    const columnNumber = primaryWorkbook['headerToColumnNumber'][headerNameTo];
 
     const editArray = [];
     for (const primaryRowObject of primaryRows) {
@@ -97,6 +61,40 @@ export class CopyService {
     }
 
     return editArray;
+  }
+
+  createRowMap(rowMap: any, editArray: Array<any>, copyToHeader: string, copyFromHeader: string, primaryWorkbook: ASWorkbook) {
+    // This is all still based on JavaScript's call by sharing.
+    // I'm not entirely sure if I still use that or find a more
+    // readable way to use the rowMap
+
+    const headerNameTo = copyToHeader.split(':')[1];
+    const headerNameFrom = copyFromHeader.split(':')[1];
+    const columnNumber = primaryWorkbook['headerToColumnNumber'][headerNameTo];
+
+    rowMap[headerNameTo] = {};
+
+    editArray.forEach( rowObj => {
+      if (rowObj[headerNameFrom].hasOwnProperty('result')) {
+        const newValue = rowObj[headerNameFrom]['result'];
+        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = newValue;
+        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+      } else {
+        const newValue = rowObj[headerNameFrom];
+        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = newValue;
+        newMappedRow['oldValue'] = rowObj['mappedRowOldValue'];
+        rowMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+      }
+    });
   }
 
   // Small wrapper to make this look less ugly
