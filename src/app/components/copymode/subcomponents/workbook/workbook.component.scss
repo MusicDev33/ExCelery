@@ -78,8 +78,8 @@ input {
   border-color: $sidebar-color2;
 }
 
-/* IDs */
-#encompass {
+// 'IDs'
+.encompass {
   background-color: #fafafa;
   border-radius: 10px;
   border-width: 1px;
@@ -89,21 +89,11 @@ input {
   margin-bottom: 10px;
 }
 
-#searchfield-no-padding {
-  padding-right: 0;
-  padding-left: 0;
-}
-
-#actionbar {
+.actionbar {
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.1em 0.5em;
 }
 
-#actionbar-container {
+.actionbar-container {
   border-bottom: 1px solid $sidebar-color2;
-}
-
-#actionbar .inactive {
-  color: #666;
-  cursor: default;
 }

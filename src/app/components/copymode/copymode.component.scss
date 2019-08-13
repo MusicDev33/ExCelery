@@ -95,33 +95,3 @@
   color: #fff;
   pointer-events: none;
 }
-
-/* IDs */
-#encompass {
-  background-color: #fafafa;
-  border-radius: 10px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: $sidebar-color2;
-  box-sizing: content-box;
-  margin-bottom: 10px;
-}
-
-#searchfield-no-padding {
-  padding-right: 0;
-  padding-left: 0;
-}
-
-#actionbar {
-  margin: 0.4em 0.1em 0.4em 0.1em;
-  padding: 0.1em 0.5em;
-}
-
-#actionbar-container {
-  border-bottom: 1px solid $sidebar-color2;
-}
-
-#actionbar .inactive {
-  color: #666;
-  cursor: default;
-}
