@@ -22,7 +22,8 @@ export class SidebarComponent implements OnInit {
 
   // File marked for delete
   markedFile: string;
-  trashTimers: Array<timer> = [];
+  // Should be for type of timer, but TS doesn't like that for some reason
+  trashTimers: Array<any> = [];
 
   /*
   Right now, this is the only time I need to interact with
@@ -54,7 +55,6 @@ export class SidebarComponent implements OnInit {
 
   toggleNavbarClicked() {
     this.navbarActive = !this.navbarActive;
-
     this.filesCollapsed = true;
   }
 
