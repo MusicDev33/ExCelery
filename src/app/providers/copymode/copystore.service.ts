@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ASWorkbook } from '../../model/asworkbook';
 import { KeyPair } from '../../model/keypair';
 
-import { CopyService } from './copy.service';
 import { ColumnComparisonService } from './columncomparison.service';
 
 @Injectable({
@@ -30,7 +29,7 @@ export class CopyStoreService {
 
   columnPreviews = {};
 
-  constructor(public copyService: CopyService, public compService: ColumnComparisonService) { }
+  constructor(public compService: ColumnComparisonService) { }
 
   checkIfRowMap() {
     return typeof this.rowMap !== 'undefined' && Object.keys(this.rowMap).length > 0;
@@ -108,14 +107,18 @@ export class CopyStoreService {
 
   // This is really just a wrapper function
   copyColumns() {
+    this.compService.mode = 'copy';
     this.compService.copyColumns(this.keyPair, this.currentWorkbooks, this.copyToHeader, this.copyFromHeader, this.rowMap);
     this.editCount += 1;
     this.copyToHeader = '';
     this.copyFromHeader = '';
+    this.compService.mode = '';
   }
 
   calcDiff() {
+    this.compService.mode = 'diff';
     this.compService.copyColumns(this.keyPair, this.currentWorkbooks, this.diffHeaderOne, this.diffHeaderTwo, this.diffMap);
+    this.compService.mode = '';
   }
 
   clearRowMap() {
