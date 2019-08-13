@@ -3,6 +3,7 @@ import { ASWorkbook } from '../../model/asworkbook';
 import { KeyPair } from '../../model/keypair';
 
 import { CopyService } from './copy.service';
+import { ColumnComparisonService } from './columncomparison.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class CopyStoreService {
 
   columnPreviews = {};
 
-  constructor(public copyService: CopyService) { }
+  constructor(public copyService: CopyService, public compService: ColumnComparisonService) { }
 
   checkIfRowMap() {
     return typeof this.rowMap !== 'undefined' && Object.keys(this.rowMap).length > 0;
@@ -101,87 +102,20 @@ export class CopyStoreService {
   calculateDiffIfFull() {
     if (this.areBothDiffsSelected()) {
       this.openPreview(this.diffHeaderOne.split(':')[0], this.diffHeaderOne.split(':')[1]);
-      this.calculateDiff();
+      this.calcDiff();
     }
   }
 
   // This is really just a wrapper function
   copyColumns() {
-    this.copyService.copyColumns(this.keyPair, this.currentWorkbooks, this.copyToHeader, this.copyFromHeader, this.rowMap);
+    this.compService.copyColumns(this.keyPair, this.currentWorkbooks, this.copyToHeader, this.copyFromHeader, this.rowMap);
     this.editCount += 1;
     this.copyToHeader = '';
     this.copyFromHeader = '';
   }
 
-  // DOES NOT GO IN COPY SERVICE
-  calculateDiff() {
-    this.diffMap = {};
-
-    const editArray = [];
-
-    const primaryKeyFile = this.keyPair.primaryFile;
-    const primaryKeyHeader = this.keyPair.primaryHeader;
-    const secondaryKeyFile = this.keyPair.secondaryFile;
-    const secondaryKeyHeader = this.keyPair.secondaryHeader;
-
-    const primaryWorkbook = this.currentWorkbooks.filter(workbook => {
-      return workbook.filename === primaryKeyFile;
-    });
-    const primaryRows = primaryWorkbook[0]['rows'];
-
-    const secondaryWorkbook = this.currentWorkbooks.filter(workbook => {
-      return workbook.filename === secondaryKeyFile;
-    });
-    const secondaryRows = secondaryWorkbook[0]['rows'];
-
-    const headerNameOne = this.diffHeaderOne.split(':')[1];
-    const headerNameTwo = this.diffHeaderTwo.split(':')[1];
-    const columnNumber = primaryWorkbook[0]['headerToColumnNumber'][headerNameOne];
-
-    this.diffMap[headerNameOne] = {};
-
-    for (const primaryRowObject of primaryRows) {
-      const primaryKeyValue = primaryRowObject[primaryKeyHeader];
-      // Get row with value regardless of whether or not it's a formula
-      const value = secondaryRows.filter(rowObj => {
-        if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
-          return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
-        } else {
-          return rowObj[secondaryKeyHeader] === primaryKeyValue;
-        }
-      });
-
-      // value is a row, and is actually just very poorly named
-      if (value.length) {
-        value[0]['mappedRow'] = primaryRowObject['rowNumber'];
-        if (primaryRowObject[headerNameOne] !== null && primaryRowObject[headerNameOne].hasOwnProperty('result')) {
-          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne]['result'];
-        } else {
-          value[0]['mappedRowOldValue'] = primaryRowObject[headerNameOne];
-        }
-        editArray.push(value[0]);
-      }
-    }
-
-    editArray.forEach( (rowObj) => {
-      if (rowObj[headerNameTwo].hasOwnProperty('result')) {
-        const newValue = rowObj[headerNameTwo]['result'];
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
-        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
-        this.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
-      } else {
-        const newValue = rowObj[headerNameTwo];
-        const newMappedRow = {};
-        newMappedRow['mappedRow'] = rowObj['rowNumber'];
-        newMappedRow['rowNumber'] = rowObj['mappedRow'];
-        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
-        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
-        this.diffMap[headerNameOne][rowObj['mappedRow']] = newMappedRow;
-      }
-    });
+  calcDiff() {
+    this.compService.copyColumns(this.keyPair, this.currentWorkbooks, this.diffHeaderOne, this.diffHeaderTwo, this.diffMap);
   }
 
   clearRowMap() {

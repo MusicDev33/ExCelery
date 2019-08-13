@@ -1,0 +1,110 @@
+import { Injectable } from '@angular/core';
+import { ASWorkbook } from '../../model/asworkbook';
+import { KeyPair } from '../../model/keypair';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ColumnComparisonService {
+
+  mode: string;
+
+  copyColumns(keyPair: KeyPair, currentWorkbooks: Array<ASWorkbook>, toHeader: string, fromHeader: string, genericMap: any) {
+
+    const primaryKeyFile = keyPair.primaryFile;
+    const primaryWorkbook = this.getWorkbookByFile(currentWorkbooks, primaryKeyFile);
+
+    const editArray = this.createEditArray(keyPair, currentWorkbooks, toHeader, fromHeader);
+
+    this.createRowMap(genericMap, editArray, toHeader, fromHeader, primaryWorkbook);
+  }
+
+  createEditArray(keyPair: KeyPair, workbooks: Array<ASWorkbook>, toHeader: string, fromHeader: string) {
+    const primaryKeyFile = keyPair.primaryFile;
+    const primaryKeyHeader = keyPair.primaryHeader;
+    const secondaryKeyFile = keyPair.secondaryFile;
+    const secondaryKeyHeader = keyPair.secondaryHeader;
+
+    const primaryWorkbook = this.getWorkbookByFile(workbooks, primaryKeyFile);
+    const secondaryWorkbook = this.getWorkbookByFile(workbooks, secondaryKeyFile);
+
+    const primaryRows = primaryWorkbook['rows'];
+    const secondaryRows = secondaryWorkbook['rows'];
+
+    const headerNameTo = toHeader.split(':')[1];
+    const headerNameFrom = fromHeader.split(':')[1];
+
+    const editArray = [];
+    for (const primaryRowObject of primaryRows) {
+      const primaryKeyValue = primaryRowObject[primaryKeyHeader];
+      // Get row with value regardless of whether or not it's a formula
+      const value = secondaryRows.filter(rowObj => {
+        if (rowObj[secondaryKeyHeader].hasOwnProperty('result')) {
+          return rowObj[secondaryKeyHeader]['result'] === primaryKeyValue;
+        } else {
+          return rowObj[secondaryKeyHeader] === primaryKeyValue;
+        }
+      });
+
+      // value is a row, and is actually just very poorly named
+      if (value.length) {
+        const row = value[0];
+        row['mappedRow'] = primaryRowObject['rowNumber'];
+        if (primaryRowObject[headerNameTo] !== null && primaryRowObject[headerNameTo].hasOwnProperty('result')) {
+          row['mappedRowOldValue'] = primaryRowObject[headerNameTo]['result'];
+        } else {
+          row['mappedRowOldValue'] = primaryRowObject[headerNameTo];
+        }
+        editArray.push(row);
+      }
+    }
+
+    return editArray;
+  }
+
+  createRowMap(genericMap: any, editArray: Array<any>, toHeader: string, fromHeader: string, primaryWorkbook: ASWorkbook) {
+    // This is all still based on JavaScript's call by sharing.
+    // I'm not entirely sure if I still use that or find a more
+    // readable way to use the genericMap
+
+    const headerNameTo = toHeader.split(':')[1];
+    const headerNameFrom = fromHeader.split(':')[1];
+    const columnNumber = primaryWorkbook['headerToColumnNumber'][headerNameTo];
+
+    genericMap[headerNameTo] = {};
+
+    editArray.forEach( rowObj => {
+      if (rowObj[headerNameFrom].hasOwnProperty('result')) {
+        const newValue = rowObj[headerNameFrom]['result'];
+        if (this.mode === 'copy') {
+          primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        }
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
+        genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+      } else {
+        const newValue = rowObj[headerNameFrom];
+        if (this.mode === 'copy') {
+          primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        }
+        const newMappedRow = {};
+        newMappedRow['mappedRow'] = rowObj['rowNumber'];
+        newMappedRow['rowNumber'] = rowObj['mappedRow'];
+        newMappedRow['newValue'] = isNaN(newValue) ? newValue : Number(newValue);
+        newMappedRow['oldValue'] = isNaN(rowObj['mappedRowOldValue']) ? rowObj['mappedRowOldValue'] : Number(rowObj['mappedRowOldValue']);
+        genericMap[headerNameTo][rowObj['mappedRow']] = newMappedRow;
+      }
+    });
+  }
+
+  // Small wrapper to make this look less ugly
+  getWorkbookByFile(workbooks: Array<ASWorkbook>, filename: string) {
+    const wb = workbooks.filter(workbook => {
+      return workbook.filename === filename;
+    })[0];
+    return wb;
+  }
+}
