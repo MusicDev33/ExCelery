@@ -10,7 +10,7 @@
   margin-right: 0.3em;
 }
 
-.header:hover{
+.header:hover {
   color: $sidebar-color2-em;
 }
 
@@ -47,11 +47,11 @@
   opacity: 1;
 }
 
-.preview-open{
+.preview-open {
   border-bottom: 2px solid #f00;
 }
 
-.preview-container{
+.preview-container {
   margin-top: 5px;
   border-top: 2px solid $sidebar-color2-em;
   height: 20vh;
@@ -65,7 +65,7 @@
   overflow-y: scroll;
 }
 
-.preview-cell-container{
+.preview-cell-container {
   border-radius: 5px;
   background-color: #eee;
   padding: 3px;

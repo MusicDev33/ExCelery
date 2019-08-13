@@ -20,12 +20,12 @@ a:focus {
     transition: all 0.3s;
 }
 
-.file-select{
+.file-select {
   transition: all 0.3s;
   padding-right: 10px;
 }
 
-.file-select:hover{
+.file-select:hover {
   color: $sidebar-color2-em;
 }
 
@@ -56,15 +56,15 @@ a:focus {
   color: #ff695e;
 }
 
-.close-button{
+.close-button {
   transition: all 0.3s;
 }
 
-.close-button:hover{
+.close-button:hover {
   color: $sidebar-color2-em;
 }
 
-.file-opened{
+.file-opened {
   color: #666;
   pointer-events: none;
   cursor: default;
@@ -97,7 +97,7 @@ span {
   display: inline-block;
 }
 
-#left-arrow{
+#left-arrow {
   cursor: pointer;
   font-size: 20px;
   float: right;
@@ -105,7 +105,7 @@ span {
   transform: translateY(50%);
 }
 
-#dismiss{
+#dismiss {
   width: 100%;
   height: 35px;
   padding-left: 10px;
@@ -113,23 +113,23 @@ span {
   position: relative;
 }
 
-#close-x{
+#close-x {
   position: absolute;
   right: 2px;
   vertical-align:middle;
   cursor: pointer;
 }
 
-#right-arrow{
+#right-arrow {
   cursor: pointer;
   display: none;
 }
 
-#sidebar.active #left-arrow{
+#sidebar.active #left-arrow {
   display: none;
 }
 
-#sidebar.active #right-arrow{
+#sidebar.active #right-arrow {
   display: inline;
 }
 

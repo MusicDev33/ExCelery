@@ -9,12 +9,12 @@ html, body {
   overflow: auto;
 }
 
-.padding-0{
+.padding-0 {
   padding-right: 0!important;
   padding-left: 0!important;
 }
 
-.no-padding{
+.no-padding {
   padding-right: 0;
   padding-left: 0;
 }
@@ -29,7 +29,7 @@ html, body {
                                   supported by Chrome and Opera */
 }
 
-.selectable{
+.selectable {
   cursor: pointer;
 }
 
@@ -50,7 +50,7 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
-.content-box{
+.content-box {
   transition: all 0.9s;
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
@@ -76,13 +76,13 @@ body::-webkit-scrollbar-thumb {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
-.white-border{
+.white-border {
   border-width: 1px;
   border-style: solid;
   border-color: #fff;
 }
 
-.purple-border{
+.purple-border {
   border-width: 1px;
   border-style: solid;
   border-color: $sidebar-color2;

@@ -16,20 +16,20 @@
   transition: all 0.3s;
 }
 
-.actionbar-item{
+.actionbar-item {
   cursor: pointer;
   margin-right: 0.6em;
 }
 
-.actionbar-text{
+.actionbar-text {
   color: #000;
 }
 
-.actionbar-icon{
+.actionbar-icon {
   color: $sidebar-color2-em;
 }
 
-.search-field{
+.search-field {
   background-color: #fafafa;
   transition: all 0.4s;
   border-width: 0;
@@ -44,20 +44,20 @@
   margin-bottom: 5px;
 }
 
-.search-container{
+.search-container {
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
 
-.search-field:focus{
+.search-field:focus {
   border-color: $sidebar-color2 !important;
 }
 
-.scroll-container{
+.scroll-container {
   padding-right: 10px;
 }
 
-.scrollbox{
+.scrollbox {
   overflow: scroll;
   overflow-x: hidden;
   height: 85vh;
@@ -80,24 +80,24 @@
   border-radius: 10px;
 }
 
-.content-box{
+.content-box {
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
 }
 
-.content-box .confirm-box{
+.content-box .confirm-box {
   background-color: $sidebar-color2;
   border-color: $sidebar-color2;
 }
 
-.no-show{
+.no-show {
   transition: all 0.0s;
   color: #fff;
   pointer-events: none;
 }
 
 /* IDs */
-#encompass{
+#encompass {
   background-color: #fafafa;
   border-radius: 10px;
   border-width: 1px;
@@ -107,21 +107,21 @@
   margin-bottom: 10px;
 }
 
-#searchfield-no-padding{
+#searchfield-no-padding {
   padding-right: 0;
   padding-left: 0;
 }
 
-#actionbar{
+#actionbar {
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.1em 0.5em;
 }
 
-#actionbar-container{
+#actionbar-container {
   border-bottom: 1px solid $sidebar-color2;
 }
 
-#actionbar .inactive{
+#actionbar .inactive {
   color: #666;
   cursor: default;
 }
