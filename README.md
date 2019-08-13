@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/d7724c0e23521306ece7/maintainability)](https://codeclimate.com/github/MusicDev33/ExCelery/maintainability)
+
 # Introduction
 Built off of [angular-electron](https://github.com/maximegris/angular-electron.git), big thanks to [Maxime GRIS](https://github.com/maximegris).
 
