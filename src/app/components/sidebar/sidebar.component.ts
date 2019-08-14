@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Observable, of, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import { CopyStoreService } from '../../providers/copymode/copystore.service';
+
 import { version } from '../../../../package.json';
 
 @Component({
@@ -45,7 +47,8 @@ export class SidebarComponent implements OnInit {
     public ngZone: NgZone,
     public fpService: FilepathService,
     public xlService: ExcelService,
-    public router: Router) { }
+    public router: Router,
+    public store: CopyStoreService) { }
 
   ngOnInit() {
     this.versionUrl = 'https://github.com/MusicDev33/ExCelery/releases/tag/' + this.versionNumber;

@@ -37,8 +37,14 @@
       <ul class="collapse list-unstyled" id="wbSubmenu">
         <li *ngFor="let wb of workbooks" class="list-container">
           <div [ngClass]="{'file-opened': openWorkbooks.includes(wb)}">
-            <a href="#">
+            <a href="#" *ngIf="store.currentWorkbooks.length < 2">
               <span class="file-select" (click)="openWorkbook(wb)">
+                {{ wb }}
+              </span>
+            </a>
+            <a href="#" *ngIf="store.currentWorkbooks.length === 2">
+              <span class="file-select"
+              tooltip="Can't open more than 2 workbooks!" hide-delay="1800" trigger="click">
                 {{ wb }}
               </span>
             </a>
