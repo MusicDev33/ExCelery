@@ -30,22 +30,27 @@ export class ASWorkbook {
 
   rows = [];
 
-  constructor (workbook: Workbook, filename: string, abstract: AbstracterizerService) {
+  constructor (workbook: Workbook, filename: string, public abstract: AbstracterizerService) {
     this.workbook = workbook;
     workbook.eachSheet( (worksheet, sheetId) => {
       this.worksheets.push(worksheet);
     });
     this.currentSheetInt = 0;
-    this.currentWorksheet = workbook.getWorksheet(1);
     this.filename = filename;
 
-    const headersAndMetadata = abstract.returnWorksheetHeadersAndIndexes(this.currentWorksheet);
+    this.loadSheet(this.currentSheetInt);
+  }
+
+  loadSheet(worksheetNumber: number) {
+    this.currentWorksheet = this.workbook.getWorksheet(worksheetNumber + 1);
+
+    const headersAndMetadata = this.abstract.returnWorksheetHeadersAndIndexes(this.currentWorksheet);
     this.headers = headersAndMetadata.headers;
     this.headerToColumnNumber = headersAndMetadata.headerToColumnNumber;
     this.columnNumbertoHeader = headersAndMetadata.columnNumbertoHeader;
 
-    this.rows = abstract.getRowObject(this.currentWorksheet, this.columnNumbertoHeader);
-    this.headerToCells = abstract.associateCellsAndHeaders(this.currentWorksheet, this.headerToColumnNumber, this.headers);
+    this.rows = this.abstract.getRowObject(this.currentWorksheet, this.columnNumbertoHeader);
+    this.headerToCells = this.abstract.associateCellsAndHeaders(this.currentWorksheet, this.headerToColumnNumber, this.headers);
   }
 
   getColIntFromHeader(header: string) {
