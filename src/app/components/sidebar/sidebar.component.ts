@@ -109,12 +109,12 @@ export class SidebarComponent implements OnInit {
     } else {
       this.markedFile = filename;
       const trashTimer = timer(2000, 1000);
-      this.trashTimers.push(trashTimer);
-      trashTimer.pipe(take(1)).subscribe(t => {
+      const tSub = trashTimer.pipe(take(1)).subscribe(t => {
         if (t === 0) {
           this.markedFile = '';
         }
       });
+      this.trashTimers.push(tSub);
     }
   }
 }
