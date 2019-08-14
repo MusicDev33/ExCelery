@@ -23,6 +23,8 @@ export class ExcelService {
 
   path: string;
 
+  loading: false;
+
   private wbSource = new BehaviorSubject<ExcelFile>({workbook: new Workbook(), filename: ''});
   currentWorkbook = this.wbSource.asObservable();
 
@@ -58,6 +60,7 @@ export class ExcelService {
   }
 
   async openWorkbook(filename: string) {
+    this.loading = true;
     const workbook = new Workbook();
     const promise = workbook.xlsx.readFile(this.path + '/sheets/' + filename)
       .then(() => {
