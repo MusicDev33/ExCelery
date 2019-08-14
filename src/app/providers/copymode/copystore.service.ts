@@ -129,9 +129,7 @@ export class CopyStoreService {
     this.editCount = 0;
   }
 
-  closeFile(filename: string) {
-    const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
-    if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
+  clearInfo() {
     this.copyToHeader = '';
     this.copyFromHeader = '';
     this.diffHeaderOne = '';
@@ -140,6 +138,12 @@ export class CopyStoreService {
     this.diffMap = {};
     this.editCount = 0;
     this.keyPair.deleteKeys();
+  }
+
+  closeFile(filename: string) {
+    const index = this.currentWorkbooks.findIndex(x => x.filename === filename);
+    if (index !== -1) { this.currentWorkbooks.splice(index, 1); }
+    this.clearInfo();
   }
 
   getWorkbookByFileName(filename: string) {

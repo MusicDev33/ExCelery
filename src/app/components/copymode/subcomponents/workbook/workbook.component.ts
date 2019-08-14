@@ -76,12 +76,14 @@ export class WorkbookComponent implements OnInit {
   nextSheetClicked() {
     if (this.workbook.currentWorksheet['orderNo'] < this.workbook.worksheets.length - 1) {
       this.workbook.loadSheet(this.workbook.currentWorksheet['orderNo'] + 1);
+      this.store.clearInfo();
     }
   }
 
   previousSheetClicked() {
     if (this.workbook.currentWorksheet['orderNo'] > 0) {
       this.workbook.loadSheet(this.workbook.currentWorksheet['orderNo'] - 1);
+      this.store.clearInfo();
     }
   }
 }
