@@ -9,21 +9,20 @@
       *ngIf="!navbarActive && filesCollapsed">
     </i>
     <span>
-      <h3>ExCelery</h3>
+      <h3 style="cursor: pointer;"
+      tooltip="Version: {{ versionNumber }}" placement="bottom" show-delay="300" hide-delay="100"
+      (click)="electron.openInBrowser(versionUrl)">
+        ExCelery
+      </h3>
       <i class="fas fa-arrow-right" id="right-arrow" (click)="toggleNavbarClicked()"></i>
     </span>
 
-    <strong>EC</strong>
+    <strong style="cursor: pointer;"
+    tooltip="Version: {{ versionNumber }}" placement="right" show-delay="300" hide-delay="100"
+    (click)="electron.openInBrowser(versionUrl)">EC</strong>
   </div>
 
   <ul class="list-unstyled components">
-    <li>
-      <a href="#" (click)="electron.openInBrowser(versionUrl)">
-        <i class="fas fa-terminal"></i>
-        <b style="color: #444;">Version:
-        {{ versionNumber }}</b>
-      </a>
-    </li>
     <li>
       <a href="#" (click)="refreshFiles()">
           <i class="fas fa-sync"></i>
