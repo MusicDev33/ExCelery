@@ -35,14 +35,14 @@ export class ASWorkbook {
     workbook.eachSheet( (worksheet, sheetId) => {
       this.worksheets.push(worksheet);
     });
-    this.currentSheetInt = 0;
     this.filename = filename;
 
-    this.loadSheet(this.currentSheetInt);
+    this.loadSheet(0);
   }
 
   loadSheet(worksheetNumber: number) {
     this.currentWorksheet = this.workbook.getWorksheet(worksheetNumber + 1);
+    this.currentSheetInt = worksheetNumber;
 
     const headersAndMetadata = this.abstract.returnWorksheetHeadersAndIndexes(this.currentWorksheet);
     this.headers = headersAndMetadata.headers;

@@ -52,7 +52,6 @@ export class ColumnComparisonService {
       }
       editArray.push(row);
     }
-
     return editArray;
   }
 
@@ -72,13 +71,18 @@ export class ColumnComparisonService {
 
       const newMappedRow = {};
 
+      if (!rowObj[headerNameFrom]) {
+        return;
+      }
+
       if (rowObj[headerNameFrom].hasOwnProperty('result')) {
         newValue = rowObj[headerNameFrom]['result'];
       } else {
         newValue = rowObj[headerNameFrom];
       }
       if (this.mode === 'copy') {
-        primaryWorkbook.workbook.getWorksheet(1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
+        const sheetInt = primaryWorkbook.currentSheetInt;
+        primaryWorkbook.workbook.getWorksheet(sheetInt + 1).getRow(rowObj.mappedRow).getCell(columnNumber).value = newValue;
       }
 
       newMappedRow['mappedRow'] = rowObj['rowNumber'];
