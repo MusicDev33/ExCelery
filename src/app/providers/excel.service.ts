@@ -23,7 +23,7 @@ export class ExcelService {
 
   path: string;
 
-  loading: false;
+  loading = false;
 
   private wbSource = new BehaviorSubject<ExcelFile>({workbook: new Workbook(), filename: ''});
   currentWorkbook = this.wbSource.asObservable();
