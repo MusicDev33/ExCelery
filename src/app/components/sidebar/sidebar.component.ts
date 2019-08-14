@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Observable, of, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import { version } from '../../../../package.json';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -17,6 +19,11 @@ export class SidebarComponent implements OnInit {
   workbooks: Array<string> = [];
   openWorkbooks: Array<string> = [];
   pathText: string;
+
+  versionNumber = version;
+  versionArray: Array<string>;
+  versionBinary = '';
+  versionUrl = '';
 
   workbook: ExcelFile;
 
@@ -41,8 +48,17 @@ export class SidebarComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit() {
+    this.versionUrl = 'https://github.com/MusicDev33/ExCelery/releases/tag/' + this.versionNumber;
+    this.versionArray = this.versionNumber.split('.');
+    this.versionToBinary();
     this.refreshFiles();
     this.xlService.currentWorkbook.subscribe(wb => this.workbook = wb);
+  }
+
+  versionToBinary() {
+    this.versionArray.forEach( num => {
+      this.versionBinary += Number(num).toString(2);
+    });
   }
 
   refreshFiles() {

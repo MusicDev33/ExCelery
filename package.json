@@ -1,6 +1,6 @@
 {
   "name": "ExCelery",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "An app for Excel automation, built with Angular and Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/MusicDev33/ExCelery",
   "author": {
