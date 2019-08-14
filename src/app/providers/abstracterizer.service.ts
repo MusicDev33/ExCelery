@@ -61,14 +61,12 @@ export class AbstracterizerService {
 
   // I'll try to come up with a better name
   returnCorrectCell(cellValue: any, rowNumber: number) {
+    if (cellValue === null) { return {value: 'null', row: rowNumber}; }
+
     switch (typeof cellValue) {
       case 'string':
         return {value: cellValue, row: rowNumber};
       case 'object':
-        if (cellValue === null) {
-          return {value: 'null', row: rowNumber};
-        }
-
         if (cellValue.hasOwnProperty('result')) {
           return {value: cellValue['result'].toString(), row: rowNumber};
         } else {
