@@ -53,12 +53,8 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     if (this.store.columnPreviews[filename] === header) {
       this.store.columnPreviews[filename] = '';
     } else {
-      this.openPreview(filename, header);
+      this.store.openPreview(filename, header);
     }
-  }
-
-  openPreview(filename: string, header: string) {
-    this.store.columnPreviews[filename] = header;
   }
 
   saveFile(workbook) {

@@ -46,6 +46,7 @@ export class CopyStoreService {
   }
 
   openPreview(filename: string, header: string) {
+    console.log(this.currentWorkbooks[0]);
     this.columnPreviews[filename] = header;
   }
 

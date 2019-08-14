@@ -62,6 +62,53 @@ input {
   border-color: $sidebar-color2 !important;
 }
 
+.tab-container {
+  padding: 0.5em 0em;
+}
+
+.tab-icon {
+  transition: all 0.4s;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.tab-icon:hover {
+  color: $sidebar-color2;
+}
+
+.sheet {
+  transition: all 0.4s;
+}
+
+.sheet.right {
+  margin-left: 40px;
+}
+
+.sheet.left {
+  margin-right: 40px;
+}
+
+.sheet.inactive {
+  color: #aaa;
+}
+
+.sheet.active {
+  cursor: pointer;
+  color: $sidebar-color2-em;
+}
+
+.sheet.active:hover {
+  color: $sidebar-color2;
+}
+
+.sheet-text {
+  pointer-events: none;
+}
+
 .scroll-container {
   padding-right: 10px;
 }
@@ -69,7 +116,7 @@ input {
 .scrollbox {
   overflow: scroll;
   overflow-x: hidden;
-  height: 85vh;
+  height: 82vh;
   margin-bottom: 6px;
 }
 

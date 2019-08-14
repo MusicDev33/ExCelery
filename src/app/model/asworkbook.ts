@@ -13,6 +13,7 @@ export class ASWorkbook {
   workbook: Workbook;
   worksheets: Array<Worksheet> = [];
   currentWorksheet: Worksheet;
+  currentSheetInt: number;
 
   headers: Array<string> = [];
 
@@ -31,6 +32,10 @@ export class ASWorkbook {
 
   constructor (workbook: Workbook, filename: string, abstract: AbstracterizerService) {
     this.workbook = workbook;
+    workbook.eachSheet( (worksheet, sheetId) => {
+      this.worksheets.push(worksheet);
+    });
+    this.currentSheetInt = 0;
     this.currentWorksheet = workbook.getWorksheet(1);
     this.filename = filename;
 

@@ -17,6 +17,28 @@
       <section class="row search-container">
         <input class="search-field form-control" name="searchText" placeholder="Header Search" [(ngModel)]="searchText">
       </section>
+      <section class="row tab-container justify-content-center">
+        <div class="col-sm-1">
+          <!-- <i class="far fa-copy tab-icon"></i> -->
+          <i class="far fa-file tab-icon"></i>
+        </div>
+        <div class="col-sm-10 text-center">
+          <span>
+            <i class="fas fa-arrow-left sheet left"
+            [ngClass]="{'active': workbook.currentWorksheet['orderNo'] > 0,
+            'inactive': workbook.currentWorksheet['orderNo'] === 0}"></i>
+          </span>
+          <span class="text-purple sheet-text">{{workbook.currentWorksheet.name}}</span>
+          <span>
+            <i class="fas fa-arrow-right sheet right"
+            [ngClass]="{'active': workbook.currentWorksheet['orderNo'] < workbook.worksheets.length - 1,
+            'inactive': workbook.currentWorksheet['orderNo'] === workbook.worksheets.length - 1}"></i>
+          </span>
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+      </section>
     </article>
 
     <article class="col">
