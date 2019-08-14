@@ -1,6 +1,16 @@
 @import 'colors.scss';
 
 /* Classes */
+.link {
+  cursor: pointer;
+  transition: all 0.4s;
+  border-bottom: 2px solid #ddd;
+}
+
+.link:hover {
+  border-color: $sidebar-color2;
+}
+
 .text-purple {
   color: $sidebar-color2-em;
 }

@@ -32,6 +32,7 @@ export class ColumnComparisonService {
       const primaryKeyValue = primaryRowObject[keyPair.primaryHeader];
       // Get row with value regardless of whether or not it's a formula
       const value = secondaryRows.filter(rowObj => {
+        if (!rowObj[keyPair.secondaryHeader]) { return false; }
         if (rowObj[keyPair.secondaryHeader].hasOwnProperty('result')) {
           return rowObj[keyPair.secondaryHeader]['result'] === primaryKeyValue;
         } else {

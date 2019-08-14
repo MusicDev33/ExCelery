@@ -13,6 +13,9 @@
 
   <section *ngIf="!store.currentWorkbooks.length">
     <h4 style="color: #333;margin-top: 2em;margin-left: 2em;">No workbooks open currently. One can be opened from the sidebar.</h4>
+    <h4 style="color: #333; margin-top: 2em;margin-left: 2em;">
+      For new releases, click <span class="link" (click)="electron.openInBrowser('https://github.com/MusicDev33/ExCelery/releases')">here</span>
+    </h4>
   </section>
 
   <section class="row" *ngIf="store.currentWorkbooks.length">
