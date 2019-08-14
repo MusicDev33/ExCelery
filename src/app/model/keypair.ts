@@ -67,6 +67,12 @@ export class KeyPair {
     return this.getIsPrimaryKey(filename, header) ? 1 : 2;
   }
 
+  getHeaderFromFile(filename: string) {
+    if (!this.doBothKeysExist) { return; }
+
+    return this.primaryKey.includes(filename) ? this.primaryHeader : this.secondaryHeader;
+  }
+
   getWhichKeyFileIn(filename) {
     if (!this.isFilenameInKey(filename)) {
       return 0;

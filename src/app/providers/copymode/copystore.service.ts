@@ -141,4 +141,12 @@ export class CopyStoreService {
     this.editCount = 0;
     this.keyPair.deleteKeys();
   }
+
+  getWorkbookByFileName(filename: string) {
+    const wb = this.currentWorkbooks.filter( workbook => {
+      return workbook.filename === filename;
+    });
+
+    return wb[0];
+  }
 }

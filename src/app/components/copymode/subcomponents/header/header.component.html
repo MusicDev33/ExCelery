@@ -24,8 +24,8 @@
     <section *ngIf="previewOpen" class="preview-container col-sm-12">
       <div class="preview-scroller-container">
         <div class="preview-cell-container">
-          <section *ngFor="let cell of header.cells" class="content-box white-border" tooltip="{{ cell.value }}"
-           trigger="click" hide-delay="1000" style="cursor: pointer;">
+          <section *ngFor="let cell of header.cells" class="content-box white-border" tooltip="{{ tooltipText(cell) }}"
+           trigger="click" hide-delay="1100" style="cursor: pointer;">
 
             <span>
               <span *ngIf="isPrimary && store.rowMap[header.name]">

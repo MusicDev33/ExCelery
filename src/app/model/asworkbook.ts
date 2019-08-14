@@ -70,4 +70,17 @@ export class ASWorkbook {
   getCellsFromHeader(header: string) {
     return this.headerToCells[header];
   }
+
+  // Returns cell value that is associated with the row and key
+  getKeyCellValue(header: string, row: number) {
+    const correctCell = this.getCellsFromHeader(header).filter( cell => {
+      return cell.row === row;
+    })[0];
+
+    if (correctCell.hasOwnProperty('result')) {
+      return correctCell['result']['value'];
+    } else {
+      return correctCell['value'];
+    }
+  }
 }

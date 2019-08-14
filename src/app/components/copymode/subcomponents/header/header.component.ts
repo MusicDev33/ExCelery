@@ -61,4 +61,15 @@ export class HeaderComponent implements OnInit {
   onHeaderClick() {
     this.selectHeader.emit(this.header);
   }
+
+  tooltipText(cell) {
+    if (!this.keysFull) {
+      return cell.value;
+    }
+
+    if (this.keysFull) {
+      return this.store.getWorkbookByFileName(this.header.filename)
+              .getKeyCellValue(this.store.keyPair.getHeaderFromFile(this.header.filename), cell.row);
+    }
+  }
 }
