@@ -12,7 +12,8 @@
     </article>
 
     <article class="col">
-      <div class="content-box purple-border selectable row justify-content-center" (click)="copyClicked()">
+      <div class="content-box purple-border selectable row justify-content-center" (click)="copyClicked()"
+        [ngClass]="{'inactive-text': !store.copyToHeader.length || !store.copyFromHeader.length}">
         Copy
       </div>
     </article>

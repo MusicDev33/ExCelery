@@ -37,12 +37,16 @@ export class ControlPanelComponent implements OnInit {
   // Wrapper functions
   copyClicked() {
     // Should this method even be in the copy store???
-    this.store.copyColumns();
+    if (this.store.copyToHeader.length && this.store.copyFromHeader.length) {
+      this.store.copyColumns();
+    }
   }
 
   saveClicked() {
-    const primaryFile = this.store.keyPair.primaryFile;
-    const primaryWorkbook = this.store.getWorkbookByFileName(primaryFile);
-    this.save.emit(primaryWorkbook);
+    if (this.store.editCount > 0) {
+      const primaryFile = this.store.keyPair.primaryFile;
+      const primaryWorkbook = this.store.getWorkbookByFileName(primaryFile);
+      this.save.emit(primaryWorkbook);
+    }
   }
 }
