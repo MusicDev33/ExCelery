@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { CopyStoreService } from '../../../../providers/copymode/copystore.service';
 
 @Component({
   selector: 'app-controlpanel',
@@ -7,9 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ControlPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(public store: CopyStoreService) { }
 
   ngOnInit() {
   }
-
 }

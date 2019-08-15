@@ -19,7 +19,7 @@
   </section>
 
   <section class="row" *ngIf="store.currentWorkbooks.length">
-    <div *ngFor="let workbook of store.currentWorkbooks" class="row col-xl-5 col-sm-6">
+    <div *ngFor="let workbook of store.currentWorkbooks" class="row col-4">
       <app-workbook-view class="col-12"
         [workbook]="workbook"
         (close)="closeFile($event)"
@@ -29,6 +29,10 @@
         (selectCopy)="checkMarkClicked(workbook.filename, $event)"
         (selectHeader)="headerClicked(workbook.filename, $event)">
       </app-workbook-view>
+    </div>
+    <div class="col-2 padding-0 d-md-none d-lg-block">
+      <app-controlpanel>
+      </app-controlpanel>
     </div>
   </section>
 </main>
