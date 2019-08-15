@@ -1,7 +1,7 @@
-import { Keypair } from './keypair';
+import { KeyPair } from './keypair';
 
-describe('Keypair', () => {
+describe('KeyPair', () => {
   it('should create an instance', () => {
-    expect(new Keypair()).toBeTruthy();
+    expect(new KeyPair()).toBeTruthy();
   });
 });
