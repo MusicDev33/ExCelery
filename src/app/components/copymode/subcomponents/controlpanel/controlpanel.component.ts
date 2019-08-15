@@ -27,11 +27,11 @@ export class ControlPanelComponent implements OnInit {
   }
 
   copyToHeaderReturn() {
-    return this.store.copyToHeader.length ? this.store.copyToHeader.split(':')[0] : 'No header selected';
+    return this.store.copyToHeader.length ? this.store.copyToHeader.split(':')[1] : 'No header selected';
   }
 
   copyFromHeaderReturn() {
-    return this.store.copyFromHeader.length ? this.store.copyFromHeader.split(':')[0] : 'No header selected';
+    return this.store.copyFromHeader.length ? this.store.copyFromHeader.split(':')[1] : 'No header selected';
   }
 
   // Wrapper functions
