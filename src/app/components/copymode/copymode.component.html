@@ -31,7 +31,7 @@
       </app-workbook-view>
     </div>
     <div class="col-4 padding-0 d-md-none d-lg-block">
-      <app-controlpanel>
+      <app-controlpanel (save)=saveFile($event)>
       </app-controlpanel>
     </div>
   </section>

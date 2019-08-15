@@ -9,6 +9,12 @@
         </span>
       </section>
     </article>
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+      *ngIf="store.editCount >= 1 && store.keyPair.primaryFile === workbook.filename" (click)="saveClicked()">
+        Save
+      </div>
+    </article>
     <div style="height: 10vh;"></div>
   </div>
 </div>

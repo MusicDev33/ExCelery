@@ -20,6 +20,7 @@ export class ControlPanelComponent implements OnInit {
 
   // Wrapper functions
   copyClicked() {
+    // Should this method even be in the copy store???
     this.store.copyColumns();
   }
 
