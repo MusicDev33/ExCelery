@@ -24,8 +24,9 @@
             [ngClass]="{'active': workbook.currentWorksheet['orderNo'] > 0,
             'inactive': workbook.currentWorksheet['orderNo'] === 0}"></i>
           </span>
+
           <span class="text-purple sheet-text" tooltip="{{ workbook.currentWorksheet.name }}" hide-delay="0">
-            {{workbook.currentWorksheet.name.substring(0, 12)}}
+            {{workbook.currentWorksheet.name.substring(0, 13)}}
             <span *ngIf="workbook.currentWorksheet.name.length > 13">. . .</span>
           </span>
           <span>
