@@ -12,7 +12,6 @@ describe('ControlPanelComponent', () => {
     })
     .compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(ControlPanelComponent);
     component = fixture.componentInstance;
