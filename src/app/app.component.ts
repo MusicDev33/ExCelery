@@ -34,8 +34,8 @@ export class AppComponent {
         fs.mkdirSync(this.filepathService.path + '/sheets');
         fs.mkdirSync(this.filepathService.path + '/sheets/options');
       }
-      if (!fs.existsSync(this.filepathService.path + '/deleted')) {
-        fs.mkdirSync(this.filepathService.path + '/deleted');
+      if (!fs.existsSync(this.filepathService.path + '/sheets/deleted')) {
+        fs.mkdirSync(this.filepathService.path + '/sheets/deleted');
       }
       this.xlService.setPath(this.filepathService.path);
     } else {
