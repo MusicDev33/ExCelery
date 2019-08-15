@@ -2,7 +2,7 @@
   <div class="content-box white-border row">
 
     <span class="col-sm-12">
-      <span class="header selectable" (click)="onHeaderClick()">
+      <span class="header selectable" (click)="onHeaderClick()" (contextmenu)="copyText(header.name)">
         {{ header.name }}
       </span>
 

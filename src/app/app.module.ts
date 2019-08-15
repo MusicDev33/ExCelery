@@ -8,6 +8,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { TooltipModule } from 'ng2-tooltip-directive';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     TooltipModule,
+    ClipboardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

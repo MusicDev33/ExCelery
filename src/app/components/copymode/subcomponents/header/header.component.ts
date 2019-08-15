@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { ClipboardService } from 'ngx-clipboard';
 // I should probably find a better way to do this
 import { Header } from '../../../../model/header';
 
@@ -11,7 +12,7 @@ import { CopyStoreService } from '../../../../providers/copymode/copystore.servi
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public store: CopyStoreService) { }
+  constructor(public store: CopyStoreService, public clipboard: ClipboardService) { }
 
   // INPUTS
   @Input()
@@ -39,6 +40,9 @@ export class HeaderComponent implements OnInit {
 
   @Output()
   selectHeader = new EventEmitter<Header>();
+
+  @Output()
+  headerCopy = new EventEmitter<string>();
 
 
   ngOnInit() {}
@@ -71,5 +75,10 @@ export class HeaderComponent implements OnInit {
       return this.store.getWorkbookByFileName(this.header.filename)
               .getKeyCellValue(this.store.keyPair.getHeaderFromFile(this.header.filename), cell.row);
     }
+  }
+
+  copyText(text: string) {
+    this.headerCopy.emit(text);
+    this.clipboard.copyFromContent(text);
   }
 }

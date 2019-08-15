@@ -35,6 +35,8 @@ export class WorkbookComponent implements OnInit {
   @Output()
   selectHeader = new EventEmitter<string>();
 
+  placeholder = 'Header Search';
+
   constructor(public store: CopyStoreService) { }
 
   ngOnInit() { }
@@ -70,6 +72,10 @@ export class WorkbookComponent implements OnInit {
 
   headerSelected(header: Header) {
     this.selectHeader.emit(header.name);
+  }
+
+  headerCopied(text: string) {
+    this.placeholder = text;
   }
 
   // METHODS

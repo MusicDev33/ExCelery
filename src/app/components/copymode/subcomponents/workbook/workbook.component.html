@@ -15,7 +15,7 @@
       </section>
 
       <section class="row search-container">
-        <input class="search-field form-control" name="searchText" placeholder="Header Search" [(ngModel)]="searchText">
+        <input class="search-field form-control" name="searchText" placeholder="{{ placeholder }}" [(ngModel)]="searchText">
       </section>
 
       <section class="row tab-container justify-content-center">
@@ -52,7 +52,8 @@
             (selectKey)="store.keyPair.setKey(workbook.filename, header)"
             (selectDiff)="diffSelected($event)"
             (selectCopy)="copySelected($event)"
-            (selectHeader)="headerSelected($event)">
+            (selectHeader)="headerSelected($event)"
+            (headerCopy)="headerCopied($event)">
           </app-header-box>
 
         </div>
