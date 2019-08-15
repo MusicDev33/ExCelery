@@ -27,6 +27,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CopymodeComponent } from './components/copymode/copymode.component';
 import { WorkbookComponent } from './components/copymode/subcomponents/workbook/workbook.component';
 import { HeaderComponent } from './components/copymode/subcomponents/header/header.component';
+import { ControlPanelComponent } from './components/copymode/subcomponents/controlpanel/controlpanel.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,7 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidebarComponent,
     CopymodeComponent,
     WorkbookComponent,
-    HeaderComponent
+    HeaderComponent,
+    ControlPanelComponent
   ],
   imports: [
     BrowserModule,
