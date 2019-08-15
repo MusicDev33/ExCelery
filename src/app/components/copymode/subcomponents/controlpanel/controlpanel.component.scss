@@ -36,3 +36,15 @@
   margin: 0.4em 0.1em 0.4em 0.1em;
   padding: 0.3em;
 }
+
+.text-purple {
+  color: $sidebar-color2-em
+}
+
+.text-purple.underlined {
+  border-bottom: 2px solid $sidebar-color2-em;
+}
+
+.text-green {
+  color: $sidebar-color-em;
+}

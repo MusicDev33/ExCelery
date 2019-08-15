@@ -1,5 +1,6 @@
 <div class="col">
   <div class="encompass">
+
     <article class="col">
       <section class="row actionbar-container justify-content-center">
         <span class="actionbar">
@@ -9,12 +10,29 @@
         </span>
       </section>
     </article>
+
     <article class="col">
       <div class="content-box purple-border selectable row justify-content-center"
       *ngIf="store.editCount >= 1 && store.keyPair.primaryFile === workbook.filename" (click)="saveClicked()">
         Save
       </div>
     </article>
+
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+        (click)="copyButtonClicked()">
+        <div class="col justify-content-center">
+          <span class="text-purple row no-gutters justify-content-center"> {{ secondaryFileReturn() }} </span>
+          <span class="row no-gutters justify-content-center"> {{ copyFromHeaderReturn() }} </span>
+          <span class="row no-gutters justify-content-center"><i class="fas fa-arrow-down text-green"></i></span>
+          <span class="text-purple row no-gutters justify-content-center"> {{ primaryFileReturn() }} </span>
+          <span class="row no-gutters justify-content-center"> {{ copyToHeaderReturn() }} </span>
+        </div>
+
+      </div>
+    </article>
+
     <div style="height: 10vh;"></div>
+
   </div>
 </div>

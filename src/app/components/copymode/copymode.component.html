@@ -30,7 +30,7 @@
         (selectHeader)="headerClicked(workbook.filename, $event)">
       </app-workbook-view>
     </div>
-    <div class="col-4 padding-0 d-md-none d-lg-block">
+    <div class="col-4 padding-0 d-md-none d-lg-block" *ngIf="store.currentWorkbooks.length == 2">
       <app-controlpanel (save)=saveFile($event)>
       </app-controlpanel>
     </div>

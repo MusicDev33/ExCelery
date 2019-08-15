@@ -82,14 +82,9 @@ input {
 
 .sheet {
   transition: all 0.4s;
-}
-
-.sheet.right {
-  margin-left: 40px;
-}
-
-.sheet.left {
-  margin-right: 40px;
+  -webkit-transform: translateY(50%);
+  -ms-transform: translateY(50%);
+  transform: translateY(25%);
 }
 
 .sheet.inactive {
@@ -105,6 +100,7 @@ input {
   color: $sidebar-color2;
 }
 
+/* Tooltips won't work because of this line , just a heads up */
 .sheet-text {
   pointer-events: none;
 }

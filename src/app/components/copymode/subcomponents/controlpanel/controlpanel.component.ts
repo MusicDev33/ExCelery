@@ -18,6 +18,22 @@ export class ControlPanelComponent implements OnInit {
   ngOnInit() {
   }
 
+  primaryFileReturn() {
+    return this.store.keyPair.primaryFile.length ? this.store.keyPair.primaryFile : 'No file selected';
+  }
+
+  secondaryFileReturn() {
+    return this.store.keyPair.secondaryFile.length ? this.store.keyPair.secondaryFile : 'No file selected';
+  }
+
+  copyToHeaderReturn() {
+    return this.store.copyToHeader.length ? this.store.copyToHeader.split(':')[0] : 'No header selected';
+  }
+
+  copyFromHeaderReturn() {
+    return this.store.copyFromHeader.length ? this.store.copyFromHeader.split(':')[0] : 'No header selected';
+  }
+
   // Wrapper functions
   copyClicked() {
     // Should this method even be in the copy store???

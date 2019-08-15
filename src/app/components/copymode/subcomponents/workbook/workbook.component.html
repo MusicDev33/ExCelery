@@ -18,28 +18,21 @@
         <input class="search-field form-control" name="searchText" placeholder="Header Search" [(ngModel)]="searchText">
       </section>
       <section class="row tab-container justify-content-center">
-        <div class="col-sm-1">
-          <!-- <i class="far fa-copy tab-icon"></i> -->
-          <i class="far fa-file tab-icon"></i>
-        </div>
-        <div class="col-sm-10 text-center" tooltip="{{ workbook.currentWorksheet.name }}" hide-delay="0">
+        <div class="col-sm-12 text-center" tooltip="{{ workbook.currentWorksheet.name }}" hide-delay="0">
           <span>
-            <i class="fas fa-arrow-left sheet left" (click)="previousSheetClicked()"
+            <i class="fas fa-arrow-left sheet float-left" (click)="previousSheetClicked()"
             [ngClass]="{'active': workbook.currentWorksheet['orderNo'] > 0,
             'inactive': workbook.currentWorksheet['orderNo'] === 0}"></i>
           </span>
           <span class="text-purple sheet-text">
-            {{workbook.currentWorksheet.name.substring(0, 13)}}
+            {{workbook.currentWorksheet.name.substring(0, 12)}}
             <span *ngIf="workbook.currentWorksheet.name.length > 13">. . .</span>
           </span>
           <span>
-            <i class="fas fa-arrow-right sheet right" (click)="nextSheetClicked()"
+            <i class="fas fa-arrow-right sheet float-right" (click)="nextSheetClicked()"
             [ngClass]="{'active': workbook.currentWorksheet['orderNo'] < workbook.worksheets.length - 1,
             'inactive': workbook.currentWorksheet['orderNo'] === workbook.worksheets.length - 1}"></i>
           </span>
-        </div>
-        <div class="col-sm-1">
-          <!-- Don't delete -->
         </div>
       </section>
     </article>
