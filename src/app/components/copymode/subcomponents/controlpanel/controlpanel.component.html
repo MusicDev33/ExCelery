@@ -19,8 +19,13 @@
     </article>
 
     <article class="col">
-      <div class="content-box purple-border selectable row justify-content-center"
-        (click)="copyButtonClicked()">
+      <div class="content-box purple-border selectable row justify-content-center" (click)="copyButtonClicked()">
+        Copy
+      </div>
+    </article>
+
+    <article class="col no-events">
+      <div class="content-box-no-shadow grey purple-border selectable row justify-content-center">
         <div class="col justify-content-center">
           <span class="text-purple row no-gutters justify-content-center"> {{ secondaryFileReturn() }} </span>
           <span class="row no-gutters justify-content-center"> {{ copyFromHeaderReturn() }} </span>

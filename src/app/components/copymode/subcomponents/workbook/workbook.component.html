@@ -18,13 +18,13 @@
         <input class="search-field form-control" name="searchText" placeholder="Header Search" [(ngModel)]="searchText">
       </section>
       <section class="row tab-container justify-content-center">
-        <div class="col-sm-12 text-center" tooltip="{{ workbook.currentWorksheet.name }}" hide-delay="0">
+        <div class="col-sm-12 text-center">
           <span>
             <i class="fas fa-arrow-left sheet float-left" (click)="previousSheetClicked()"
             [ngClass]="{'active': workbook.currentWorksheet['orderNo'] > 0,
             'inactive': workbook.currentWorksheet['orderNo'] === 0}"></i>
           </span>
-          <span class="text-purple sheet-text">
+          <span class="text-purple sheet-text" tooltip="{{ workbook.currentWorksheet.name }}" hide-delay="0">
             {{workbook.currentWorksheet.name.substring(0, 12)}}
             <span *ngIf="workbook.currentWorksheet.name.length > 13">. . .</span>
           </span>

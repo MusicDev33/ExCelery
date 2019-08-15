@@ -102,7 +102,7 @@ input {
 
 /* Tooltips won't work because of this line , just a heads up */
 .sheet-text {
-  pointer-events: none;
+  cursor: default;
 }
 
 .scroll-container {

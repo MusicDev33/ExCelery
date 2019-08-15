@@ -29,6 +29,10 @@ html, body {
                                   supported by Chrome and Opera */
 }
 
+.no-events {
+  pointer-events: none;
+}
+
 .selectable {
   cursor: pointer;
 }
@@ -48,6 +52,14 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: rgba(200,200,200,0.6);;
   border-radius: 10px;
+}
+
+.content-box-no-shadow {
+  transition: all 0.9s;
+  margin: 0.4em 0.1em 0.4em 0.1em;
+  padding: 0.3em;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
 .content-box {
