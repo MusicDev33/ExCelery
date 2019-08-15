@@ -37,14 +37,14 @@
       </section>
     </article>
 
-    <article class="col">
+    <article class="col d-md-block d-lg-none">
       <div class="content-box purple-border selectable row justify-content-center"
         *ngIf="store.editCount >= 1 && store.keyPair.primaryFile === workbook.filename" (click)="saveButtonClicked()">
         Save
       </div>
     </article>
 
-    <article class="col">
+    <article class="col d-md-block d-lg-none">
       <div class="content-box purple-border selectable row justify-content-center"
         *ngIf="store.copyToHeader.length && store.copyFromHeader.length && store.keyPair.getWhichKeyFileIn(workbook.filename) == 1"
         (click)="copyButtonClicked()">

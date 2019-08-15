@@ -12,14 +12,7 @@
     </article>
 
     <article class="col">
-      <div class="content-box purple-border selectable row justify-content-center"
-      *ngIf="store.editCount >= 1 && store.keyPair.primaryFile === workbook.filename" (click)="saveClicked()">
-        Save
-      </div>
-    </article>
-
-    <article class="col">
-      <div class="content-box purple-border selectable row justify-content-center" (click)="copyButtonClicked()">
+      <div class="content-box purple-border selectable row justify-content-center" (click)="copyClicked()">
         Copy
       </div>
     </article>
@@ -33,11 +26,18 @@
           <span class="text-purple row no-gutters justify-content-center"> {{ primaryFileReturn() }} </span>
           <span class="row no-gutters justify-content-center"> {{ copyToHeaderReturn() }} </span>
         </div>
-
       </div>
     </article>
 
-    <div style="height: 10vh;"></div>
+    <article class="col">
+      <div class="content-box purple-border selectable row justify-content-center"
+      (click)="saveClicked()"
+      [ngClass]="{'inactive-text': store.editCount < 1}">
+        Save
+      </div>
+    </article>
+
+    <div style="height: 1vh;"></div>
 
   </div>
 </div>
