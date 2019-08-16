@@ -14,7 +14,7 @@ export class FilepathService {
   }
 
   deleteFile(filename: string, callback) {
-    fs.rename(this.path + '/sheets/' + filename, this.path + '/deleted/' + filename, err => {
+    fs.rename(this.path + '/sheets/' + filename, this.path + '/sheets/deleted/' + filename, err => {
       callback(err);
     });
   }

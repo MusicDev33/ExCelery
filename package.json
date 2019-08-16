@@ -1,6 +1,6 @@
 {
   "name": "ExCelery",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "An app for Excel automation, built with Angular and Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/MusicDev33/ExCelery",
   "author": {
@@ -90,6 +90,7 @@
     "jquery": "^3.4.1",
     "ng2-tooltip-directive": "^2.1.9",
     "ngx-clipboard": "^12.2.0",
+    "ngx-web-worker": "^8.0.0",
     "popper.js": "^1.15.0"
   }
 }
