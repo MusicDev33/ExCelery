@@ -96,6 +96,8 @@ export class SidebarComponent implements OnInit {
       if (err === null) {
         this.refreshFiles();
         this.unsubFromAllTimers();
+      } else {
+        console.log(err);
       }
     });
     this.markedFile = '';
