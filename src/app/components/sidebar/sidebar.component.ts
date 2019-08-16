@@ -88,8 +88,7 @@ export class SidebarComponent implements OnInit {
   }
 
   openWorkbook(filename: string) {
-    // this.xlService.openWorkbook(filename);
-    this.xlService.openWorkbookStream(filename);
+    this.xlService.openWorkbook(filename);
   }
 
   fileDeleted(filename: string) {

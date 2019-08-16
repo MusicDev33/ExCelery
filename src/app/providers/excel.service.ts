@@ -73,14 +73,4 @@ export class ExcelService {
 
     const read = await promise;
   }
-
-  openWorkbookStream(filename: string) {
-    const stream = fs.createReadStream(this.path + '/sheets/' + filename);
-    const workbook = new Workbook();
-    stream.pipe(workbook.xlsx.createInputStream() as Writable)
-    .on('done', () => {
-      const excelFile: ExcelFile = { workbook: workbook, filename: filename };
-      this.wbSource.next(excelFile);
-    });
-  }
 }
