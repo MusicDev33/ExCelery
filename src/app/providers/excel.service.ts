@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Workbook, Worksheet } from 'exceljs';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Writable } from 'stream';
 
 export interface ExcelFile {
   workbook: Workbook;
@@ -21,11 +22,11 @@ export class ExcelService {
   intToWsHeader: any = [];
   wsHeaderToCells: any = {};
 
-  path: string;
+  public path: string;
 
   loading = false;
 
-  private wbSource = new BehaviorSubject<ExcelFile>({workbook: new Workbook(), filename: ''});
+  public wbSource = new BehaviorSubject<ExcelFile>({workbook: new Workbook(), filename: ''});
   currentWorkbook = this.wbSource.asObservable();
 
   constructor() { }
@@ -71,5 +72,15 @@ export class ExcelService {
       });
 
     const read = await promise;
+  }
+
+  openWorkbookStream(filename: string) {
+    const stream = fs.createReadStream(this.path + '/sheets/' + filename);
+    const workbook = new Workbook();
+    stream.pipe(workbook.xlsx.createInputStream() as Writable)
+    .on('done', () => {
+      const excelFile: ExcelFile = { workbook: workbook, filename: filename };
+      this.wbSource.next(excelFile);
+    });
   }
 }

@@ -8,13 +8,15 @@ import { Observable, of, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { CopyStoreService } from '../../providers/copymode/copystore.service';
+import { WebWorkerService } from 'ngx-web-worker';
 
 import { version } from '../../../../package.json';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
+  providers: [WebWorkerService]
 })
 export class SidebarComponent implements OnInit {
   navbarActive = false;
@@ -48,14 +50,17 @@ export class SidebarComponent implements OnInit {
     public fpService: FilepathService,
     public xlService: ExcelService,
     public router: Router,
-    public store: CopyStoreService) { }
+    public store: CopyStoreService,
+    public workerService: WebWorkerService) { }
 
   ngOnInit() {
     this.versionUrl = 'https://github.com/MusicDev33/ExCelery/releases/tag/' + this.versionNumber;
     this.versionArray = this.versionNumber.split('.');
     this.versionToBinary();
     this.refreshFiles();
-    this.xlService.currentWorkbook.subscribe(wb => this.workbook = wb);
+    this.xlService.currentWorkbook.subscribe(wb => {
+      this.workbook = wb;
+    });
   }
 
   versionToBinary() {
@@ -83,8 +88,8 @@ export class SidebarComponent implements OnInit {
   }
 
   openWorkbook(filename: string) {
-    this.xlService.openWorkbook(filename);
-    // this.openWorkbooks.push(filename)
+    // this.xlService.openWorkbook(filename);
+    this.xlService.openWorkbookStream(filename);
   }
 
   fileDeleted(filename: string) {

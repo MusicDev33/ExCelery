@@ -9,6 +9,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { ClipboardModule } from 'ngx-clipboard';
+import { WebWorkerService } from 'ngx-web-worker';
 
 // NG Translate
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

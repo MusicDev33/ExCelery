@@ -90,6 +90,7 @@
     "jquery": "^3.4.1",
     "ng2-tooltip-directive": "^2.1.9",
     "ngx-clipboard": "^12.2.0",
+    "ngx-web-worker": "^8.0.0",
     "popper.js": "^1.15.0"
   }
 }

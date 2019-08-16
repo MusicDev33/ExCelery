@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Workbook, Worksheet } from 'exceljs';
 import { Subscription } from 'rxjs';
 import { ASWorkbook } from '../../model/asworkbook';
@@ -23,15 +23,18 @@ export class CopymodeComponent implements OnInit, OnDestroy {
     public electron: ElectronService,
     public excel: ExcelService,
     public abstract: AbstracterizerService,
-    public store: CopyStoreService) { }
+    public store: CopyStoreService,
+    public ngZone: NgZone) { }
 
   ngOnInit() {
     // wb is an excel file interface
     this.subscription = this.excel.currentWorkbook.subscribe(wb => {
       if (wb.workbook.getWorksheet(1)) {
-        const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
-        this.store.keyPair = new KeyPair();
-        this.store.currentWorkbooks.push(newWorkbook);
+        this.ngZone.run(() => {
+          const newWorkbook = new ASWorkbook(wb.workbook, wb.filename, this.abstract);
+          this.store.keyPair = new KeyPair();
+          this.store.currentWorkbooks.push(newWorkbook);
+        });
       }
     });
   }
